@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4a4d983b9d194fe2bdd4f5439027dbad" Name="Diagram1">
+        <EntityTypeShape EntityType="bARBieModel.BetFairCompetitionUrls" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.BetFairFootballOdds" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.Bookie" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.Countries" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.FootballArbs" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.FootballCompetitions" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.FootballMatches" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.OddsCheckerCompetitionUrls" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.OddsCheckerFootballOdds" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CompetitionID" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CountryID" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CountryID" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CompetitionID" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

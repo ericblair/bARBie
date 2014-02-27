@@ -4,20 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4a4d983b9d194fe2bdd4f5439027dbad" Name="Diagram1">
-        <EntityTypeShape EntityType="bARBieModel.BetFairCompetitionUrls" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.BetFairFootballOdds" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.Bookie" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.Countries" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.FootballArbs" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.FootballCompetitions" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.FootballMatches" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.OddsCheckerCompetitionUrls" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.OddsCheckerFootballOdds" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
-        <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CompetitionID" />
-        <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CountryID" />
-        <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CountryID" />
-        <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CompetitionID" />
+      <Diagram DiagramId="75a4360e32624381b49fd7f9b6c836bd" Name="Diagram1">
+        <EntityTypeShape EntityType="bARBieModel.BetFairCompetitionUrls" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.BetFairFootballOdds" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.Bookie" Width="1.5" PointX="2.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.Countries" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.FootballArbs" Width="1.5" PointX="4.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.FootballCompetitions" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.FootballMatches" Width="1.5" PointX="6.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.OddsCheckerCompetitionUrls" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bARBieModel.OddsCheckerFootballOdds" Width="1.5" PointX="8.75" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CompetitionID" ManuallyRouted="false" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CountryID" ManuallyRouted="false" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CountryID" ManuallyRouted="false" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CompetitionID" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

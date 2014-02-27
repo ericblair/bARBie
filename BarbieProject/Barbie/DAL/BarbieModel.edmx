@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="bARBieModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="bARBieModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="bARBieModelStoreContainer">
           <EntitySet Name="BetFairCompetitionUrls" EntityType="bARBieModel.Store.BetFairCompetitionUrls" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BetFairFootballOdds" EntityType="bARBieModel.Store.BetFairFootballOdds" store:Type="Tables" Schema="dbo" />
@@ -202,7 +202,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bARBieModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -241,8 +242,8 @@
           <Property Name="CountryID" Type="Int32" />
           <Property Name="CompetitionID" Type="Int32" Nullable="false" />
           <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="FootballCompetition" Relationship="bARBieModel.FK_BetFairCompetitionUrls_CompetitionID" FromRole="BetFairCompetitionUrls" ToRole="FootballCompetitions" />
-          <NavigationProperty Name="Country" Relationship="bARBieModel.FK_BetFairCompetitionUrls_CountryID" FromRole="BetFairCompetitionUrls" ToRole="Countries" />
+          <NavigationProperty Name="FootballCompetitions" Relationship="bARBieModel.FK_BetFairCompetitionUrls_CompetitionID" FromRole="BetFairCompetitionUrls" ToRole="FootballCompetitions" />
+          <NavigationProperty Name="Countries" Relationship="bARBieModel.FK_BetFairCompetitionUrls_CountryID" FromRole="BetFairCompetitionUrls" ToRole="Countries" />
         </EntityType>
         <EntityType Name="BetFairFootballOdds">
           <Key>
@@ -326,8 +327,8 @@
           <Property Name="CountryID" Type="Int32" />
           <Property Name="CompetitionID" Type="Int32" Nullable="false" />
           <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Country" Relationship="bARBieModel.FK_OddsCheckerCompetitionUrls_CountryID" FromRole="OddsCheckerCompetitionUrls" ToRole="Countries" />
-          <NavigationProperty Name="FootballCompetition" Relationship="bARBieModel.FK_OddsCheckerCompetitionUrls_CompetitionID" FromRole="OddsCheckerCompetitionUrls" ToRole="FootballCompetitions" />
+          <NavigationProperty Name="Countries" Relationship="bARBieModel.FK_OddsCheckerCompetitionUrls_CountryID" FromRole="OddsCheckerCompetitionUrls" ToRole="Countries" />
+          <NavigationProperty Name="FootballCompetitions" Relationship="bARBieModel.FK_OddsCheckerCompetitionUrls_CompetitionID" FromRole="OddsCheckerCompetitionUrls" ToRole="FootballCompetitions" />
         </EntityType>
         <EntityType Name="OddsCheckerFootballOdds">
           <Key>
@@ -364,8 +365,8 @@
           <Property Name="Updated" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_BetFairCompetitionUrls_CompetitionID">
-          <End Type="bARBieModel.FootballCompetitions" Role="FootballCompetitions" Multiplicity="1" />
-          <End Type="bARBieModel.BetFairCompetitionUrls" Role="BetFairCompetitionUrls" Multiplicity="*" />
+          <End Role="FootballCompetitions" Type="bARBieModel.FootballCompetitions" Multiplicity="1" />
+          <End Role="BetFairCompetitionUrls" Type="bARBieModel.BetFairCompetitionUrls" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FootballCompetitions">
               <PropertyRef Name="ID" />
@@ -376,8 +377,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BetFairCompetitionUrls_CountryID">
-          <End Type="bARBieModel.Countries" Role="Countries" Multiplicity="0..1" />
-          <End Type="bARBieModel.BetFairCompetitionUrls" Role="BetFairCompetitionUrls" Multiplicity="*" />
+          <End Role="Countries" Type="bARBieModel.Countries" Multiplicity="0..1" />
+          <End Role="BetFairCompetitionUrls" Type="bARBieModel.BetFairCompetitionUrls" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Countries">
               <PropertyRef Name="ID" />
@@ -388,8 +389,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OddsCheckerCompetitionUrls_CountryID">
-          <End Type="bARBieModel.Countries" Role="Countries" Multiplicity="0..1" />
-          <End Type="bARBieModel.OddsCheckerCompetitionUrls" Role="OddsCheckerCompetitionUrls" Multiplicity="*" />
+          <End Role="Countries" Type="bARBieModel.Countries" Multiplicity="0..1" />
+          <End Role="OddsCheckerCompetitionUrls" Type="bARBieModel.OddsCheckerCompetitionUrls" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Countries">
               <PropertyRef Name="ID" />
@@ -400,8 +401,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OddsCheckerCompetitionUrls_CompetitionID">
-          <End Type="bARBieModel.FootballCompetitions" Role="FootballCompetitions" Multiplicity="1" />
-          <End Type="bARBieModel.OddsCheckerCompetitionUrls" Role="OddsCheckerCompetitionUrls" Multiplicity="*" />
+          <End Role="FootballCompetitions" Type="bARBieModel.FootballCompetitions" Multiplicity="1" />
+          <End Role="OddsCheckerCompetitionUrls" Type="bARBieModel.OddsCheckerCompetitionUrls" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FootballCompetitions">
               <PropertyRef Name="ID" />

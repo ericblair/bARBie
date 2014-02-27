@@ -10,26 +10,42 @@ namespace Scrapers
 {
     public class OCFixturesScraper
     {
-        bARBieEntities barbieEntity = new bARBieEntities();
-        // Public methods:
-        // Scrape all fixtures
+        bARBieEntities barbieEntity;
+        
+        
+        public OCFixturesScraper()
+        {
+            barbieEntity = new bARBieEntities();
+        }
+        
         public void ScrapeAllFixtures()
         {
-            // Get all competition urls from database
+            barbieEntity = new bARBieEntities();
+
             var competitions = barbieEntity.OddsCheckerCompetitionUrls;
+
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            var process = new Process { StartInfo = startInfo };
 
             foreach (var competition in competitions)
             {
-                CallFixtureScraper(competition.CountryID, competition.CompetitionID, competition.Url);
+                CallFixtureScraper(process, competition.CountryID, competition.CompetitionID, competition.Url);
             }
 
-            // foreach competition url,
-            // call node to run the oc script, passing in url to scrape fixtures from
         }
+
         // Scrape all fixtures for country
         // Scrape all fixtures for competetion
 
-        private void CallFixtureScraper(int? countryId, int competitionId, string competitionUrl)
+        private void CallFixtureScraper(Process process, int? countryId, int competitionId, string competitionUrl)
         {
             // Thoughts: 
             // By simply omitting the following lines:
@@ -42,25 +58,19 @@ namespace Scrapers
             var scraperFileHomeDir = @"C:\bARBie\bARBie\ScrapingScripts\OddsChecker";
             var scraperFileName = "ocScrapeFootballFixtures.js";
             var logFileName = "ocScrapeFootballFixtures.log";
-            
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = "cmd.exe",
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            var process = new Process { StartInfo = startInfo };
 
             process.Start();
             process.StandardInput.WriteLine(@"cd " + scraperFileHomeDir);
-            process.StandardInput.WriteLine(@"node {0} {1] {2} {3} >> {4}", scraperFileName, 
-                                            countryId.HasValue ? countryId.Value.ToString() : "NULL", 
-                                            competitionId, competitionUrl, logFileName);
-            
 
+            string countryIdString = countryId.HasValue ? countryId.Value.ToString() : "NULL";
+
+            var nodeInputString = "node " + scraperFileName + " " + countryIdString + " " + competitionId
+                                     + " " + competitionUrl + " >> " + logFileName;
+
+            process.StandardInput.WriteLine(nodeInputString);
+
+            process.StandardInput.WriteLine("exit");
+            process.WaitForExit();
 
         }
 

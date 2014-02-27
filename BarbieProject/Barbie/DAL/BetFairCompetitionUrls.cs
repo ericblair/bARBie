@@ -19,7 +19,7 @@ namespace DAL
         public int CompetitionID { get; set; }
         public string Url { get; set; }
     
-        public virtual FootballCompetitions FootballCompetition { get; set; }
-        public virtual Countries Country { get; set; }
+        public virtual FootballCompetitions FootballCompetitions { get; set; }
+        public virtual Countries Countries { get; set; }
     }
 }

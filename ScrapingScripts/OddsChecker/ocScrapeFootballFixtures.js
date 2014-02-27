@@ -34,8 +34,7 @@ function ExtractFixtureMarketUrls(error, response, body) {
 
         $ = cheerio.load(body);
 
-        var fixtureDate = $('.date.first > .day').eq(0).text().trim();
-        console.log('fixtureDate intital set to: ' + fixtureDate);
+        var fixtureDate;
 
         try {
             $('.content-4 tbody tr').each(function (index, data) { ScrapeFixureDetails(index, data); });
@@ -43,9 +42,6 @@ function ExtractFixtureMarketUrls(error, response, body) {
         catch (exception) {
             console.log(exception);
         }
-        
-
-        console.log('Fin');
     }
 }
 
@@ -53,39 +49,22 @@ function ScrapeFixureDetails(index, data) {
 
     if ($(data).hasClass("date") && $(data).hasClass("first")) {
         fixtureDate = $(data).find('.date.first > .day').text().trim();
-        console.log('fixtureDate set to: ' + fixtureDate);
     }
     else if ($(data).hasClass("match-on")) {
 
-        console.log('match-on');
-
         var fixtureTime = $(data).find("td.time").eq(0).text();
-        console.log('fixtureTime : ' + fixtureTime);
-
         var fixtureDateTime = ConvertDateTimeToSqlFormat(fixtureTime, fixtureDate);
-        console.log('fixtureDateTime : ' + fixtureDateTime);
 
         var homeTeam = $(data).find('.fixtures-bet-name').eq(0).text();
         var awayTeam = $(data).find('.fixtures-bet-name').eq(2).text();
-        console.log('homeTeam : ' + homeTeam);
-        console.log('awayTeam : ' + awayTeam);
 
         var fixtureOddsUrl = oddsCheckerBaseUrl + $(data).find('.button.button-f60-10').eq(0).attr('href');
-        console.log('fixtureOddsUrl : ' + fixtureOddsUrl);
 
         WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeTeam, awayTeam, fixtureOddsUrl);
     }
 }
 
 function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeTeam, awayTeam, fixtureOddsUrl) {
-    console.log('IN WriteFixtureToDatabase!');
-
-    //console.log('countryId : ' + countryId);
-    //console.log('competitionId : ' + competitionId);
-    //console.log('fixtureDateTime : ' + fixtureDateTime);
-    //console.log('homeTeam : ' + homeTeam);
-    //console.log('awayTeam : ' + awayTeam);
-    //console.log('fixtureOddsUrl : ' + fixtureOddsUrl);
 
     sql.open(connectionString, function (err, conn) {
 
@@ -116,7 +95,6 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
                     return;
                 }
                 else {
-                    //console.log('results.rows.length: ' + results.rows.length);
 
                     if (results.rows.length != 0) {
                         return;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,9 @@ namespace Scrapers.Football
 
         public void ScrapeAllOdds()
         {
-            var scraperFileHomeDir = @"C:\bARBie\bARBie\ScrapingScripts\OddsChecker";
-            var scraperFileName = "ocScrapeFootballMatchWinnerOdds.js";
-            var logFileName = "ocScrapeFootballMatchWinnerOdds.log";
+            var scraperFileHomeDir = ConfigurationManager.AppSettings["OddsCheckerScriptsDir"];
+            var scraperFileName = ConfigurationManager.AppSettings["OddsCheckerMatchOddsScraperScript"];
+            var logFileName = ConfigurationManager.AppSettings["OddsCheckerMatchOddsScraperLog"];
 
             var fixtures = barbieEntity.OddsCheckerFootballFixtures;
 
@@ -88,6 +89,4 @@ namespace Scrapers.Football
             return nodeInputString;
         }
     }
-
-
 }

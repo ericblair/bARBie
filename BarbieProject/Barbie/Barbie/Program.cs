@@ -12,15 +12,12 @@ namespace Barbie
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("hello");
             //var ocScraper = new OCFixturesScraper();
             //ocScraper.ScrapeAllFixtures();
 
             var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
             ocMatchWinnerOddsScraper.ScrapeAllOdds();
 
-            Console.WriteLine("Bye then");
-            Console.ReadLine();
             //FootballArbFinder fab = new FootballArbFinder();
 
             //var watch = Stopwatch.StartNew();

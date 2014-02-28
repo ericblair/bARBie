@@ -13,118 +13,80 @@ namespace Scrapers.Football
     {
         bARBieEntities barbieEntity;
 
-        Process process;
-
-        ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            FileName = "cmd.exe",
-            RedirectStandardInput = true,
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-
         public OCMatchWinnerOddsScraper()
         {
             barbieEntity = new bARBieEntities();
-            process = new Process { StartInfo = startInfo };
         }
 
         public void ScrapeAllOdds()
         {
-            var fixtures = barbieEntity.OddsCheckerFootballFixtures;
-
-            foreach (var fixture in fixtures)
-            {
-
-                CallMatchWinnerOddsScraper(process, fixture.ID, fixture.CountryID, fixture.CompetitionID,
-                                        fixture.HomeTeam, fixture.AwayTeam, fixture.MatchWinnerOddsUrl);
-
-
-                    
-
-            }
-
-            //process.StandardInput.WriteLine("exit");
-            //process.WaitForExit();
-        }
-
-        //private void CallMatchWinnerOddsScraper(Process process, int fixtureId, int? countryId, int competitionId,
-        //                                        string homeTeam, string awayTeam, string matchWinnerOddsUrl)
-        //{
-        //    var scraperFileHomeDir = @"C:\bARBie\bARBie\ScrapingScripts\OddsChecker";
-        //    var scraperFileName = "ocScrapeFootballMatchWinnerOdds.js";
-        //    var logFileName = "ocScrapeFootballMatchWinnerOdds.log";
-
-        //    process.Start();
-        //    process.StandardInput.WriteLine(@"cd " + scraperFileHomeDir);
-
-        //    string countryIdString = countryId.HasValue ? countryId.Value.ToString() : "NULL";
-
-        //    var nodeInputString = "node " + scraperFileName + " " + fixtureId + " " + countryIdString
-        //                            + " " + competitionId + " " + homeTeam + " " + awayTeam
-        //                            + " " + matchWinnerOddsUrl + " >> " + logFileName;
-
-        //    process.StandardInput.WriteLine(nodeInputString);
-
-        //    process.StandardInput.WriteLine("exit");
-        //    process.WaitForExit();
-        //}
-
-        
-
-        private void CallMatchWinnerOddsScraper(Process process, int fixtureId, int? countryId, int competitionId,
-                                                string homeTeam, string awayTeam, string matchWinnerOddsUrl)
-        {
-            //ProcessStartInfo startInfo = new ProcessStartInfo
-            //{
-            //    FileName = "cmd.exe",
-            //    RedirectStandardInput = true,
-            //    RedirectStandardOutput = true,
-            //    UseShellExecute = false,
-            //    CreateNoWindow = true
-            //};
-
-            //var process = new Process { StartInfo = startInfo };
-
             var scraperFileHomeDir = @"C:\bARBie\bARBie\ScrapingScripts\OddsChecker";
             var scraperFileName = "ocScrapeFootballMatchWinnerOdds.js";
             var logFileName = "ocScrapeFootballMatchWinnerOdds.log";
 
-            process.Start();
-            process.StandardInput.WriteLine(@"cd " + scraperFileHomeDir);
+            var fixtures = barbieEntity.OddsCheckerFootballFixtures;
 
-            string countryIdString = countryId.HasValue ? countryId.Value.ToString() : "NULL";
+            var processCommands = new List<string>();
 
-            var nodeInputString = "node " + scraperFileName + " " + fixtureId + " " + countryIdString
-                                    + " " + competitionId + " " + homeTeam + " " + awayTeam
-                                    + " " + matchWinnerOddsUrl + " >> " + logFileName;
+            foreach (var fixture in fixtures)
+            {
+                var cmd = BuildScraperCommandPromptString
+                                (
+                                    scraperFileName, logFileName, fixture.ID,
+                                    fixture.CountryID, fixture.CompetitionID, fixture.HomeTeam,
+                                    fixture.AwayTeam, fixture.MatchWinnerOddsUrl
+                                );
 
-            process.StandardInput.WriteLine(nodeInputString);
+                processCommands.Add(cmd);
+            }
 
-            process.StandardInput.WriteLine("exit");
-            process.WaitForExit();
-            //await process.WaitForExitAsync();
+            var allProcesses = Task.Factory.StartNew(() =>
+                {
+                    var processes = processCommands.Select(cmd =>
+                        {
+                            ProcessStartInfo startInfo = new ProcessStartInfo
+                            {
+                                FileName = "cmd.exe",
+                                RedirectStandardInput = true,
+                                RedirectStandardOutput = true,
+                                UseShellExecute = false,
+                                CreateNoWindow = true
+                            };
+
+                            var process = new Process { StartInfo = startInfo };
+
+                            process.Start();
+                            process.StandardInput.WriteLine(@"cd " + scraperFileHomeDir);
+                            process.StandardInput.WriteLine(cmd);
+                            process.StandardInput.WriteLine("exit");
+                            process.WaitForExit();
+
+                            return process;
+                        }).ToArray();
+
+                    foreach (var process in processes)
+                    {
+                        process.WaitForExit();
+                        process.Dispose();
+                    }
+                });
+
+            allProcesses.Wait();
+            
         }
 
-        /// <summary>
-        /// Waits asynchronously for the process to exit.
-        /// </summary>
-        /// <param name="process">The process to wait for cancellation.</param>
-        /// <param name="cancellationToken">A cancellation token. If invoked, the task will return 
-        /// immediately as cancelled.</param>
-        /// <returns>A Task representing waiting for the process to end.</returns>
-        //public static Task WaitForExitAsync(this Process process,
-        //    CancellationToken cancellationToken = default(CancellationToken))
-        //{
-        //    var tcs = new TaskCompletionSource<object>();
-        //    process.EnableRaisingEvents = true;
-        //    process.Exited += (sender, args) => tcs.SetResult(null);
-        //    if (cancellationToken != default(CancellationToken))
-        //        cancellationToken.Register(tcs.SetCanceled);
+        private string BuildScraperCommandPromptString(string scraperFileName, string logFileName, 
+                                                        int fixtureId, int? countryId, int competitionId,
+                                                        string homeTeam, string awayTeam, string matchWinnerOddsUrl)
+        {
+            string countryIdString = countryId.HasValue ? countryId.Value.ToString() : "NULL";
 
-        //    return tcs.Task;
-        //}
+            var nodeInputString = "node " + scraperFileName + " " + fixtureId 
+                                    + " " + countryIdString + " " + competitionId + " " + homeTeam 
+                                    + " " + awayTeam + " " + matchWinnerOddsUrl + " >> " + logFileName;
+
+            return nodeInputString;
+        }
     }
 
 

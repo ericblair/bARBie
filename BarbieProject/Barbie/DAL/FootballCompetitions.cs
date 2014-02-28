@@ -18,6 +18,7 @@ namespace DAL
         {
             this.BetFairCompetitionUrls = new HashSet<BetFairCompetitionUrls>();
             this.OddsCheckerCompetitionUrls = new HashSet<OddsCheckerCompetitionUrls>();
+            this.OddsCheckerFootballFixtures = new HashSet<OddsCheckerFootballFixtures>();
         }
     
         public int ID { get; set; }
@@ -26,5 +27,6 @@ namespace DAL
     
         public virtual ICollection<BetFairCompetitionUrls> BetFairCompetitionUrls { get; set; }
         public virtual ICollection<OddsCheckerCompetitionUrls> OddsCheckerCompetitionUrls { get; set; }
+        public virtual ICollection<OddsCheckerFootballFixtures> OddsCheckerFootballFixtures { get; set; }
     }
 }

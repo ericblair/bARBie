@@ -34,5 +34,6 @@ namespace DAL
         public DbSet<FootballMatches> FootballMatches { get; set; }
         public DbSet<OddsCheckerCompetitionUrls> OddsCheckerCompetitionUrls { get; set; }
         public DbSet<OddsCheckerFootballOdds> OddsCheckerFootballOdds { get; set; }
+        public DbSet<OddsCheckerFootballFixtures> OddsCheckerFootballFixtures { get; set; }
     }
 }

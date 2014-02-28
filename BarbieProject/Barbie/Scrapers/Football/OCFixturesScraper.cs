@@ -6,44 +6,41 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 
-namespace Scrapers
+namespace Scrapers.Football
 {
     public class OCFixturesScraper
     {
         bARBieEntities barbieEntity;
-        
-        
+
+        Process process;
+
+        ProcessStartInfo startInfo = new ProcessStartInfo
+        {
+            FileName = "cmd.exe",
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+                        
         public OCFixturesScraper()
         {
             barbieEntity = new bARBieEntities();
-        }
-        
-        public void ScrapeAllFixtures()
-        {
-            barbieEntity = new bARBieEntities();
-
-            var competitions = barbieEntity.OddsCheckerCompetitionUrls;
-
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = "cmd.exe",
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            var process = new Process { StartInfo = startInfo };
-
-            foreach (var competition in competitions)
-            {
-                CallFixtureScraper(process, competition.CountryID, competition.CompetitionID, competition.Url);
-            }
-
+            process = new Process { StartInfo = startInfo };
         }
 
         // Scrape all fixtures for country
         // Scrape all fixtures for competetion
+
+        public void ScrapeAllFixtures()
+        {
+            var competitions = barbieEntity.OddsCheckerCompetitionUrls;
+            
+            foreach (var competition in competitions)
+            {
+                CallFixtureScraper(process, competition.CountryID, competition.CompetitionID, competition.Url);
+            }
+        }
 
         private void CallFixtureScraper(Process process, int? countryId, int competitionId, string competitionUrl)
         {

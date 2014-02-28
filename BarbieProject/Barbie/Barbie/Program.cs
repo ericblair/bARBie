@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Scrapers;
+using Scrapers.Football;
 
 namespace Barbie
 {
@@ -13,8 +13,12 @@ namespace Barbie
         static void Main(string[] args)
         {
             Console.WriteLine("hello");
-            var ocScraper = new OCFixturesScraper();
-            ocScraper.ScrapeAllFixtures();
+            //var ocScraper = new OCFixturesScraper();
+            //ocScraper.ScrapeAllFixtures();
+
+            var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
+            ocMatchWinnerOddsScraper.ScrapeAllOdds();
+
             Console.WriteLine("Bye then");
             Console.ReadLine();
             //FootballArbFinder fab = new FootballArbFinder();

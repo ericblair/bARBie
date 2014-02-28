@@ -18,6 +18,9 @@
         <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CountryID" ManuallyRouted="false" />
         <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CountryID" ManuallyRouted="false" />
         <AssociationConnector Association="bARBieModel.FK_OddsCheckerCompetitionUrls_CompetitionID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="bARBieModel.OddsCheckerFootballFixtures" Width="1.5" PointX="5.8162945349776631" PointY="10.275666718499579" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballFixtures_CountryID" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballFixtures_CompetitionID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

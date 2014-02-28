@@ -85,6 +85,9 @@
     <Compile Include="OddsCheckerCompetitionUrls.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="OddsCheckerFootballFixtures.cs">
+      <DependentUpon>BarbieModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="OddsCheckerFootballOdds.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>

@@ -103,12 +103,10 @@ namespace Scrapers.Football
             ScrapeOdds(fixtures);
         }
 
-        // scrape odds for specified match
-
         /// <summary>
         /// Scrape odds for fixture matching ID provided
         /// </summary>
-        /// <param name="fixtureId"></param>
+        /// <param name="fixtureId">OddsCheckerFootballFixtures.ID</param>
         public void ScrapeOddsForFixture(int fixtureId)
         {
             var fixtures = barbieEntity.OddsCheckerFootballFixtures
@@ -118,7 +116,18 @@ namespace Scrapers.Football
             ScrapeOdds(fixtures);
         }
 
-        // scrape odds for competition / country
+        /// <summary>
+        /// Scrape odds for fixtures in the competition matching the ID provided
+        /// </summary>
+        /// <param name="competitionId">FootballCompetitions.ID</param>
+        public void ScrapeOddsForCompetition(int competitionId)
+        {
+            var fixtures = barbieEntity.OddsCheckerFootballFixtures
+                            .Where(x => x.CompetitionID == competitionId)
+                            .ToList();
+
+            ScrapeOdds(fixtures);
+        }
 
 
         private void ScrapeOdds(List<OddsCheckerFootballFixtures> fixtures)

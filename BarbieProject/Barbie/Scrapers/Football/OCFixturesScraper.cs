@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -12,21 +13,13 @@ namespace Scrapers.Football
     {
         bARBieEntities barbieEntity;
 
-        Process process;
+        string scraperFileHomeDir = ConfigurationManager.AppSettings["OddsCheckerScriptsDir"];
+        string scraperFileName = ConfigurationManager.AppSettings["OddsCheckerFixturesScraperScript"];
+        string logFileName = ConfigurationManager.AppSettings["OddsCheckerFixturesScraperLog"];
 
-        ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            FileName = "cmd.exe",
-            RedirectStandardInput = true,
-            RedirectStandardOutput = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
-                        
         public OCFixturesScraper()
         {
             barbieEntity = new bARBieEntities();
-            process = new Process { StartInfo = startInfo };
         }
 
         // Scrape all fixtures for country
@@ -34,41 +27,35 @@ namespace Scrapers.Football
 
         public void ScrapeAllFixtures()
         {
-            var competitions = barbieEntity.OddsCheckerCompetitionUrls;
-            
-            foreach (var competition in competitions)
-            {
-                CallFixtureScraper(process, competition.CountryID, competition.CompetitionID, competition.Url);
-            }
+            var competitions = barbieEntity.OddsCheckerCompetitionUrls.ToList();
+
+            ScrapeFixtures(competitions);
         }
 
-        private void CallFixtureScraper(Process process, int? countryId, int competitionId, string competitionUrl)
+
+        private void ScrapeFixtures(List<OddsCheckerCompetitionUrls> competitions)
         {
-            // Thoughts: 
-            // By simply omitting the following lines:
-            //process.StandardInput.WriteLine("exit");
-            //process.WaitForExit();
-            // from the end of this method, it becomes asynch in the sense that the method does
-            // not wait for the node process to complete before returning.
+            var processCommands = new List<string>();
 
-            // TODO: Load location of scraper script, name of file and log file from config file
-            var scraperFileHomeDir = @"C:\bARBie\bARBie\ScrapingScripts\OddsChecker";
-            var scraperFileName = "ocScrapeFootballFixtures.js";
-            var logFileName = "ocScrapeFootballFixtures.log";
+            foreach (var competition in competitions)
+            {
+                var cmd = BuildScraperCommandPromptString(scraperFileName, logFileName, competition);
 
-            process.Start();
-            process.StandardInput.WriteLine(@"cd " + scraperFileHomeDir);
+                processCommands.Add(cmd);
+            }
 
-            string countryIdString = countryId.HasValue ? countryId.Value.ToString() : "NULL";
+            ScraperRunner.CallNodeScripts(processCommands, scraperFileHomeDir);
+        }
 
-            var nodeInputString = "node " + scraperFileName + " " + countryIdString + " " + competitionId
-                                     + " " + competitionUrl + " >> " + logFileName;
+        private string BuildScraperCommandPromptString(string scraperFileName, string logFileName,
+                                                        OddsCheckerCompetitionUrls competition)
+        {
+            string countryIdString = competition.CountryID.HasValue ? competition.CountryID.Value.ToString() : "NULL";
 
-            process.StandardInput.WriteLine(nodeInputString);
+            var nodeInputString = "node " + scraperFileName + " " + countryIdString + " " + competition.ID
+                                     + " " + competition.Url + " >> " + logFileName;
 
-            process.StandardInput.WriteLine("exit");
-            process.WaitForExit();
-
+            return nodeInputString;
         }
 
     }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DAL;
+using Scrapers;
 
 namespace Scrapers.Football
 {
@@ -145,47 +146,7 @@ namespace Scrapers.Football
                 processCommands.Add(cmd);
             }
 
-            CallNodeScripts(processCommands);
-        }
-
-        /// <summary>
-        /// Pass each command to the node script to scrape odds from site
-        /// </summary>
-        /// <param name="processCommands"></param>
-        private void CallNodeScripts(List<string> processCommands)
-        {
-            var allProcesses = Task.Factory.StartNew(() =>
-            {
-                var processes = processCommands.Select(cmd =>
-                {
-                    ProcessStartInfo startInfo = new ProcessStartInfo
-                    {
-                        FileName = "cmd.exe",
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
-
-                    var process = new Process { StartInfo = startInfo };
-
-                    process.Start();
-                    process.StandardInput.WriteLine(@"cd " + scraperFileHomeDir);
-                    process.StandardInput.WriteLine(cmd);
-                    process.StandardInput.WriteLine("exit");
-                    process.WaitForExit();
-
-                    return process;
-                }).ToArray();
-
-                foreach (var process in processes)
-                {
-                    process.WaitForExit();
-                    process.Dispose();
-                }
-            });
-
-            allProcesses.Wait();
+            ScraperRunner.CallNodeScripts(processCommands, scraperFileHomeDir);
         }
 
         /// <summary>

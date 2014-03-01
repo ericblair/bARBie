@@ -48,6 +48,7 @@
     <Compile Include="Football\OCFixturesScraper.cs" />
     <Compile Include="Football\OCMatchWinnerOddsScraper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScraperRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

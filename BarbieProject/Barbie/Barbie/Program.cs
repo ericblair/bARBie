@@ -12,11 +12,11 @@ namespace Barbie
     {
         static void Main(string[] args)
         {
-            //var ocScraper = new OCFixturesScraper();
-            //ocScraper.ScrapeAllFixtures();
+            var ocScraper = new OCFixturesScraper();
+            ocScraper.ScrapeAllFixtures();
 
-            var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
-            ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
+            //var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
+            //ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
 
             //FootballArbFinder fab = new FootballArbFinder();
 

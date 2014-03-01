@@ -129,7 +129,11 @@ namespace Scrapers.Football
             ScrapeOdds(fixtures);
         }
 
-
+        /// <summary>
+        /// Create a command for each fixture passed in and then 
+        /// pass the commands to a helper to run them
+        /// </summary>
+        /// <param name="fixtures"></param>
         private void ScrapeOdds(List<OddsCheckerFootballFixtures> fixtures)
         {
             var processCommands = new List<string>();
@@ -144,6 +148,10 @@ namespace Scrapers.Football
             CallNodeScripts(processCommands);
         }
 
+        /// <summary>
+        /// Pass each command to the node script to scrape odds from site
+        /// </summary>
+        /// <param name="processCommands"></param>
         private void CallNodeScripts(List<string> processCommands)
         {
             var allProcesses = Task.Factory.StartNew(() =>
@@ -180,6 +188,13 @@ namespace Scrapers.Football
             allProcesses.Wait();
         }
 
+        /// <summary>
+        /// Build the command string that will be passed to the Process
+        /// </summary>
+        /// <param name="scraperFileName"></param>
+        /// <param name="logFileName"></param>
+        /// <param name="fixture"></param>
+        /// <returns></returns>
         private string BuildScraperCommandPromptString(string scraperFileName, string logFileName, 
                                                         OddsCheckerFootballFixtures fixture)
         {

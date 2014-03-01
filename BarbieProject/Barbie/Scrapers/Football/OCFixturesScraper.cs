@@ -22,9 +22,9 @@ namespace Scrapers.Football
             barbieEntity = new bARBieEntities();
         }
 
-        // Scrape all fixtures for country
-        // Scrape all fixtures for competetion
-
+        /// <summary>
+        /// Scrape the fixtures for all competitions 
+        /// </summary>
         public void ScrapeAllFixtures()
         {
             var competitions = barbieEntity.OddsCheckerCompetitionUrls.ToList();
@@ -32,6 +32,18 @@ namespace Scrapers.Football
             ScrapeFixtures(competitions);
         }
 
+        /// <summary>
+        /// Scrape the fixtures for specified competition
+        /// </summary>
+        /// <param name="competitionId">FootballCompetitions.ID</param>
+        public void ScrapeFixturesForCompetition(int competitionId)
+        {
+            var competitions = barbieEntity.OddsCheckerCompetitionUrls
+                                .Where(x => x.CompetitionID == competitionId)
+                                .ToList();
+
+            ScrapeFixtures(competitions);
+        }
 
         private void ScrapeFixtures(List<OddsCheckerCompetitionUrls> competitions)
         {

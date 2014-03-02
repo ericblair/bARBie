@@ -41,7 +41,6 @@ function ExtractFixtureMarketUrls(error, response, body) {
         });
 
         fixtureMarketUrls.forEach(function (fixtureMarketUrl) {
-
             CallFixtureMarketUrl(betFairBaseUrl + fixtureMarketUrl);
         });
     }
@@ -67,22 +66,17 @@ function ScrapeFixureDetails(error, response, body) {
 
         if (typeof matchWinnerMarketHref != 'undefined') {
 
+            var dateTimeString = $('.match-status > .status').eq(0).text();
+            var matchDateTime = convertDateTimeMinusYearToSqlFormat(dateTimeString);
+
+            if (matchDateTime == "INVALID") {
+                return;
+            }
+
             var matchWinnerMarketUrl = betFairBaseUrl + matchWinnerMarketHref;
 
             var homeTeam = $('.home-team').eq(0).text();
             var awayTeam = $('.away-team').eq(0).text();
-
-            // matchDateTime format: Tue 28 Jan 7:45PM
-            var dateTimeString = $('.match-status > .status').eq(0).text();
-            console.log("dateTimeString: " + dateTimeString);
-            var matchDateTime = convertDateTimeMinusYearToSqlFormat(dateTimeString);
-
-            console.log("countryId: " + countryId);
-            console.log("competitionId: " + competitionId);
-            console.log("matchDateTime: " + matchDateTime);
-            console.log("homeTeam: " + homeTeam);
-            console.log("awayTeam: " + awayTeam);
-            console.log("matchWinnerMarketUrl: " + matchWinnerMarketUrl);
 
             WriteFixtureToDatabase(countryId, competitionId, matchDateTime, homeTeam, awayTeam, matchWinnerMarketUrl);
         }
@@ -117,6 +111,12 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
                 if (err) {
                     console.log("WriteFixtureToDatabase: matchingFixtures: Error");
                     console.log(err);
+                    console.log('countryId: ' + countryId);
+                    console.log('competitionId: ' + competitionId);
+                    console.log('fixtureDateTime: ' + fixtureDateTime);
+                    console.log('homeTeam: ' + homeTeam);
+                    console.log('awayTeam: ' + awayTeam);
+                    console.log('fixtureOddsUrl: ' + fixtureOddsUrl);
                     return;
                 }
                 else {
@@ -141,6 +141,12 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
                             if (err) {
                                 console.log("WriteFixtureToDatabase: oddsInsertSql: Error");
                                 console.log(err);
+                                console.log('countryId: ' + countryId);
+                                console.log('competitionId: ' + competitionId);
+                                console.log('fixtureDateTime: ' + fixtureDateTime);
+                                console.log('homeTeam: ' + homeTeam);
+                                console.log('awayTeam: ' + awayTeam);
+                                console.log('fixtureOddsUrl: ' + fixtureOddsUrl);
                                 return;
                             }
                         });
@@ -191,74 +197,73 @@ function convertMonthNameToNumber(monthName) {
 }
 
 function convertDateTimeMinusYearToSqlFormat(matchDateTimeUnformatted) {
-    // Example string parsed from web site: Tue 28 Jan 7:45PM
-    // alt example: Starting in 2' 
+    try {
+        // Example string parsed from web site: Tue 28 Jan 7:45PM
+        
+        // If the string provided isn't in the expected form then return null
+        // This means that the script won't grab any games in progress but this
+        // isn't a concern.
+        if (matchDateTimeUnformatted.indexOf("Starting") != -1
+            || matchDateTimeUnformatted.indexOf("Elapsed") != -1
+            || matchDateTimeUnformatted.indexOf("HT") != -1) {
 
-    // if the string contains 'Starting' then just insert the current datetime
-    if (matchDateTimeUnformatted.indexOf("Starting") != -1) {
+            return "INVALID";
+        }
+            
+        var dayRaw = matchDateTimeUnformatted.split(' ')[1];
+        var dayInt = parseInt(dayRaw);
+        var day = ((dayInt < 10) ? '0' : '') + dayInt;
 
-        var matchDateTime = getCurrentDateTimeInSqlFormat();
-        return matchDateTime;
-    }
-        // if the string contains 'Elapsed' then just insert the current datetime
-    else if (matchDateTimeUnformatted.indexOf("Elapsed") != -1) {
-        var matchDateTime = getCurrentDateTimeInSqlFormat();
-        return matchDateTime;
-    }
-        // if the string contains 'HT' then just insert the current datetime
-    else if (matchDateTimeUnformatted.indexOf("HT") != -1) {
-        var matchDateTime = getCurrentDateTimeInSqlFormat();
-        return matchDateTime;
-    }
+        var monthRaw = matchDateTimeUnformatted.split(' ')[2];
+        var monthInt = convertMonthNameToNumber(monthRaw);
+        var month = ((monthInt < 10) ? '0' : '') + monthInt;
 
-    var dayRaw = matchDateTimeUnformatted.split(' ')[1];
-    var dayInt = parseInt(dayRaw);
-    var day = ((dayInt < 10) ? '0' : '') + dayInt;
-
-    var monthRaw = matchDateTimeUnformatted.split(' ')[2];
-    var monthInt = convertMonthNameToNumber(monthRaw);
-    var month = ((monthInt < 10) ? '0' : '') + monthInt;
-
-    // If current month is December and the dateTime string contains
-    // the word 'January' then increment the current year,
-    // otherwise just return the current year
-    var year;
-    var currentDate = new Date();
-    if (currentDate.getMonth() == 11) {
-        var x = matchDateTimeUnformatted.indexOf('January');
-        if (x > 0) {
-            year = currentDate.getFullYear() + 1;
+        // If current month is December and the dateTime string contains
+        // the word 'January' then increment the current year,
+        // otherwise just return the current year
+        var year;
+        var currentDate = new Date();
+        if (currentDate.getMonth() == 11) {
+            var x = matchDateTimeUnformatted.indexOf('January');
+            if (x > 0) {
+                year = currentDate.getFullYear() + 1;
+            } else {
+                year = currentDate.getFullYear();
+            }
         } else {
             year = currentDate.getFullYear();
         }
-    } else {
-        year = currentDate.getFullYear();
+
+        var hourRaw = matchDateTimeUnformatted.split(' ')[3].split(':')[0];
+        var hourInt = parseInt(hourRaw);
+
+        var minuteRaw = matchDateTimeUnformatted.split(' ')[3].split(':')[1];
+        if (typeof minuteRaw != 'undefined') {
+            var minutesInt = parseInt(minuteRaw);
+            var minutes = ((minutesInt < 10) ? '0' : '') + minutesInt;
+            var phaseOfDay = matchDateTimeUnformatted.split(' ')[3].split(':')[1].substring(2, 4);
+
+        } else {
+            var minutes = '00';
+            var phaseOfDay = matchDateTimeUnformatted.split(' ')[3].split(':')[0].substring(1, 3);
+        }
+
+        if (phaseOfDay == 'PM' && hourInt != 12) {
+            hourInt = hourInt + 12;
+        }
+        var hours = ((hourInt < 10) ? '0' : '') + hourInt;
+
+        var seconds = '00';
+
+        // '2014-12-20T14:25:10'
+        var matchDateTime = year + "-" + month + "-" + day + "T" + hours + ":" + minutes + ":" + seconds;
+        return matchDateTime;
+
+    } catch (err) {
+        console.log('ERROR in convertDateTimeMinusYearToSqlFormat');
+        console.log('matchDateTimeUnformatted: ' + matchDateTimeUnformatted);
+        console.log(err);
     }
-
-    var hourRaw = matchDateTimeUnformatted.split(' ')[3].split(':')[0];
-    var hourInt = parseInt(hourRaw);
-
-    var minuteRaw = matchDateTimeUnformatted.split(' ')[3].split(':')[1];
-    if (typeof minuteRaw != 'undefined') {
-        var minutesInt = parseInt(minuteRaw);
-        var minutes = ((minutesInt < 10) ? '0' : '') + minutesInt;
-        var phaseOfDay = matchDateTimeUnformatted.split(' ')[3].split(':')[1].substring(2, 4);
-
-    } else {
-        var minutes = '00';
-        var phaseOfDay = matchDateTimeUnformatted.split(' ')[3].split(':')[0].substring(1, 3);
-    }
-
-    if (phaseOfDay == 'PM' && hourInt != 12) {
-        hourInt = hourInt + 12;
-    }
-    var hours = ((hourInt < 10) ? '0' : '') + hourInt;
-
-    var seconds = '00';
-
-    // '2014-12-20T14:25:10'
-    var matchDateTime = year + "-" + month + "-" + day + "T" + hours + ":" + minutes + ":" + seconds;
-    return matchDateTime;
 }
 
 function convertMonthNameToNumber(monthAbrv) {

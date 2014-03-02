@@ -18,8 +18,11 @@ namespace Barbie
             //var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
             //ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
 
-            var bfFixturesScraper = new BFFixturesScraper();
-            bfFixturesScraper.ScrapeAllFixtures();
+            //var bfFixturesScraper = new BFFixturesScraper();
+            //bfFixturesScraper.ScrapeAllFixtures();
+
+            var bfMatchWinnerOddsScraper = new BFMatchWinnerOddsScraper();
+            bfMatchWinnerOddsScraper.ScrapeAllOdds();
 
             //FootballArbFinder fab = new FootballArbFinder();
 

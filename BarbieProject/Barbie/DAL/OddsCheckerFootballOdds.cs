@@ -15,10 +15,6 @@ namespace DAL
     public partial class OddsCheckerFootballOdds
     {
         public int ID { get; set; }
-        public System.DateTime MatchDateTime { get; set; }
-        public string Fixture { get; set; }
-        public string HomeTeam { get; set; }
-        public string AwayTeam { get; set; }
         public string Prediction { get; set; }
         public Nullable<decimal> Bet365 { get; set; }
         public Nullable<decimal> SkyBet { get; set; }
@@ -43,5 +39,12 @@ namespace DAL
         public Nullable<decimal> BetFair { get; set; }
         public Nullable<decimal> BetDaq { get; set; }
         public System.DateTime Updated { get; set; }
+        public int FixtureID { get; set; }
+        public Nullable<int> CountryID { get; set; }
+        public int CompetitionID { get; set; }
+    
+        public virtual Countries Countries { get; set; }
+        public virtual FootballCompetitions FootballCompetitions { get; set; }
+        public virtual OddsCheckerFootballFixtures OddsCheckerFootballFixtures { get; set; }
     }
 }

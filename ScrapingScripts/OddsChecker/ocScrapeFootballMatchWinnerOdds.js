@@ -21,15 +21,15 @@ function main() {
     CallMatchWinnerOddsPage(matchWinnerOddsUrl);
 }
 
-function CallMatchWinnerOddsPage(matchWinnerOddsUrl) {
+    function CallMatchWinnerOddsPage(matchWinnerOddsUrl) {
 
-    var matchWinnerOddsUrlOptions = {
-        url: matchWinnerOddsUrl,
-        headers: { 'User-Agent': 'Mozilla/5.0' }
-    };
+        var matchWinnerOddsUrlOptions = {
+            url: matchWinnerOddsUrl,
+            headers: { 'User-Agent': 'Mozilla/5.0' }
+        };
 
-    request(matchWinnerOddsUrlOptions, ExtractMatchWinnerOdds);
-}
+        request(matchWinnerOddsUrlOptions, ExtractMatchWinnerOdds);
+    }
 
 function ExtractMatchWinnerOdds(error, response, body) {
 

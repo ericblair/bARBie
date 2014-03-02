@@ -19,6 +19,9 @@ namespace DAL
             this.BetFairCompetitionUrls = new HashSet<BetFairCompetitionUrls>();
             this.OddsCheckerCompetitionUrls = new HashSet<OddsCheckerCompetitionUrls>();
             this.OddsCheckerFootballFixtures = new HashSet<OddsCheckerFootballFixtures>();
+            this.BetFairFootballFixtures = new HashSet<BetFairFootballFixtures>();
+            this.OddsCheckerFootballOdds = new HashSet<OddsCheckerFootballOdds>();
+            this.BetFairFootballOdds = new HashSet<BetFairFootballOdds>();
         }
     
         public int ID { get; set; }
@@ -27,5 +30,8 @@ namespace DAL
         public virtual ICollection<BetFairCompetitionUrls> BetFairCompetitionUrls { get; set; }
         public virtual ICollection<OddsCheckerCompetitionUrls> OddsCheckerCompetitionUrls { get; set; }
         public virtual ICollection<OddsCheckerFootballFixtures> OddsCheckerFootballFixtures { get; set; }
+        public virtual ICollection<BetFairFootballFixtures> BetFairFootballFixtures { get; set; }
+        public virtual ICollection<OddsCheckerFootballOdds> OddsCheckerFootballOdds { get; set; }
+        public virtual ICollection<BetFairFootballOdds> BetFairFootballOdds { get; set; }
     }
 }

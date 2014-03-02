@@ -62,7 +62,8 @@ function ScrapeFixureDetails(error, response, body) {
 
         $ = cheerio.load(body);
 
-        var matchWinnerMarketHref = $('.i13n-X-FullMarket').eq(0).attr('href');
+        // Trim '&exp=e' from the end of the url
+        var matchWinnerMarketHref = $('.i13n-X-FullMarket').eq(0).attr('href').slice(0, -6);
 
         if (typeof matchWinnerMarketHref != 'undefined') {
 
@@ -205,7 +206,8 @@ function convertDateTimeMinusYearToSqlFormat(matchDateTimeUnformatted) {
         // isn't a concern.
         if (matchDateTimeUnformatted.indexOf("Starting") != -1
             || matchDateTimeUnformatted.indexOf("Elapsed") != -1
-            || matchDateTimeUnformatted.indexOf("HT") != -1) {
+            || matchDateTimeUnformatted.indexOf("HT") != -1
+            || matchDateTimeUnformatted.indexOf("FT") != -1){
 
             return "INVALID";
         }

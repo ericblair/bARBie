@@ -12,11 +12,11 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class OddsCheckerFootballFixtures
+    public partial class BetFairFootballFixtures
     {
-        public OddsCheckerFootballFixtures()
+        public BetFairFootballFixtures()
         {
-            this.OddsCheckerFootballOdds = new HashSet<OddsCheckerFootballOdds>();
+            this.BetFairFootballOdds = new HashSet<BetFairFootballOdds>();
         }
     
         public int ID { get; set; }
@@ -27,8 +27,8 @@ namespace DAL
         public string AwayTeam { get; set; }
         public string MatchWinnerOddsUrl { get; set; }
     
-        public virtual Countries Countries { get; set; }
         public virtual FootballCompetitions FootballCompetitions { get; set; }
-        public virtual ICollection<OddsCheckerFootballOdds> OddsCheckerFootballOdds { get; set; }
+        public virtual Countries Countries { get; set; }
+        public virtual ICollection<BetFairFootballOdds> BetFairFootballOdds { get; set; }
     }
 }

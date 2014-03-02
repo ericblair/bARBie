@@ -15,10 +15,6 @@ namespace DAL
     public partial class BetFairFootballOdds
     {
         public int ID { get; set; }
-        public System.DateTime MatchDateTime { get; set; }
-        public string Fixture { get; set; }
-        public string HomeTeam { get; set; }
-        public string AwayTeam { get; set; }
         public string Prediction { get; set; }
         public Nullable<decimal> BackLow { get; set; }
         public Nullable<decimal> BackLowCash { get; set; }
@@ -33,5 +29,12 @@ namespace DAL
         public Nullable<decimal> LayHigh { get; set; }
         public Nullable<decimal> LayHighCash { get; set; }
         public System.DateTime Updated { get; set; }
+        public int FixtureID { get; set; }
+        public Nullable<int> CountryID { get; set; }
+        public int CompetitionID { get; set; }
+    
+        public virtual BetFairFootballFixtures BetFairFootballFixtures { get; set; }
+        public virtual FootballCompetitions FootballCompetitions { get; set; }
+        public virtual Countries Countries { get; set; }
     }
 }

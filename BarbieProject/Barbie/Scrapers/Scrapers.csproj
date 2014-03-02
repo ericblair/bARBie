@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Football\BFFixturesScraper.cs" />
+    <Compile Include="Football\BFMatchWinnerOddsScraper.cs" />
     <Compile Include="Football\OCFixturesScraper.cs" />
     <Compile Include="Football\OCMatchWinnerOddsScraper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

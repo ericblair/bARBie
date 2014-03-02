@@ -162,8 +162,8 @@ namespace Scrapers.Football
             string countryIdString = fixture.CountryID.HasValue ? fixture.CountryID.Value.ToString() : "NULL";
 
             var nodeInputString = "node " + scraperFileName + " " + fixture.ID
-                                    + " " + countryIdString + " " + fixture.CompetitionID + " " + fixture.HomeTeam
-                                    + " " + fixture.AwayTeam + " " + fixture.MatchWinnerOddsUrl + " >> " + logFileName;
+                                    + " " + countryIdString + " " + fixture.CompetitionID + @" """ + fixture.HomeTeam
+                                    + @""" """ + fixture.AwayTeam + @""" " + fixture.MatchWinnerOddsUrl + " >> " + logFileName;
 
             return nodeInputString;
         }

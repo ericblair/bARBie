@@ -64,6 +64,9 @@
     <Compile Include="BetFairCompetitionUrls.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="BetFairFootballFixtures.cs">
+      <DependentUpon>BarbieModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="BetFairFootballOdds.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>

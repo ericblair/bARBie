@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="75a4360e32624381b49fd7f9b6c836bd" Name="Diagram1">
+      <Diagram DiagramId="75a4360e32624381b49fd7f9b6c836bd" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="bARBieModel.BetFairCompetitionUrls" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bARBieModel.BetFairFootballOdds" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="bARBieModel.Bookie" Width="1.5" PointX="2.75" PointY="7" IsExpanded="true" />
@@ -21,6 +21,15 @@
         <EntityTypeShape EntityType="bARBieModel.OddsCheckerFootballFixtures" Width="1.5" PointX="5.8162945349776631" PointY="10.275666718499579" />
         <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballFixtures_CountryID" />
         <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballFixtures_CompetitionID" />
+        <EntityTypeShape EntityType="bARBieModel.BetFairFootballFixtures" Width="1.5" PointX="2.4133700385751995" PointY="7.03438178032375" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairFootballFixtures_CompetitionID" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairFootballFixtures_CountryID" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballOdds_CountryID" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballOdds_CompetitionID" />
+        <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballOdds_FixtureID" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairFootballOdds_FixtureID" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairFootballOdds_CompetitionID" />
+        <AssociationConnector Association="bARBieModel.FK_BetFairFootballOdds_CountryID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

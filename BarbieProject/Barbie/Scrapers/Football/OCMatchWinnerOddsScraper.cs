@@ -12,7 +12,7 @@ using Scrapers;
 
 namespace Scrapers.Football
 {
-    public class OCMatchWinnerOddsScraper
+    public class OCMatchWinnerOddsScraper : IMatchWinnerOddsScraper
     {
         bARBieEntities barbieEntity;
 

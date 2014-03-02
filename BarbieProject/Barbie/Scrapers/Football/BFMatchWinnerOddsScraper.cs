@@ -12,7 +12,7 @@ using Scrapers;
 
 namespace Scrapers.Football
 {
-    public class BFMatchWinnerOddsScraper
+    public class BFMatchWinnerOddsScraper : IMatchWinnerOddsScraper
     {
         bARBieEntities barbieEntity;
 
@@ -32,6 +32,99 @@ namespace Scrapers.Football
         {
             var fixtures = barbieEntity.BetFairFootballFixtures
                             .OrderBy(x => x.MatchDateTime)
+                            .ToList();
+
+            ScrapeOdds(fixtures);
+        }
+
+        /// <summary>
+        /// Scrape odds for all fixtures which have not already been played
+        /// </summary>
+        public void ScrapeOddsForUnexpiredFixtures()
+        {
+            int matchExpiryLimitMins;
+
+            if (!Int32.TryParse(ConfigurationManager.AppSettings["MatchExpiryLimitMins"], out matchExpiryLimitMins))
+            {
+                // log error 
+                return;
+            }
+
+            var matchExpiryDateTime = DateTime.Now.AddMinutes(-matchExpiryLimitMins);
+
+            var fixtures = barbieEntity.BetFairFootballFixtures
+                            .Where(x => x.MatchDateTime >= matchExpiryDateTime)
+                            .OrderBy(x => x.MatchDateTime)
+                            .ToList();
+
+            ScrapeOdds(fixtures);
+        }
+
+        /// <summary>
+        /// Scrape all odds being played before the datetime provided
+        /// </summary>
+        /// <param name="limit"></param>
+        public void ScrapeOddsBefore(DateTime limit)
+        {
+            var fixtures = barbieEntity.BetFairFootballFixtures
+                            .Where(x => x.MatchDateTime <= limit)
+                            .OrderBy(x => x.MatchDateTime)
+                            .ToList();
+
+            ScrapeOdds(fixtures);
+        }
+
+        /// <summary>
+        /// Scrape all odds being played after the datetime provided
+        /// </summary>
+        /// <param name="limit"></param>
+        public void ScrapeOddsAfter(DateTime limit)
+        {
+            var fixtures = barbieEntity.BetFairFootballFixtures
+                            .Where(x => x.MatchDateTime >= limit)
+                            .OrderBy(x => x.MatchDateTime)
+                            .ToList();
+
+            ScrapeOdds(fixtures);
+        }
+
+        /// <summary>
+        /// Scrape all odds being played between the datetimes provided
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        public void ScrapeOddsBetween(DateTime start, DateTime end)
+        {
+            var fixtures = barbieEntity.BetFairFootballFixtures
+                            .Where(x => x.MatchDateTime >= start)
+                            .Where(x => x.MatchDateTime <= end)
+                            .OrderBy(x => x.MatchDateTime)
+                            .ToList();
+
+            ScrapeOdds(fixtures);
+        }
+
+        /// <summary>
+        /// Scrape odds for fixture matching ID provided
+        /// </summary>
+        /// <param name="fixtureId">BetFairFootballFixtures.ID</param>
+        public void ScrapeOddsForFixture(int fixtureId)
+        {
+            var fixtures = barbieEntity.BetFairFootballFixtures
+                            .Where(x => x.ID == fixtureId)
+                            .ToList();
+
+            ScrapeOdds(fixtures);
+        }
+
+        /// <summary>
+        /// Scrape odds for fixtures in the competition matching the ID provided
+        /// </summary>
+        /// <param name="competitionId">FootballCompetitions.ID</param>
+        public void ScrapeOddsForCompetition(int competitionId)
+        {
+            var fixtures = barbieEntity.BetFairFootballFixtures
+                            .Where(x => x.CompetitionID == competitionId)
                             .ToList();
 
             ScrapeOdds(fixtures);

@@ -13,7 +13,7 @@
           <EntitySet Name="Countries" EntityType="bARBieModel.Store.Countries" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FootballArbs" EntityType="bARBieModel.Store.FootballArbs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FootballCompetitions" EntityType="bARBieModel.Store.FootballCompetitions" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FootballMatches" EntityType="bARBieModel.Store.FootballMatches" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FootballFixturesMap" EntityType="bARBieModel.Store.FootballFixturesMap" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OddsCheckerCompetitionUrls" EntityType="bARBieModel.Store.OddsCheckerCompetitionUrls" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OddsCheckerFootballFixtures" EntityType="bARBieModel.Store.OddsCheckerFootballFixtures" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OddsCheckerFootballOdds" EntityType="bARBieModel.Store.OddsCheckerFootballOdds" store:Type="Tables" Schema="dbo" />
@@ -44,6 +44,14 @@
           <AssociationSet Name="FK_BetFairFootballOdds_FixtureID" Association="bARBieModel.Store.FK_BetFairFootballOdds_FixtureID">
             <End Role="BetFairFootballFixtures" EntitySet="BetFairFootballFixtures" />
             <End Role="BetFairFootballOdds" EntitySet="BetFairFootballOdds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FootballFixturesMap_BetFairFixtureID" Association="bARBieModel.Store.FK_FootballFixturesMap_BetFairFixtureID">
+            <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FootballFixturesMap_OddsCheckerFixtureID" Association="bARBieModel.Store.FK_FootballFixturesMap_OddsCheckerFixtureID">
+            <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
           </AssociationSet>
           <AssociationSet Name="FK_OddsCheckerCompetitionUrls_CompetitionID" Association="bARBieModel.Store.FK_OddsCheckerCompetitionUrls_CompetitionID">
             <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
@@ -156,13 +164,13 @@
           <Property Name="CountryID" Type="int" />
           <Property Name="Competition" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
-        <EntityType Name="FootballMatches">
+        <EntityType Name="FootballFixturesMap">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Fixture" Type="nvarchar" Nullable="false" MaxLength="200" />
-          <Property Name="MatchDateTime" Type="datetime" Nullable="false" />
+          <Property Name="BetFairFixtureID" Type="int" Nullable="false" />
+          <Property Name="OddsCheckerFixtureID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="OddsCheckerCompetitionUrls">
           <Key>
@@ -302,6 +310,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FootballFixturesMap_BetFairFixtureID">
+          <End Role="FootballCompetitions" Type="bARBieModel.Store.FootballCompetitions" Multiplicity="1" />
+          <End Role="FootballFixturesMap" Type="bARBieModel.Store.FootballFixturesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FootballCompetitions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FootballFixturesMap">
+              <PropertyRef Name="BetFairFixtureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FootballFixturesMap_OddsCheckerFixtureID">
+          <End Role="FootballCompetitions" Type="bARBieModel.Store.FootballCompetitions" Multiplicity="1" />
+          <End Role="FootballFixturesMap" Type="bARBieModel.Store.FootballFixturesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FootballCompetitions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FootballFixturesMap">
+              <PropertyRef Name="OddsCheckerFixtureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OddsCheckerCompetitionUrls_CompetitionID">
           <End Role="FootballCompetitions" Type="bARBieModel.Store.FootballCompetitions" Multiplicity="1" />
           <End Role="OddsCheckerCompetitionUrls" Type="bARBieModel.Store.OddsCheckerCompetitionUrls" Multiplicity="*" />
@@ -397,7 +429,6 @@
           <EntitySet Name="Countries" EntityType="bARBieModel.Countries" />
           <EntitySet Name="FootballArbs" EntityType="bARBieModel.FootballArbs" />
           <EntitySet Name="FootballCompetitions" EntityType="bARBieModel.FootballCompetitions" />
-          <EntitySet Name="FootballMatches" EntityType="bARBieModel.FootballMatches" />
           <EntitySet Name="OddsCheckerCompetitionUrls" EntityType="bARBieModel.OddsCheckerCompetitionUrls" />
           <EntitySet Name="OddsCheckerFootballOdds" EntityType="bARBieModel.OddsCheckerFootballOdds" />
           <AssociationSet Name="FK_BetFairCompetitionUrls_CompetitionID" Association="bARBieModel.FK_BetFairCompetitionUrls_CompetitionID">
@@ -457,6 +488,15 @@
           <AssociationSet Name="FK_BetFairFootballOdds_CountryID" Association="bARBieModel.FK_BetFairFootballOdds_CountryID">
             <End Role="Countries" EntitySet="Countries" />
             <End Role="BetFairFootballOdds" EntitySet="BetFairFootballOdds" />
+          </AssociationSet>
+          <EntitySet Name="FootballFixturesMap" EntityType="bARBieModel.FootballFixturesMap" />
+          <AssociationSet Name="FK_FootballFixturesMap_BetFairFixtureID" Association="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID">
+            <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FootballFixturesMap_OddsCheckerFixtureID" Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID">
+            <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BetFairCompetitionUrls">
@@ -545,14 +585,8 @@
           <NavigationProperty Name="BetFairFootballFixtures" Relationship="bARBieModel.FK_BetFairFootballFixtures_CompetitionID" FromRole="FootballCompetitions" ToRole="BetFairFootballFixtures" />
           <NavigationProperty Name="OddsCheckerFootballOdds" Relationship="bARBieModel.FK_OddsCheckerFootballOdds_CompetitionID" FromRole="FootballCompetitions" ToRole="OddsCheckerFootballOdds" />
           <NavigationProperty Name="BetFairFootballOdds" Relationship="bARBieModel.FK_BetFairFootballOdds_CompetitionID" FromRole="FootballCompetitions" ToRole="BetFairFootballOdds" />
-        </EntityType>
-        <EntityType Name="FootballMatches">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Fixture" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="MatchDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FootballFixturesMap" Relationship="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID" FromRole="FootballCompetitions" ToRole="FootballFixturesMap" />
+          <NavigationProperty Name="FootballFixturesMap1" Relationship="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID" FromRole="FootballCompetitions" ToRole="FootballFixturesMap" />
         </EntityType>
         <EntityType Name="OddsCheckerCompetitionUrls">
           <Key>
@@ -799,6 +833,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FootballFixturesMap">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="BetFairFixtureID" Nullable="false" />
+          <Property Type="Int32" Name="OddsCheckerFixtureID" Nullable="false" />
+          <NavigationProperty Name="FootballCompetitions" Relationship="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID" FromRole="FootballFixturesMap" ToRole="FootballCompetitions" />
+          <NavigationProperty Name="FootballCompetitions1" Relationship="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID" FromRole="FootballFixturesMap" ToRole="FootballCompetitions" />
+        </EntityType>
+        <Association Name="FK_FootballFixturesMap_BetFairFixtureID">
+          <End Type="bARBieModel.FootballCompetitions" Role="FootballCompetitions" Multiplicity="1" />
+          <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FootballCompetitions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FootballFixturesMap">
+              <PropertyRef Name="BetFairFixtureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FootballFixturesMap_OddsCheckerFixtureID">
+          <End Type="bARBieModel.FootballCompetitions" Role="FootballCompetitions" Multiplicity="1" />
+          <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FootballCompetitions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FootballFixturesMap">
+              <PropertyRef Name="OddsCheckerFixtureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -881,15 +949,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FootballMatches">
-            <EntityTypeMapping TypeName="bARBieModel.FootballMatches">
-              <MappingFragment StoreEntitySet="FootballMatches">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Fixture" ColumnName="Fixture" />
-                <ScalarProperty Name="MatchDateTime" ColumnName="MatchDateTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OddsCheckerCompetitionUrls">
             <EntityTypeMapping TypeName="bARBieModel.OddsCheckerCompetitionUrls">
               <MappingFragment StoreEntitySet="OddsCheckerCompetitionUrls">
@@ -956,6 +1015,15 @@
                 <ScalarProperty Name="MatchDateTime" ColumnName="MatchDateTime" />
                 <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
                 <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FootballFixturesMap">
+            <EntityTypeMapping TypeName="bARBieModel.FootballFixturesMap">
+              <MappingFragment StoreEntitySet="FootballFixturesMap">
+                <ScalarProperty Name="OddsCheckerFixtureID" ColumnName="OddsCheckerFixtureID" />
+                <ScalarProperty Name="BetFairFixtureID" ColumnName="BetFairFixtureID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

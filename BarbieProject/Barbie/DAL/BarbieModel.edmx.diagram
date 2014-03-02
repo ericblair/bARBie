@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="bARBieModel.Countries" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="bARBieModel.FootballArbs" Width="1.5" PointX="4.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="bARBieModel.FootballCompetitions" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="bARBieModel.FootballMatches" Width="1.5" PointX="6.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="bARBieModel.OddsCheckerCompetitionUrls" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="bARBieModel.OddsCheckerFootballOdds" Width="1.5" PointX="8.75" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="bARBieModel.FK_BetFairCompetitionUrls_CompetitionID" ManuallyRouted="false" />
@@ -30,6 +29,9 @@
         <AssociationConnector Association="bARBieModel.FK_BetFairFootballOdds_FixtureID" />
         <AssociationConnector Association="bARBieModel.FK_BetFairFootballOdds_CompetitionID" />
         <AssociationConnector Association="bARBieModel.FK_BetFairFootballOdds_CountryID" />
+        <EntityTypeShape EntityType="bARBieModel.FootballFixturesMap" Width="1.5" PointX="6.2095295275605888" PointY="5.7544093307826714" />
+        <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID" />
+        <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

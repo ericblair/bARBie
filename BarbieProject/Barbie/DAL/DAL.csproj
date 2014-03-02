@@ -82,7 +82,7 @@
     <Compile Include="FootballCompetitions.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="FootballMatches.cs">
+    <Compile Include="FootballFixturesMap.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
     <Compile Include="OddsCheckerCompetitionUrls.cs">

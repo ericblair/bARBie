@@ -12,10 +12,13 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class FootballMatches
+    public partial class FootballFixturesMap
     {
         public int ID { get; set; }
-        public string Fixture { get; set; }
-        public System.DateTime MatchDateTime { get; set; }
+        public int BetFairFixtureID { get; set; }
+        public int OddsCheckerFixtureID { get; set; }
+    
+        public virtual FootballCompetitions FootballCompetitions { get; set; }
+        public virtual FootballCompetitions FootballCompetitions1 { get; set; }
     }
 }

@@ -48,64 +48,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BarbieFootball.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BarbieFootball.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BarbieFootball.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BarbieFootball.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BarbieFootball.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BarbieFootball.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="BetFairFootballOdd.cs">
-      <DependentUpon>BarbieFootball.tt</DependentUpon>
-    </Compile>
     <Compile Include="BetFairMatchOdds.cs" />
-    <Compile Include="FootballArb.cs">
-      <DependentUpon>BarbieFootball.tt</DependentUpon>
-    </Compile>
+    <Compile Include="FixtureMappers\MatchWinner_BF_OC.cs" />
     <Compile Include="FootballArbFinder.cs" />
-    <Compile Include="FootballMatch.cs">
-      <DependentUpon>BarbieFootball.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OddsCheckerFootballOdd.cs">
-      <DependentUpon>BarbieFootball.tt</DependentUpon>
-    </Compile>
     <Compile Include="OddsDataCollection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="BarbieFootball.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BarbieFootball.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="BarbieFootball.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BarbieFootball.edmx</DependentUpon>
-      <LastGenOutput>BarbieFootball.Context.cs</LastGenOutput>
-    </None>
-    <None Include="BarbieFootball.edmx.diagram">
-      <DependentUpon>BarbieFootball.edmx</DependentUpon>
-    </None>
-    <None Include="BarbieFootball.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BarbieFootball.edmx</DependentUpon>
-      <LastGenOutput>BarbieFootball.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{e379f885-9963-435d-9c28-a4f6edd2ffb5}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Scrapers\Scrapers.csproj">
       <Project>{f44a77c8-5018-4a42-acec-f868ae091728}</Project>
       <Name>Scrapers</Name>

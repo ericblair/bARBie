@@ -18,7 +18,7 @@ namespace DAL
         public int BetFairFixtureID { get; set; }
         public int OddsCheckerFixtureID { get; set; }
     
-        public virtual FootballCompetitions FootballCompetitions { get; set; }
-        public virtual FootballCompetitions FootballCompetitions1 { get; set; }
+        public virtual BetFairFootballFixtures BetFairFootballFixtures { get; set; }
+        public virtual OddsCheckerFootballFixtures OddsCheckerFootballFixtures { get; set; }
     }
 }

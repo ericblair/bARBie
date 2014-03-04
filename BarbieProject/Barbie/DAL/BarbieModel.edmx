@@ -46,11 +46,11 @@
             <End Role="BetFairFootballOdds" EntitySet="BetFairFootballOdds" />
           </AssociationSet>
           <AssociationSet Name="FK_FootballFixturesMap_BetFairFixtureID" Association="bARBieModel.Store.FK_FootballFixturesMap_BetFairFixtureID">
-            <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
+            <End Role="BetFairFootballFixtures" EntitySet="BetFairFootballFixtures" />
             <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
           </AssociationSet>
           <AssociationSet Name="FK_FootballFixturesMap_OddsCheckerFixtureID" Association="bARBieModel.Store.FK_FootballFixturesMap_OddsCheckerFixtureID">
-            <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
+            <End Role="OddsCheckerFootballFixtures" EntitySet="OddsCheckerFootballFixtures" />
             <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
           </AssociationSet>
           <AssociationSet Name="FK_OddsCheckerCompetitionUrls_CompetitionID" Association="bARBieModel.Store.FK_OddsCheckerCompetitionUrls_CompetitionID">
@@ -311,10 +311,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FootballFixturesMap_BetFairFixtureID">
-          <End Role="FootballCompetitions" Type="bARBieModel.Store.FootballCompetitions" Multiplicity="1" />
+          <End Role="BetFairFootballFixtures" Type="bARBieModel.Store.BetFairFootballFixtures" Multiplicity="1" />
           <End Role="FootballFixturesMap" Type="bARBieModel.Store.FootballFixturesMap" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="FootballCompetitions">
+            <Principal Role="BetFairFootballFixtures">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="FootballFixturesMap">
@@ -323,10 +323,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FootballFixturesMap_OddsCheckerFixtureID">
-          <End Role="FootballCompetitions" Type="bARBieModel.Store.FootballCompetitions" Multiplicity="1" />
+          <End Role="OddsCheckerFootballFixtures" Type="bARBieModel.Store.OddsCheckerFootballFixtures" Multiplicity="1" />
           <End Role="FootballFixturesMap" Type="bARBieModel.Store.FootballFixturesMap" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="FootballCompetitions">
+            <Principal Role="OddsCheckerFootballFixtures">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="FootballFixturesMap">
@@ -496,6 +496,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_FootballFixturesMap_OddsCheckerFixtureID" Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID">
             <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FootballFixturesMap_BetFairFixtureID1" Association="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID1">
+            <End Role="BetFairFootballFixtures" EntitySet="BetFairFootballFixtures" />
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FootballFixturesMap_OddsCheckerFixtureID1" Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID1">
+            <End Role="OddsCheckerFootballFixtures" EntitySet="OddsCheckerFootballFixtures" />
             <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
           </AssociationSet>
         </EntityContainer>
@@ -697,6 +705,7 @@
           <NavigationProperty Name="Countries" Relationship="bARBieModel.FK_OddsCheckerFootballFixtures_CountryID" FromRole="OddsCheckerFootballFixtures" ToRole="Countries" />
           <NavigationProperty Name="FootballCompetitions" Relationship="bARBieModel.FK_OddsCheckerFootballFixtures_CompetitionID" FromRole="OddsCheckerFootballFixtures" ToRole="FootballCompetitions" />
           <NavigationProperty Name="OddsCheckerFootballOdds" Relationship="bARBieModel.FK_OddsCheckerFootballOdds_FixtureID" FromRole="OddsCheckerFootballFixtures" ToRole="OddsCheckerFootballOdds" />
+          <NavigationProperty Name="FootballFixturesMap" Relationship="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID1" FromRole="OddsCheckerFootballFixtures" ToRole="FootballFixturesMap" />
         </EntityType>
         <Association Name="FK_OddsCheckerFootballFixtures_CountryID">
           <End Type="bARBieModel.Countries" Role="Countries" Multiplicity="0..1" />
@@ -736,6 +745,7 @@
           <NavigationProperty Name="FootballCompetitions" Relationship="bARBieModel.FK_BetFairFootballFixtures_CompetitionID" FromRole="BetFairFootballFixtures" ToRole="FootballCompetitions" />
           <NavigationProperty Name="Countries" Relationship="bARBieModel.FK_BetFairFootballFixtures_CountryID" FromRole="BetFairFootballFixtures" ToRole="Countries" />
           <NavigationProperty Name="BetFairFootballOdds" Relationship="bARBieModel.FK_BetFairFootballOdds_FixtureID" FromRole="BetFairFootballFixtures" ToRole="BetFairFootballOdds" />
+          <NavigationProperty Name="FootballFixturesMap" Relationship="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID1" FromRole="BetFairFootballFixtures" ToRole="FootballFixturesMap" />
         </EntityType>
         <Association Name="FK_BetFairFootballFixtures_CompetitionID">
           <End Type="bARBieModel.FootballCompetitions" Role="FootballCompetitions" Multiplicity="1" />
@@ -840,8 +850,8 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="BetFairFixtureID" Nullable="false" />
           <Property Type="Int32" Name="OddsCheckerFixtureID" Nullable="false" />
-          <NavigationProperty Name="FootballCompetitions" Relationship="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID" FromRole="FootballFixturesMap" ToRole="FootballCompetitions" />
-          <NavigationProperty Name="FootballCompetitions1" Relationship="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID" FromRole="FootballFixturesMap" ToRole="FootballCompetitions" />
+          <NavigationProperty Name="BetFairFootballFixtures" Relationship="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID1" FromRole="FootballFixturesMap" ToRole="BetFairFootballFixtures" />
+          <NavigationProperty Name="OddsCheckerFootballFixtures" Relationship="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID1" FromRole="FootballFixturesMap" ToRole="OddsCheckerFootballFixtures" />
         </EntityType>
         <Association Name="FK_FootballFixturesMap_BetFairFixtureID">
           <End Type="bARBieModel.FootballCompetitions" Role="FootballCompetitions" Multiplicity="1" />
@@ -860,6 +870,30 @@
           <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FootballCompetitions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FootballFixturesMap">
+              <PropertyRef Name="OddsCheckerFixtureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FootballFixturesMap_BetFairFixtureID1">
+          <End Type="bARBieModel.BetFairFootballFixtures" Role="BetFairFootballFixtures" Multiplicity="1" />
+          <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BetFairFootballFixtures">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FootballFixturesMap">
+              <PropertyRef Name="BetFairFixtureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FootballFixturesMap_OddsCheckerFixtureID1">
+          <End Type="bARBieModel.OddsCheckerFootballFixtures" Role="OddsCheckerFootballFixtures" Multiplicity="1" />
+          <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OddsCheckerFootballFixtures">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="FootballFixturesMap">

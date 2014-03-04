@@ -17,6 +17,7 @@ namespace DAL
         public BetFairFootballFixtures()
         {
             this.BetFairFootballOdds = new HashSet<BetFairFootballOdds>();
+            this.FootballFixturesMap = new HashSet<FootballFixturesMap>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,6 @@ namespace DAL
         public virtual FootballCompetitions FootballCompetitions { get; set; }
         public virtual Countries Countries { get; set; }
         public virtual ICollection<BetFairFootballOdds> BetFairFootballOdds { get; set; }
+        public virtual ICollection<FootballFixturesMap> FootballFixturesMap { get; set; }
     }
 }

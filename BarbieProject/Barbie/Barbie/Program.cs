@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Scrapers.Football;
+using Barbie.FixtureMappers;
 
 namespace Barbie
 {
@@ -21,8 +22,8 @@ namespace Barbie
             //var bfFixturesScraper = new BFFixturesScraper();
             //bfFixturesScraper.ScrapeAllFixtures();
 
-            var bfMatchWinnerOddsScraper = new BFMatchWinnerOddsScraper();
-            bfMatchWinnerOddsScraper.ScrapeAllOdds();
+            //var bfMatchWinnerOddsScraper = new BFMatchWinnerOddsScraper();
+            //bfMatchWinnerOddsScraper.ScrapeAllOdds();
 
             //FootballArbFinder fab = new FootballArbFinder();
 
@@ -36,6 +37,9 @@ namespace Barbie
 
             //Console.WriteLine(time);
             //Console.ReadLine();
+
+            var mapper = new MatchWinner_BF_OC();
+            mapper.RunMapper();
         }
     }
 }

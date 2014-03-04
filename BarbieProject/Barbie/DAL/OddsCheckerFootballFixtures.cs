@@ -17,6 +17,7 @@ namespace DAL
         public OddsCheckerFootballFixtures()
         {
             this.OddsCheckerFootballOdds = new HashSet<OddsCheckerFootballOdds>();
+            this.FootballFixturesMap = new HashSet<FootballFixturesMap>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,6 @@ namespace DAL
         public virtual Countries Countries { get; set; }
         public virtual FootballCompetitions FootballCompetitions { get; set; }
         public virtual ICollection<OddsCheckerFootballOdds> OddsCheckerFootballOdds { get; set; }
+        public virtual ICollection<FootballFixturesMap> FootballFixturesMap { get; set; }
     }
 }

@@ -32,6 +32,8 @@
         <EntityTypeShape EntityType="bARBieModel.FootballFixturesMap" Width="1.5" PointX="6.2095295275605888" PointY="5.7544093307826714" />
         <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID" />
         <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID" />
+        <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_BetFairFixtureID1" />
+        <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

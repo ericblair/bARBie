@@ -76,8 +76,8 @@ function ScrapeFixureDetails(error, response, body) {
 
             var matchWinnerMarketUrl = betFairBaseUrl + matchWinnerMarketHref;
 
-            var homeTeam = $('.home-team').eq(0).text();
-            var awayTeam = $('.away-team').eq(0).text();
+            var homeTeam = $('.home-team').eq(0).text().replace(/\n/g, "").replace(/\s+/g, "");
+            var awayTeam = $('.away-team').eq(0).text().replace(/\n/g, "").replace(/\s+/g, "");
 
             WriteFixtureToDatabase(countryId, competitionId, matchDateTime, homeTeam, awayTeam, matchWinnerMarketUrl);
         }

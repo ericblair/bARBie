@@ -15,8 +15,8 @@ namespace Barbie.FixtureMappers
     {
         bARBieEntities barbieEntity;
 
-        List<BetFairFootballFixtures> unmatchedBetFairFixtures;
-        List<OddsCheckerFootballFixtures> unmatchedOddsCheckerFixtures;
+        List<BetFairFootballFixtures> unmappedBetFairFixtures;
+        List<OddsCheckerFootballFixtures> unmappedOddsCheckerFixtures;
 
         public MatchWinner_BF_OC()
         {
@@ -25,76 +25,109 @@ namespace Barbie.FixtureMappers
 
         public void RunMapper()
         {
-            unmatchedBetFairFixtures = GetAllUnmappedBetFairFixtures();
-            unmatchedOddsCheckerFixtures = GetAllUnmappedOddsCheckerFixtures();
+            // TODO: Externalise var to config file
+            var maxLevenshteinValue = 15;
 
-            var exactMatches = GetExactMatches();
-            UpdateUnmappedFixtures(exactMatches);
-            
+            for (var i = 0; i <= maxLevenshteinValue; i++)
+            {
+                unmappedBetFairFixtures = GetAllUnmappedBetFairFixtures();
+                unmappedOddsCheckerFixtures = GetAllUnmappedOddsCheckerFixtures();
 
+                var mappedFixtures = 
+                              (from bf in unmappedBetFairFixtures
+                              join oc in unmappedOddsCheckerFixtures
+                              on bf.CompetitionID equals oc.CompetitionID
+                              where bf.MatchDateTime == oc.MatchDateTime
+                              && levenshtein(bf.HomeTeam, oc.HomeTeam) <= i
+                              && levenshtein(bf.AwayTeam, oc.AwayTeam) <= i
+                              select new FootballFixturesMap
+                              {
+                                  BetFairFixtureID = bf.ID,
+                                  OddsCheckerFixtureID = oc.ID,
+                              }).ToList();
+
+                foreach (var fixture in mappedFixtures)
+                {
+                    barbieEntity.FootballFixturesMap.Add(fixture);
+                }
+
+                barbieEntity.SaveChanges();
+            }
+ 
         }
 
         private List<BetFairFootballFixtures> GetAllUnmappedBetFairFixtures()
         {
             var unmappedFixtures = (from bf in barbieEntity.BetFairFootballFixtures
                                     where !(from map in barbieEntity.FootballFixturesMap
-                                            select map.ID)
+                                            select map.BetFairFixtureID)
                                             .Contains(bf.ID)
                                     select bf).ToList();
 
             return unmappedFixtures;
-                
         }
 
         private List<OddsCheckerFootballFixtures> GetAllUnmappedOddsCheckerFixtures()
         {
             var unmappedFixtures = (from oc in barbieEntity.OddsCheckerFootballFixtures
                                     where !(from map in barbieEntity.FootballFixturesMap
-                                            select map.ID)
+                                            select map.OddsCheckerFixtureID)
                                             .Contains(oc.ID)
                                     select oc).ToList();
 
             return unmappedFixtures;
-
         }
 
-        /// <summary>
-        /// Returns the IDs of any fixtures where the MatchDateTime, HomeTeam and AwayTeam
-        /// values in both BF and OC tables match exactly
-        /// </summary>
-        /// <returns></returns>
-        private List<FootballFixturesMap> GetExactMatches()
+        private Int32 levenshtein(String a, String b)
         {
-            var exactMatches = (from bf in barbieEntity.BetFairFootballFixtures
-                                join oc in barbieEntity.OddsCheckerFootballFixtures
-                                on bf.MatchDateTime equals oc.MatchDateTime
-                                where bf.CompetitionID == oc.CompetitionID
-                                && bf.HomeTeam == oc.HomeTeam
-                                && bf.AwayTeam == oc.AwayTeam
-                                select new FootballFixturesMap
-                                {
-                                    BetFairFixtureID = bf.ID,
-                                    OddsCheckerFixtureID = oc.ID
-                                }).ToList();
+            if (string.IsNullOrEmpty(a))
+            {
+                if (!string.IsNullOrEmpty(b))
+                {
+                    return b.Length;
+                }
+                return 0;
+            }
 
-            return exactMatches;
-        }
+            if (string.IsNullOrEmpty(b))
+            {
+                if (!string.IsNullOrEmpty(a))
+                {
+                    return a.Length;
+                }
+                return 0;
+            }
 
-        private void UpdateUnmappedFixtures(List<FootballFixturesMap> mappedFixtures)
-        {
-            var unmappedBFFixtures = (from bf in unmatchedBetFairFixtures
-                                      where !(from map in mappedFixtures
-                                              select map.BetFairFixtureID)
-                                            .Contains(bf.ID)
-                                      select bf).ToList();
+            Int32 cost;
+            Int32[,] d = new int[a.Length + 1, b.Length + 1];
+            Int32 min1;
+            Int32 min2;
+            Int32 min3;
 
-            var unmappedOCFixtures = (from oc in unmatchedOddsCheckerFixtures
-                                      where !(from map in mappedFixtures
-                                              select map.OddsCheckerFixtureID)
-                                            .Contains(oc.ID)
-                                      select oc).ToList();
+            for (Int32 i = 0; i <= d.GetUpperBound(0); i += 1)
+            {
+                d[i, 0] = i;
+            }
 
-            unmatchedOddsCheckerFixtures = unmappedOCFixtures;
+            for (Int32 i = 0; i <= d.GetUpperBound(1); i += 1)
+            {
+                d[0, i] = i;
+            }
+
+            for (Int32 i = 1; i <= d.GetUpperBound(0); i += 1)
+            {
+                for (Int32 j = 1; j <= d.GetUpperBound(1); j += 1)
+                {
+                    cost = Convert.ToInt32(!(a[i - 1] == b[j - 1]));
+
+                    min1 = d[i - 1, j] + 1;
+                    min2 = d[i, j - 1] + 1;
+                    min3 = d[i - 1, j - 1] + cost;
+                    d[i, j] = Math.Min(Math.Min(min1, min2), min3);
+                }
+            }
+
+            return d[d.GetUpperBound(0), d.GetUpperBound(1)];
         }
     }
 }

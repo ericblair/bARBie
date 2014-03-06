@@ -14,7 +14,7 @@ namespace Barbie
         static void Main(string[] args)
         {
             //var ocScraper = new OCFixturesScraper();
-            //ocScraper.ScrapeFixturesForCompetition(1);
+            //ocScraper.ScrapeAllFixtures();
 
             //var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
             //ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();

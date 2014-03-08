@@ -66,25 +66,23 @@ namespace Scrapers.Football
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.FileName = "node.exe";
-                process.StartInfo.WorkingDirectory = "C:\\bARBie\\bARBie\\ScrapingScripts\\OddsChecker\\";
-                process.StartInfo.Arguments = String.Format("ocScrapeFootballFixtures.js \"{0}\" \"{1}\" \"{2}\" >> eric.log",
-                                                competition.CountryID.ToString(),
-                                                competition.CompetitionID.ToString(),
-                                                competition.Url);
+                process.StartInfo.WorkingDirectory = scraperFileHomeDir;
+                process.StartInfo.Arguments = String.Format("{0} \"{1}\" \"{2}\" \"{3}\" >> {4}",
+                                                scraperFileName, competition.CountryID.ToString(),
+                                                competition.CompetitionID.ToString(), competition.Url,
+                                                logFileName);
 
                 processes.Add(process);
                 
             }
 
             var task = Task.Factory.StartNew(() =>
-                {
-                    Parallel.ForEach(processes, process =>
                         {
-                            process.Start();
+                            Parallel.ForEach(processes, process =>
+                                {
+                                    process.Start();
+                                });
                         });
-                });
-
-            task.Wait();
         }
 
     }

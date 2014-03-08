@@ -32,6 +32,19 @@ namespace Scrapers.Football
             ScrapeFixtures(competitions);
         }
 
+        /// <summary>
+        /// Scrape the fixtures for specified competition
+        /// </summary>
+        /// <param name="competitionId">FootballCompetitions.ID</param>
+        public void ScrapeFixturesForCompetition(int competitionId)
+        {
+            var competitions = barbieEntity.BetFairCompetitionUrls
+                                .Where(x => x.CompetitionID == competitionId)
+                                .ToList();
+
+            ScrapeFixtures(competitions);
+        }
+
         private void ScrapeFixtures(List<BetFairCompetitionUrls> competitions)
         {
             var processes = new List<Process>();

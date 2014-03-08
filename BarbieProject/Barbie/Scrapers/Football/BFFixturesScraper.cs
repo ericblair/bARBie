@@ -71,10 +71,6 @@ namespace Scrapers.Football
                 Parallel.ForEach(processes, process =>
                 {
                     process.Start();
-                    var output = process.StandardOutput.ReadToEnd();
-                    var error = process.StandardError.ReadToEnd();
-                    Console.WriteLine("output: " + output);
-                    Console.WriteLine("error: " + error);
                 });
             });
         }

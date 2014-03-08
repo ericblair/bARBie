@@ -137,35 +137,32 @@ namespace Scrapers.Football
         /// <param name="fixtures"></param>
         private void ScrapeOdds(List<BetFairFootballFixtures> fixtures)
         {
-            var processCommands = new List<string>();
+            var processes = new List<Process>();
 
             foreach (var fixture in fixtures)
             {
-                var cmd = BuildScraperCommandPromptString(scraperFileName, logFileName, fixture);
+                var process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.WorkingDirectory = scraperFileHomeDir;
+                process.StartInfo.Arguments = String.Format("{0} \"{1}\" \"{2}\" \"{3}\" \"{4}\" \"{5}\" \"{6}\" >> {7}",
+                                                scraperFileName, fixture.ID.ToString(), fixture.CountryID.ToString(),
+                                                fixture.CompetitionID.ToString(), fixture.HomeTeam, fixture.AwayTeam,
+                                                fixture.MatchWinnerOddsUrl, logFileName);
 
-                processCommands.Add(cmd);
+                processes.Add(process);
             }
 
-            ScraperRunner.CallNodeScripts(processCommands, scraperFileHomeDir);
-        }
-
-        /// <summary>
-        /// Build the command string that will be passed to the Process
-        /// </summary>
-        /// <param name="scraperFileName"></param>
-        /// <param name="logFileName"></param>
-        /// <param name="fixture"></param>
-        /// <returns></returns>
-        private string BuildScraperCommandPromptString(string scraperFileName, string logFileName,
-                                                        BetFairFootballFixtures fixture)
-        {
-            string countryIdString = fixture.CountryID.HasValue ? fixture.CountryID.Value.ToString() : "NULL";
-
-            var nodeInputString = "node " + scraperFileName + " " + fixture.ID
-                                    + " " + countryIdString + " " + fixture.CompetitionID + @" """ + fixture.HomeTeam
-                                    + @""" """ + fixture.AwayTeam + @""" " + fixture.MatchWinnerOddsUrl + " >> " + logFileName;
-
-            return nodeInputString;
+            var task = Task.Factory.StartNew(() =>
+            {
+                Parallel.ForEach(processes, process =>
+                {
+                    process.Start();
+                });
+            });
         }
     }
 }

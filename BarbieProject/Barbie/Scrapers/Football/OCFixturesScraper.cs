@@ -17,6 +17,15 @@ namespace Scrapers.Football
         string scraperFileName = ConfigurationManager.AppSettings["OddsCheckerFixturesScraperScript"];
         string logFileName = ConfigurationManager.AppSettings["OddsCheckerFixturesScraperLog"];
 
+        ProcessStartInfo startInfo = new ProcessStartInfo
+        {
+            FileName = "cmd.exe",
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+
         public OCFixturesScraper()
         {
             barbieEntity = new bARBieEntities();
@@ -47,27 +56,35 @@ namespace Scrapers.Football
 
         private void ScrapeFixtures(List<OddsCheckerCompetitionUrls> competitions)
         {
-            var processCommands = new List<string>();
+            var processes = new List<Process>();
 
             foreach (var competition in competitions)
             {
-                var cmd = BuildScraperCommandPromptString(scraperFileName, logFileName, competition);
+                var process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.WorkingDirectory = "C:\\bARBie\\bARBie\\ScrapingScripts\\OddsChecker\\";
+                process.StartInfo.Arguments = String.Format("ocScrapeFootballFixtures.js \"{0}\" \"{1}\" \"{2}\" >> eric.log",
+                                                competition.CountryID.ToString(),
+                                                competition.CompetitionID.ToString(),
+                                                competition.Url);
 
-                processCommands.Add(cmd);
+                processes.Add(process);
+                
             }
 
-            ScraperRunner.CallNodeScripts(processCommands, scraperFileHomeDir);
-        }
+            var task = Task.Factory.StartNew(() =>
+                {
+                    Parallel.ForEach(processes, process =>
+                        {
+                            process.Start();
+                        });
+                });
 
-        private string BuildScraperCommandPromptString(string scraperFileName, string logFileName,
-                                                        OddsCheckerCompetitionUrls competition)
-        {
-            string countryIdString = competition.CountryID.HasValue ? competition.CountryID.Value.ToString() : "NULL";
-
-            var nodeInputString = "node " + scraperFileName + " " + countryIdString + " " + competition.ID
-                                     + " " + competition.Url + " >> " + logFileName;
-
-            return nodeInputString;
+            task.Wait();
         }
 
     }

@@ -16,9 +16,9 @@ namespace Barbie
         {
             //var masterTimer = Stopwatch.StartNew();
 
-            scrapeOCFixtures();
+            //scrapeOCFixtures();
 
-            //scrapeBFFixtures();
+            scrapeBFFixtures();
 
             //runMapper(); 
 
@@ -46,7 +46,7 @@ namespace Barbie
             ocScraperTimer.Stop();
             var ocScraperTimerTime = ocScraperTimer.ElapsedMilliseconds / 1000;
 
-            Console.WriteLine(ocScraperTimerTime);
+            Console.WriteLine("ocScraperTimer: " + ocScraperTimerTime);
         }
 
         private static void scrapeBFFixtures()
@@ -59,7 +59,7 @@ namespace Barbie
             bfScraperTimer.Stop();
             var bfScraperTimerTime = bfScraperTimer.ElapsedMilliseconds / 1000;
 
-            Console.WriteLine(bfScraperTimerTime);
+            Console.WriteLine("bfScraperTimer: " + bfScraperTimerTime);
         }
 
         private static void scrapeOCOdds()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,27 +34,36 @@ namespace Scrapers.Football
 
         private void ScrapeFixtures(List<BetFairCompetitionUrls> competitions)
         {
-            var processCommands = new List<string>();
+            var processes = new List<Process>();
 
             foreach (var competition in competitions)
             {
-                var cmd = BuildScraperCommandPromptString(scraperFileName, logFileName, competition);
+                var process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.WorkingDirectory = scraperFileHomeDir;
+                process.StartInfo.Arguments = String.Format("{0} \"{1}\" \"{2}\" \"{3}\" >> {4}",
+                                                scraperFileName, competition.CountryID.ToString(),
+                                                competition.CompetitionID.ToString(), competition.Url,
+                                                logFileName);
 
-                processCommands.Add(cmd);
+                processes.Add(process);
             }
 
-            ScraperRunner.CallNodeScripts(processCommands, scraperFileHomeDir);
-        }
-
-        private string BuildScraperCommandPromptString(string scraperFileName, string logFileName,
-                                                        BetFairCompetitionUrls competition)
-        {
-            string countryIdString = competition.CountryID.HasValue ? competition.CountryID.Value.ToString() : "NULL";
-
-            var nodeInputString = "node " + scraperFileName + " " + countryIdString + " " + competition.ID
-                                     + " " + competition.Url + " >> " + logFileName;
-
-            return nodeInputString;
+            var task = Task.Factory.StartNew(() =>
+            {
+                Parallel.ForEach(processes, process =>
+                {
+                    process.Start();
+                    var output = process.StandardOutput.ReadToEnd();
+                    var error = process.StandardError.ReadToEnd();
+                    Console.WriteLine("output: " + output);
+                    Console.WriteLine("error: " + error);
+                });
+            });
         }
     }
 }

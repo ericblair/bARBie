@@ -29,12 +29,12 @@ namespace DAL
         public DbSet<BetFairFootballOdds> BetFairFootballOdds { get; set; }
         public DbSet<Bookie> Bookie { get; set; }
         public DbSet<Countries> Countries { get; set; }
-        public DbSet<FootballArbs> FootballArbs { get; set; }
         public DbSet<FootballCompetitions> FootballCompetitions { get; set; }
         public DbSet<OddsCheckerCompetitionUrls> OddsCheckerCompetitionUrls { get; set; }
         public DbSet<OddsCheckerFootballOdds> OddsCheckerFootballOdds { get; set; }
         public DbSet<OddsCheckerFootballFixtures> OddsCheckerFootballFixtures { get; set; }
         public DbSet<BetFairFootballFixtures> BetFairFootballFixtures { get; set; }
         public DbSet<FootballFixturesMap> FootballFixturesMap { get; set; }
+        public DbSet<Arbs_Football_MatchWinner> Arbs_Football_MatchWinner { get; set; }
     }
 }

@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arbs_Football_MatchWinner.cs">
+      <DependentUpon>BarbieModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="BarbieModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -74,9 +77,6 @@
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Countries.cs">
-      <DependentUpon>BarbieModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FootballArbs.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FootballCompetitions.cs">

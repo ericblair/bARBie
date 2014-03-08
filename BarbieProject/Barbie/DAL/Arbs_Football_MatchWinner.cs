@@ -12,11 +12,12 @@ namespace DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class FootballArbs
+    public partial class Arbs_Football_MatchWinner
     {
         public int ID { get; set; }
-        public string Fixture { get; set; }
         public System.DateTime MatchDateTime { get; set; }
+        public string HomeTeam { get; set; }
+        public string AwayTeam { get; set; }
         public decimal BetFairOdds { get; set; }
         public decimal BookieOdds { get; set; }
         public Nullable<decimal> BetFairCash { get; set; }

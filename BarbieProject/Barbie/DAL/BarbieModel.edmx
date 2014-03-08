@@ -6,12 +6,12 @@
     <edmx:StorageModels>
     <Schema Namespace="bARBieModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="bARBieModelStoreContainer">
+          <EntitySet Name="Arbs_Football_MatchWinner" EntityType="bARBieModel.Store.Arbs_Football_MatchWinner" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BetFairCompetitionUrls" EntityType="bARBieModel.Store.BetFairCompetitionUrls" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BetFairFootballFixtures" EntityType="bARBieModel.Store.BetFairFootballFixtures" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BetFairFootballOdds" EntityType="bARBieModel.Store.BetFairFootballOdds" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Bookie" EntityType="bARBieModel.Store.Bookie" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Countries" EntityType="bARBieModel.Store.Countries" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FootballArbs" EntityType="bARBieModel.Store.FootballArbs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FootballCompetitions" EntityType="bARBieModel.Store.FootballCompetitions" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FootballFixturesMap" EntityType="bARBieModel.Store.FootballFixturesMap" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OddsCheckerCompetitionUrls" EntityType="bARBieModel.Store.OddsCheckerCompetitionUrls" store:Type="Tables" Schema="dbo" />
@@ -82,6 +82,23 @@
             <End Role="OddsCheckerFootballOdds" EntitySet="OddsCheckerFootballOdds" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Arbs_Football_MatchWinner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MatchDateTime" Type="datetime" Nullable="false" />
+          <Property Name="HomeTeam" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="AwayTeam" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="BetFairOdds" Type="decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="BookieOdds" Type="decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="BetFairCash" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Bookie" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Predication" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="BetFairUpdated" Type="datetime" Nullable="false" />
+          <Property Name="OddsCheckerUpdated" Type="datetime" Nullable="false" />
+          <Property Name="Updated" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="BetFairCompetitionUrls">
           <Key>
             <PropertyRef Name="ID" />
@@ -139,22 +156,6 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Country" Type="nvarchar" Nullable="false" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="FootballArbs">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Fixture" Type="nvarchar" Nullable="false" MaxLength="200" />
-          <Property Name="MatchDateTime" Type="datetime" Nullable="false" />
-          <Property Name="BetFairOdds" Type="decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="BookieOdds" Type="decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="BetFairCash" Type="decimal" Precision="8" Scale="2" />
-          <Property Name="Bookie" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="Predication" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="BetFairUpdated" Type="datetime" Nullable="false" />
-          <Property Name="OddsCheckerUpdated" Type="datetime" Nullable="false" />
-          <Property Name="Updated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="FootballCompetitions">
           <Key>
@@ -427,7 +428,6 @@
           <EntitySet Name="BetFairFootballOdds" EntityType="bARBieModel.BetFairFootballOdds" />
           <EntitySet Name="Bookie" EntityType="bARBieModel.Bookie" />
           <EntitySet Name="Countries" EntityType="bARBieModel.Countries" />
-          <EntitySet Name="FootballArbs" EntityType="bARBieModel.FootballArbs" />
           <EntitySet Name="FootballCompetitions" EntityType="bARBieModel.FootballCompetitions" />
           <EntitySet Name="OddsCheckerCompetitionUrls" EntityType="bARBieModel.OddsCheckerCompetitionUrls" />
           <EntitySet Name="OddsCheckerFootballOdds" EntityType="bARBieModel.OddsCheckerFootballOdds" />
@@ -506,6 +506,7 @@
             <End Role="OddsCheckerFootballFixtures" EntitySet="OddsCheckerFootballFixtures" />
             <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
           </AssociationSet>
+          <EntitySet Name="Arbs_Football_MatchWinner" EntityType="bARBieModel.Arbs_Football_MatchWinner" />
         </EntityContainer>
         <EntityType Name="BetFairCompetitionUrls">
           <Key>
@@ -563,22 +564,6 @@
           <NavigationProperty Name="BetFairFootballFixtures" Relationship="bARBieModel.FK_BetFairFootballFixtures_CountryID" FromRole="Countries" ToRole="BetFairFootballFixtures" />
           <NavigationProperty Name="OddsCheckerFootballOdds" Relationship="bARBieModel.FK_OddsCheckerFootballOdds_CountryID" FromRole="Countries" ToRole="OddsCheckerFootballOdds" />
           <NavigationProperty Name="BetFairFootballOdds" Relationship="bARBieModel.FK_BetFairFootballOdds_CountryID" FromRole="Countries" ToRole="BetFairFootballOdds" />
-        </EntityType>
-        <EntityType Name="FootballArbs">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Fixture" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-          <Property Name="MatchDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="BetFairOdds" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="BookieOdds" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="BetFairCash" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="Bookie" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="Predication" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="BetFairUpdated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="OddsCheckerUpdated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="FootballCompetitions">
           <Key>
@@ -901,6 +886,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Arbs_Football_MatchWinner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="MatchDateTime" Nullable="false" Precision="3" />
+          <Property Type="String" Name="HomeTeam" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AwayTeam" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="BetFairOdds" Nullable="false" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="BookieOdds" Nullable="false" Precision="8" Scale="2" />
+          <Property Type="Decimal" Name="BetFairCash" Precision="8" Scale="2" />
+          <Property Type="String" Name="Bookie" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Predication" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="BetFairUpdated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="OddsCheckerUpdated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="Updated" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -954,23 +956,6 @@
               <MappingFragment StoreEntitySet="Countries">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FootballArbs">
-            <EntityTypeMapping TypeName="bARBieModel.FootballArbs">
-              <MappingFragment StoreEntitySet="FootballArbs">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Fixture" ColumnName="Fixture" />
-                <ScalarProperty Name="MatchDateTime" ColumnName="MatchDateTime" />
-                <ScalarProperty Name="BetFairOdds" ColumnName="BetFairOdds" />
-                <ScalarProperty Name="BookieOdds" ColumnName="BookieOdds" />
-                <ScalarProperty Name="BetFairCash" ColumnName="BetFairCash" />
-                <ScalarProperty Name="Bookie" ColumnName="Bookie" />
-                <ScalarProperty Name="Predication" ColumnName="Predication" />
-                <ScalarProperty Name="BetFairUpdated" ColumnName="BetFairUpdated" />
-                <ScalarProperty Name="OddsCheckerUpdated" ColumnName="OddsCheckerUpdated" />
-                <ScalarProperty Name="Updated" ColumnName="Updated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1058,6 +1043,24 @@
               <MappingFragment StoreEntitySet="FootballFixturesMap">
                 <ScalarProperty Name="OddsCheckerFixtureID" ColumnName="OddsCheckerFixtureID" />
                 <ScalarProperty Name="BetFairFixtureID" ColumnName="BetFairFixtureID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Arbs_Football_MatchWinner">
+            <EntityTypeMapping TypeName="bARBieModel.Arbs_Football_MatchWinner">
+              <MappingFragment StoreEntitySet="Arbs_Football_MatchWinner">
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="OddsCheckerUpdated" ColumnName="OddsCheckerUpdated" />
+                <ScalarProperty Name="BetFairUpdated" ColumnName="BetFairUpdated" />
+                <ScalarProperty Name="Predication" ColumnName="Predication" />
+                <ScalarProperty Name="Bookie" ColumnName="Bookie" />
+                <ScalarProperty Name="BetFairCash" ColumnName="BetFairCash" />
+                <ScalarProperty Name="BookieOdds" ColumnName="BookieOdds" />
+                <ScalarProperty Name="BetFairOdds" ColumnName="BetFairOdds" />
+                <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="MatchDateTime" ColumnName="MatchDateTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
@@ -48,10 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BetFairMatchOdds.cs" />
+    <Compile Include="ArbFinders\BFMatchWinnerOddsCollection.cs" />
+    <Compile Include="ArbFinders\MatchWinner_BF_OC.cs" />
+    <Compile Include="ArbFinders\OCMatchWinnerOddsCollection.cs" />
     <Compile Include="FixtureMappers\MatchWinner_BF_OC.cs" />
-    <Compile Include="FootballArbFinder.cs" />
-    <Compile Include="OddsDataCollection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

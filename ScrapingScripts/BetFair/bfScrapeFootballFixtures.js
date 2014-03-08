@@ -68,6 +68,7 @@ function ScrapeFixureDetails(error, response, body) {
         if (typeof matchWinnerMarketHref != 'undefined') {
 
             var dateTimeString = $('.match-status > .status').eq(0).text();
+            dateTimeString = dateTimeString.trim();
             var matchDateTime = convertDateTimeMinusYearToSqlFormat(dateTimeString);
 
             if (matchDateTime == "INVALID") {
@@ -76,8 +77,8 @@ function ScrapeFixureDetails(error, response, body) {
 
             var matchWinnerMarketUrl = betFairBaseUrl + matchWinnerMarketHref;
 
-            var homeTeam = $('.home-team').eq(0).text().replace(/\n/g, "").replace(/\s+/g, "");
-            var awayTeam = $('.away-team').eq(0).text().replace(/\n/g, "").replace(/\s+/g, "");
+            var homeTeam = $('.home-team').eq(0).text().split(" v ")[0];
+            var awayTeam = $('.home-team').eq(0).text().split(" v ")[1];
 
             WriteFixtureToDatabase(countryId, competitionId, matchDateTime, homeTeam, awayTeam, matchWinnerMarketUrl);
         }
@@ -164,30 +165,23 @@ function ConvertDateTimeToSqlFormat(timeString, dateString) {
     var hoursRaw = timeString.split(':')[0];
     var hoursInt = parseInt(hoursRaw);
     var hours = ((hoursInt < 10) ? '0' : '') + hoursInt;
-    console.log('hours : ' + hours);
 
     var minutes = timeString.split(':')[1].substring(0, 2);
-    console.log('minutes : ' + minutes);
 
     var seconds = '00';
 
-    console.log('dateString : ' + dateString);
     var dayRaw = dateString.split(' ')[1];
     var dayInt = parseInt(dayRaw);
     var day = ((dayInt < 10) ? '0' : '') + dayInt;
-    console.log('day : ' + day);
 
     var monthRaw = dateString.split(' ')[2];
     var monthInt = convertMonthNameToNumber(monthRaw);
     var month = ((monthInt < 10) ? '0' : '') + monthInt;
-    console.log('month : ' + month);
 
     var year = dateString.split(' ')[3];
-    console.log('year : ' + year);
 
     // '2014-12-20T14:25:10'
     var matchDateTime = year + "-" + month + "-" + day + "T" + hours + ":" + minutes + ":" + seconds;
-    console.log('matchDateTime : ' + matchDateTime);
     return matchDateTime;
 }
 

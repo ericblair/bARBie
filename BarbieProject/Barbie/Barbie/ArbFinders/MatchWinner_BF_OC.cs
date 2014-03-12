@@ -68,9 +68,6 @@ namespace Barbie.ArbFinders
 
         private void findArbs(OddsCheckerFootballOdds ocOdds, decimal? layOdds, decimal? layCash, DateTime bfUpdated)
         {
-            if (ocOdds == null)
-                return;
-
             var layOddsArbLimit = layOdds + (layOdds * betFairCommision);
             var matchDateTime = ocOdds.OddsCheckerFootballFixtures.MatchDateTime;
             var homeTeam = ocOdds.OddsCheckerFootballFixtures.HomeTeam;

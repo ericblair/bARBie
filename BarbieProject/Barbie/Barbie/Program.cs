@@ -20,11 +20,11 @@ namespace Barbie
 
             //scrapeBFFixtures();
 
-            runMapper();
+            //runMapper();
 
-            //scrapeOCOdds();
+            scrapeOCOdds();
 
-            scrapeBFOdds();
+            //scrapeBFOdds();
 
             //runArbFinder();
 
@@ -33,7 +33,7 @@ namespace Barbie
             //var time = masterTimer.ElapsedMilliseconds / 1000;
 
             //Console.WriteLine(time);
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         private static void scrapeOCFixtures()

@@ -2,6 +2,7 @@ var cheerio = require('cheerio');
 var request = require('request');
 var sql = require('msnodesql');
 var squel = require("squel");
+var winston = require('winston');
 var configSettings = require("./configSettings.js");
 
 var connectionString = configSettings.GetConnectionString();
@@ -10,6 +11,13 @@ var betFairBaseUrl = configSettings.GetBetFairBaseUrl();
 var countryId = process.argv[2];
 var competitionId = process.argv[3];
 var competitionUrl = process.argv[4];
+
+var logger = new (winston.Logger)({
+    transports: [
+      //new (winston.transports.Console)(),
+      new (winston.transports.File)({ filename: 'bfScrapeFootballFixtures.log' })
+    ]
+});
 
 main();
 
@@ -29,7 +37,7 @@ function CallCompetitionPage(competitionUrl) {
 }
 
 function ExtractFixtureMarketUrls(error, response, body) {
-
+    
     if (!error && response.statusCode == 200) {
 
         $ = cheerio.load(body);
@@ -77,8 +85,8 @@ function ScrapeFixureDetails(error, response, body) {
 
             var matchWinnerMarketUrl = betFairBaseUrl + matchWinnerMarketHref;
 
-            var homeTeam = $('.home-team').eq(0).text().split(" v ")[0];
-            var awayTeam = $('.home-team').eq(0).text().split(" v ")[1];
+            var homeTeam = $('.home-team').eq(0).text();
+            var awayTeam = $('.away-team').eq(0).text();
 
             WriteFixtureToDatabase(countryId, competitionId, matchDateTime, homeTeam, awayTeam, matchWinnerMarketUrl);
         }
@@ -90,12 +98,11 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
     sql.open(connectionString, function (err, conn) {
 
         if (err) {
-            console.log("Database connection failed!");
-            console.log(err);
+            logger.info('Database connection failed:', err);
             return;
         }
         else {
-
+            
             var matchingFixtures =
                 squel.select()
                 .field("ID")
@@ -111,14 +118,13 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
             conn.queryRaw(matchingFixtures, function (err, results) {
 
                 if (err) {
-                    console.log("WriteFixtureToDatabase: matchingFixtures: Error");
-                    console.log(err);
-                    console.log('countryId: ' + countryId);
-                    console.log('competitionId: ' + competitionId);
-                    console.log('fixtureDateTime: ' + fixtureDateTime);
-                    console.log('homeTeam: ' + homeTeam);
-                    console.log('awayTeam: ' + awayTeam);
-                    console.log('fixtureOddsUrl: ' + fixtureOddsUrl);
+                    logger.error('WriteFixtureToDatabase: matchingFixtures: Error:', err);
+                    logger.error('countryId', countryId);
+                    logger.error('competitionId', competitionId);
+                    logger.error('fixtureDateTime', fixtureDateTime);
+                    logger.error('homeTeam', homeTeam);
+                    logger.error('awayTeam', awayTeam);
+                    logger.error('fixtureOddsUrl', fixtureOddsUrl);
                     return;
                 }
                 else {
@@ -141,14 +147,13 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
                         conn.queryRaw(oddsInsertSql, function (err, results) {
 
                             if (err) {
-                                console.log("WriteFixtureToDatabase: oddsInsertSql: Error");
-                                console.log(err);
-                                console.log('countryId: ' + countryId);
-                                console.log('competitionId: ' + competitionId);
-                                console.log('fixtureDateTime: ' + fixtureDateTime);
-                                console.log('homeTeam: ' + homeTeam);
-                                console.log('awayTeam: ' + awayTeam);
-                                console.log('fixtureOddsUrl: ' + fixtureOddsUrl);
+                                logger.error('WriteFixtureToDatabase: oddsInsertSql: Error:', err);
+                                logger.error('countryId', countryId);
+                                logger.error('competitionId', competitionId);
+                                logger.error('fixtureDateTime', fixtureDateTime);
+                                logger.error('homeTeam', homeTeam);
+                                logger.error('awayTeam', awayTeam);
+                                logger.error('fixtureOddsUrl', fixtureOddsUrl);
                                 return;
                             }
                         });

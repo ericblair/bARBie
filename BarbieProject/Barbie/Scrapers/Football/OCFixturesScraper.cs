@@ -36,6 +36,7 @@ namespace Scrapers.Football
         /// </summary>
         public void ScrapeAllFixtures()
         {
+            // TODO: Catch error here if there are no results
             var competitions = barbieEntity.OddsCheckerCompetitionUrls.ToList();
 
             ScrapeFixtures(competitions);
@@ -65,7 +66,7 @@ namespace Scrapers.Football
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.FileName = "C:\\Program Files\\nodejs\\node.exe";
                 process.StartInfo.WorkingDirectory = scraperFileHomeDir;
                 process.StartInfo.Arguments = String.Format("{0} \"{1}\" \"{2}\" \"{3}\" >> {4}",
                                                 scraperFileName, competition.CountryID.ToString(),
@@ -77,12 +78,12 @@ namespace Scrapers.Football
             }
 
             var task = Task.Factory.StartNew(() =>
-                        {
-                            Parallel.ForEach(processes, process =>
-                                {
-                                    process.Start();
-                                });
-                        });
+            {
+                Parallel.ForEach(processes, process =>
+                {
+                    process.Start();
+                });
+            });
         }
 
     }

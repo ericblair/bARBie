@@ -1,4 +1,4 @@
-var connectionString = "Driver={SQL Server Native Client 11.0};Server=SAM\\SQLEXPRESS;Database=bARBie;Trusted_Connection={Yes}";
+var connectionString = "Driver={SQL Server Native Client 11.0};Server=STARSHARE-AG;Database=bARBie;Trusted_Connection={Yes}";
 
 var betFairBaseUrl = "http://www.betfair.com";
 

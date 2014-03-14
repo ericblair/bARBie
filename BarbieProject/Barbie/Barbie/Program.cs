@@ -16,15 +16,15 @@ namespace Barbie
         {
             //var masterTimer = Stopwatch.StartNew();
 
-            //scrapeOCFixtures();
+            scrapeOCFixtures();
 
-            //scrapeBFFixtures();
+            scrapeBFFixtures();
 
-            runMapper();
+            //runMapper();
 
             //scrapeOCOdds();
 
-            scrapeBFOdds();
+            //scrapeBFOdds();
 
             //runArbFinder();
 

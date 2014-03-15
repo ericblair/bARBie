@@ -244,6 +244,23 @@ namespace Barbie.ArbFinders
                                         DateTime betFairUpdated, string bookie, decimal bookieOdds,
                                         DateTime oddsCheckerUpdated, string prediction)
         {
+            // Check if record exists before writing
+            var record = barbieEntity.Arbs_Football_MatchWinner
+                            .Where(x => x.MatchDateTime == matchDateTime)
+                            .Where(x => x.HomeTeam == homeTeam)
+                            .Where(x => x.AwayTeam == awayTeam)
+                            .Where(x => x.BetFairOdds == betFairLayLow)
+                            .Where(x => x.BetFairCash == betFairCash)
+                            .Where(x => x.BetFairUpdated == betFairUpdated)
+                            .Where(x => x.Bookie == bookie)
+                            .Where(x => x.BookieOdds == bookieOdds)
+                            .Where(x => x.OddsCheckerUpdated == oddsCheckerUpdated)
+                            .Where(x => x.Predication == prediction)
+                            .FirstOrDefault();
+
+            if (record != null)
+                return;
+
             var arb = new Arbs_Football_MatchWinner();
             arb.MatchDateTime = matchDateTime;
             arb.HomeTeam = homeTeam;

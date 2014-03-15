@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using DAL;
 using System.Data.Objects.SqlClient;
 
@@ -58,13 +59,16 @@ namespace Barbie.FixtureMappers
 
         private List<BetFairFootballFixtures> GetAllUnmappedBetFairFixtures()
         {
-            var unmappedFixtures = (from bf in barbieEntity.BetFairFootballFixtures
-                                    where !(from map in barbieEntity.FootballFixturesMap
-                                            select map.BetFairFixtureID)
-                                            .Contains(bf.ID)
-                                    select bf).ToList();
+            using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
+            {
+                var unmappedFixtures = (from bf in barbieEntity.BetFairFootballFixtures
+                                        where !(from map in barbieEntity.FootballFixturesMap
+                                                select map.BetFairFixtureID)
+                                                .Contains(bf.ID)
+                                        select bf).ToList();
 
-            return unmappedFixtures;
+                return unmappedFixtures;
+            }
         }
 
         private List<OddsCheckerFootballFixtures> GetAllUnmappedOddsCheckerFixtures()

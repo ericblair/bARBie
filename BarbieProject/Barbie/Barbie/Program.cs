@@ -14,26 +14,17 @@ namespace Barbie
     {
         static void Main(string[] args)
         {
-            //var masterTimer = Stopwatch.StartNew();
-
             //scrapeOCFixtures();
 
             //scrapeBFFixtures();
 
-            //runMapper();
+            runMapper();
 
             //scrapeOCOdds();
 
             //scrapeBFOdds();
 
-            runArbFinder();
-
-            //masterTimer.Stop();
-
-            //var time = masterTimer.ElapsedMilliseconds / 1000;
-
-            //Console.WriteLine(time);
-            //Console.ReadLine();
+            //runArbFinder();
         }
 
         private static void scrapeOCFixtures()

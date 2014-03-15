@@ -18,13 +18,13 @@ namespace Barbie
 
             //scrapeBFFixtures();
 
-            runMapper();
+            //runMapper();
 
             //scrapeOCOdds();
 
             //scrapeBFOdds();
 
-            //runArbFinder();
+            runArbFinder();
         }
 
         private static void scrapeOCFixtures()

@@ -2,6 +2,7 @@ var cheerio = require('cheerio');
 var request = require('request');
 var sql = require('msnodesql');
 var squel = require("squel");
+var winston = require('winston');
 var configSettings = require("./ocConfigSettings.js");
 
 var connectionString = configSettings.GetConnectionString();
@@ -10,6 +11,12 @@ var oddsCheckerBaseUrl = configSettings.GetOddsCheckerBaseUrl();
 var countryId = process.argv[2];
 var competitionId = process.argv[3];
 var competitionUrl = process.argv[4];
+
+var logger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.File)({ filename: 'ocScrapeFootballFixtures.log' })
+    ]
+});
 
 main();
 
@@ -40,7 +47,7 @@ function ExtractFixtureMarketUrls(error, response, body) {
             $('.content-4 tbody tr').each(function (index, data) { ScrapeFixureDetails(index, data); });
         }
         catch (exception) {
-            console.log(exception);
+            logger.error(exception);
         }
     }
 }
@@ -69,8 +76,7 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
     sql.open(connectionString, function (err, conn) {
 
         if (err) {
-            console.log("Database connection failed!");
-            console.log(err);
+            logger.error('Database connection failed:', err);
             return;
         }
         else {
@@ -90,8 +96,7 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
             conn.queryRaw(matchingFixtures, function (err, results) {
 
                 if (err) {
-                    console.log("WriteFixtureToDatabase: matchingFixtures: Error");
-                    console.log(err);
+                    logger.error('WriteFixtureToDatabase: matchingFixtures: Error', err);
                     return;
                 }
                 else {
@@ -114,8 +119,7 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
                         conn.queryRaw(oddsInsertSql, function (err, results) {
 
                             if (err) {
-                                console.log("WriteFixtureToDatabase: oddsInsertSql: Error");
-                                console.log(err);
+                                logger.error('WriteFixtureToDatabase: oddsInsertSql: Error', err);
                                 return;
                             }
                         });

@@ -2,6 +2,7 @@ var cheerio = require('cheerio');
 var request = require('request');
 var sql = require('msnodesql');
 var squel = require("squel");
+var winston = require('winston');
 var configSettings = require("./configSettings.js");
 
 var connectionString = configSettings.GetConnectionString();
@@ -13,6 +14,12 @@ var competitionId = process.argv[4];
 var homeTeam = process.argv[5];
 var awayTeam = process.argv[6];
 var matchWinnerOddsUrl = process.argv[7];
+
+var logger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.File)({ filename: 'bfScrapeFootballMatchWinnerOdds.log' })
+    ]
+});
 
 main();
 
@@ -89,8 +96,7 @@ function writeOddsToDb(fixtureId, countryId, competitionId, prediction, odds) {
 
     sql.open(connectionString, function (err, conn) {
         if (err) {
-            console.log("Database connection failed!");
-            console.log(err);
+            logger.error('Database connection failed:', err);
             return;
         }
         else {
@@ -120,8 +126,7 @@ function writeOddsToDb(fixtureId, countryId, competitionId, prediction, odds) {
             conn.queryRaw(oddsInsertSql, function (err, results) {
 
                 if (err) {
-                    console.log("oddsInsertSql: " + oddsInsertSql);
-                    console.log(err);
+                    logger.error('oddsInsertSql', oddsInsertSql);
                     return;
                 }
             });

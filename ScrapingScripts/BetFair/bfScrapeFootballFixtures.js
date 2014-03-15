@@ -97,7 +97,7 @@ function WriteFixtureToDatabase(countryId, competitionId, fixtureDateTime, homeT
     sql.open(connectionString, function (err, conn) {
 
         if (err) {
-            logger.info('Database connection failed:', err);
+            logger.error('Database connection failed:', err);
             return;
         }
         else {

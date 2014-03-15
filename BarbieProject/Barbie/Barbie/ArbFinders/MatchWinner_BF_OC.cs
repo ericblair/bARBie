@@ -41,33 +41,44 @@ namespace Barbie.ArbFinders
                 var ocOddsCollection = new OCMatchWinnerOddsCollection(fixture);
                 var bfOddsCollection = new BFMatchWinnerOddsCollection(fixture);
 
-                findArbs(ocOddsCollection.HomeWinOdds, bfOddsCollection.HomeWinOdds.LayLow,
+                if (ocOddsCollection.HomeWinOdds != null && bfOddsCollection.HomeWinOdds != null)
+                {
+                    findArbs(ocOddsCollection.HomeWinOdds, bfOddsCollection.HomeWinOdds.LayLow,
                             bfOddsCollection.HomeWinOdds.LayLowCash, bfOddsCollection.HomeWinOdds.Updated);
-                findArbs(ocOddsCollection.HomeWinOdds, bfOddsCollection.HomeWinOdds.LayMid,
-                            bfOddsCollection.HomeWinOdds.LayMidCash, bfOddsCollection.HomeWinOdds.Updated);
-                findArbs(ocOddsCollection.HomeWinOdds, bfOddsCollection.HomeWinOdds.LayHigh,
-                        bfOddsCollection.HomeWinOdds.LayHighCash, bfOddsCollection.HomeWinOdds.Updated);
+                    findArbs(ocOddsCollection.HomeWinOdds, bfOddsCollection.HomeWinOdds.LayMid,
+                                bfOddsCollection.HomeWinOdds.LayMidCash, bfOddsCollection.HomeWinOdds.Updated);
+                    findArbs(ocOddsCollection.HomeWinOdds, bfOddsCollection.HomeWinOdds.LayHigh,
+                            bfOddsCollection.HomeWinOdds.LayHighCash, bfOddsCollection.HomeWinOdds.Updated);
+                }
 
-                findArbs(ocOddsCollection.AwayWinOdds, bfOddsCollection.AwayWinOdds.LayLow,
-                        bfOddsCollection.AwayWinOdds.LayLowCash, bfOddsCollection.AwayWinOdds.Updated);
-                findArbs(ocOddsCollection.AwayWinOdds, bfOddsCollection.AwayWinOdds.LayMid,
-                        bfOddsCollection.AwayWinOdds.LayMidCash, bfOddsCollection.AwayWinOdds.Updated);
-                findArbs(ocOddsCollection.AwayWinOdds, bfOddsCollection.AwayWinOdds.LayHigh,
-                        bfOddsCollection.AwayWinOdds.LayHighCash, bfOddsCollection.AwayWinOdds.Updated);
+                if (ocOddsCollection.AwayWinOdds != null && bfOddsCollection.AwayWinOdds != null)
+                {
+                    findArbs(ocOddsCollection.AwayWinOdds, bfOddsCollection.AwayWinOdds.LayLow,
+                            bfOddsCollection.AwayWinOdds.LayLowCash, bfOddsCollection.AwayWinOdds.Updated);
+                    findArbs(ocOddsCollection.AwayWinOdds, bfOddsCollection.AwayWinOdds.LayMid,
+                            bfOddsCollection.AwayWinOdds.LayMidCash, bfOddsCollection.AwayWinOdds.Updated);
+                    findArbs(ocOddsCollection.AwayWinOdds, bfOddsCollection.AwayWinOdds.LayHigh,
+                            bfOddsCollection.AwayWinOdds.LayHighCash, bfOddsCollection.AwayWinOdds.Updated);
+                }
 
-                findArbs(ocOddsCollection.DrawOdds, bfOddsCollection.DrawOdds.LayLow,
-                        bfOddsCollection.DrawOdds.LayLowCash, bfOddsCollection.DrawOdds.Updated);
-                findArbs(ocOddsCollection.DrawOdds, bfOddsCollection.DrawOdds.LayMid,
-                        bfOddsCollection.DrawOdds.LayMidCash, bfOddsCollection.DrawOdds.Updated);
-                findArbs(ocOddsCollection.DrawOdds, bfOddsCollection.DrawOdds.LayHigh,
-                        bfOddsCollection.DrawOdds.LayHighCash, bfOddsCollection.DrawOdds.Updated);
-
+                if (ocOddsCollection.DrawOdds != null && bfOddsCollection.DrawOdds != null)
+                {
+                    findArbs(ocOddsCollection.DrawOdds, bfOddsCollection.DrawOdds.LayLow,
+                            bfOddsCollection.DrawOdds.LayLowCash, bfOddsCollection.DrawOdds.Updated);
+                    findArbs(ocOddsCollection.DrawOdds, bfOddsCollection.DrawOdds.LayMid,
+                            bfOddsCollection.DrawOdds.LayMidCash, bfOddsCollection.DrawOdds.Updated);
+                    findArbs(ocOddsCollection.DrawOdds, bfOddsCollection.DrawOdds.LayHigh,
+                            bfOddsCollection.DrawOdds.LayHighCash, bfOddsCollection.DrawOdds.Updated);
+                }
 
             }
         }
 
         private void findArbs(OddsCheckerFootballOdds ocOdds, decimal? layOdds, decimal? layCash, DateTime bfUpdated)
         {
+            if (ocOdds == null)
+                return;
+
             var layOddsArbLimit = layOdds + (layOdds * betFairCommision);
             var matchDateTime = ocOdds.OddsCheckerFootballFixtures.MatchDateTime;
             var homeTeam = ocOdds.OddsCheckerFootballFixtures.HomeTeam;

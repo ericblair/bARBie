@@ -146,7 +146,7 @@ namespace Scrapers.Football
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.FileName = "node.exe";
+                process.StartInfo.FileName = "C:\\Program Files\\nodejs\\node.exe";
                 process.StartInfo.WorkingDirectory = scraperFileHomeDir;
                 process.StartInfo.Arguments = String.Format("{0} \"{1}\" \"{2}\" \"{3}\" \"{4}\" \"{5}\" \"{6}\" >> {7}",
                                                 scraperFileName, fixture.ID.ToString(), fixture.CountryID.ToString(),
@@ -163,6 +163,8 @@ namespace Scrapers.Football
                     process.Start();
                 });
             });
+
+            task.Wait();
         }
     }
 }

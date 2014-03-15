@@ -84,6 +84,8 @@ namespace Scrapers.Football
                     process.Start();
                 });
             });
+
+            task.Wait();
         }
 
     }

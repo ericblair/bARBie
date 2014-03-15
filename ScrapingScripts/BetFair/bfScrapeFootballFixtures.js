@@ -14,7 +14,6 @@ var competitionUrl = process.argv[4];
 
 var logger = new (winston.Logger)({
     transports: [
-      //new (winston.transports.Console)(),
       new (winston.transports.File)({ filename: 'bfScrapeFootballFixtures.log' })
     ]
 });
@@ -261,9 +260,8 @@ function convertDateTimeMinusYearToSqlFormat(matchDateTimeUnformatted) {
         return matchDateTime;
 
     } catch (err) {
-        console.log('ERROR in convertDateTimeMinusYearToSqlFormat');
-        console.log('matchDateTimeUnformatted: ' + matchDateTimeUnformatted);
-        console.log(err);
+        logger.error('ERROR in convertDateTimeMinusYearToSqlFormat', err);
+        logger.error('ERROR in matchDateTimeUnformatted', matchDateTimeUnformatted);
     }
 }
 

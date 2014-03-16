@@ -14,11 +14,17 @@ namespace DAL
     
     public partial class FootballFixturesMap
     {
+        public FootballFixturesMap()
+        {
+            this.Arbs_Football_MatchWinner = new HashSet<Arbs_Football_MatchWinner>();
+        }
+    
         public int ID { get; set; }
         public int BetFairFixtureID { get; set; }
         public int OddsCheckerFixtureID { get; set; }
     
         public virtual BetFairFootballFixtures BetFairFootballFixtures { get; set; }
         public virtual OddsCheckerFootballFixtures OddsCheckerFootballFixtures { get; set; }
+        public virtual ICollection<Arbs_Football_MatchWinner> Arbs_Football_MatchWinner { get; set; }
     }
 }

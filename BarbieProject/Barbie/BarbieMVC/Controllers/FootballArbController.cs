@@ -27,6 +27,7 @@ namespace BarbieMVC.Controllers
             // group results by bookie and then display only the most recent arb
             var activeArbs =
                 db.Arbs_Football_MatchWinner
+                .Where(arb => arb.Expired == false || arb.Expired == null)
                 .Where(arb => arb.MatchDateTime > arbCutOffDateTime)
                 .GroupBy(arb => new { arb.HomeTeam, arb.AwayTeam, arb.MatchDateTime, arb.Bookie, arb.Predication })
                 .Select(arb => arb.FirstOrDefault())

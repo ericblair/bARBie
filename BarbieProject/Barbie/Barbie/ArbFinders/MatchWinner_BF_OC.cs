@@ -28,7 +28,7 @@ namespace Barbie.ArbFinders
                 return;
             }
 
-            var matchExpiryDateTime = DateTime.Now.AddMinutes(-matchExpiryLimitMins);
+            matchExpiryDateTime = DateTime.Now.AddMinutes(-matchExpiryLimitMins);
         }
 
         public void CheckAllUnexpiredMappedFixtures()
@@ -84,7 +84,7 @@ namespace Barbie.ArbFinders
             var expiredFixtures = (from arb in barbieEntity.Arbs_Football_MatchWinner
                                    join map in barbieEntity.FootballFixturesMap on arb.FixtureMapID equals map.ID
                                    join oc in barbieEntity.OddsCheckerFootballFixtures on map.OddsCheckerFixtureID equals oc.ID
-                                   where oc.MatchDateTime >= matchExpiryDateTime
+                                   where oc.MatchDateTime < matchExpiryDateTime
                                    select arb).ToList();
 
             if (expiredFixtures.Count > 0)
@@ -99,14 +99,14 @@ namespace Barbie.ArbFinders
             
             // Check to see if the arb reflects the latest odds
             var arbs = barbieEntity.Arbs_Football_MatchWinner
-                        .Where(x => x.Expired == false)
+                        .Where(x => x.Expired == false || x.Expired == null)
                         .OrderBy(x => x.MatchDateTime)
                         .ToList();
 
             foreach (var arb in arbs)
             {
-                var bfFixtureId = barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.ID).Select(x => x.BetFairFixtureID).First();
-                var ocFixtureId = barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.ID).Select(x => x.OddsCheckerFixtureID).First();
+                var bfFixtureId = barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.FixtureMapID).Select(x => x.BetFairFixtureID).First();
+                var ocFixtureId = barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.FixtureMapID).Select(x => x.OddsCheckerFixtureID).First();
 
                 var bfOddsUpdated = barbieEntity.BetFairFootballOdds.Where(x => x.FixtureID == bfFixtureId).OrderByDescending(x => x.ID).Select(x => x.Updated).First();
                 var ocOddsUpdated = barbieEntity.OddsCheckerFootballOdds.Where(x => x.FixtureID == ocFixtureId).OrderByDescending(x => x.ID).Select(x => x.Updated).First();
@@ -115,6 +115,7 @@ namespace Barbie.ArbFinders
                 {
                     arb.Expired = true;
                     arb.Updated = DateTime.Now;
+                    barbieEntity.SaveChanges();
                 }
             }
         }

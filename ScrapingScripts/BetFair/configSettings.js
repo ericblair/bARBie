@@ -4,8 +4,6 @@ var betFairBaseUrl = "http://www.betfair.com";
 
 var userAgentString = "'User-Agent': 'Mozilla/5.0'";
 
-
-var competitionUrls = new Array();
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=67646");  // World Cup 2014
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=39218");  // AFC Champions League
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=59953");  // Argentina Torneo de Verano
@@ -41,33 +39,18 @@ var competitionUrls = new Array();
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=71");  // Dutch Eredivisie
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=803690");  // Ecuadorian Primera A
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=801976");  // Egyptian Premier
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=31");  // Barclays Premier League
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=2134");  // Capital One Cup
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=33");  // English Championship
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=41");  // English Conference North
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=39");  // Conference Premier
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=43");  // Conference South
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=30558");  // English FA Cup
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=42886");  // English FA Trophy
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=24789");  // English Johnstone's Paint Trophy
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=35");  // English League One
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=37");  // English League Two
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=4381282");  // English Liverpool Senior Cup Liverpool Senior Cup
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=2129602");  // English Professional Development League
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=820588");  // English Southern Premier
 //competitionUrls.push("http://www.betfair.com/exchange/football/event?id=26952112");  // Euro 2016
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=67721");  // Finnish League Cup
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=22358");  // French Coupe de la Ligue
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=55");  // French Ligue 1 Orange
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=57");  // French Ligue 2 Orange
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=1081960");  // French Ligue National
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=219");  // Friendlies 
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=158146");  // German 3. Liga
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=59");  // Bundesliga 1
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=61");  // Bundesliga 2 
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=30961");  // German Cup
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=63");  // German Regionalliga Nord
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=840808");  // German Regionalliga West
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=26207");  // Greek Cup
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=67");  // Greek Super League
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=3085802");  // Hong Kong Reserve Division League
@@ -79,12 +62,6 @@ competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=59
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=827033");  // Israeli Liga Alef South 
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=804044");  // Israeli Liga Leumit
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=822165");  // Israeli Premier
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=841133");  // Italian Campeonato Primavera
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=1874");  // Coppa Italia
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=85");  // Italian Lega Pro 1/A
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=87");  // Lega Pro 1/B 
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=81");  // Serie A 
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=83");  // Serie B 
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=89");  // J League
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=1979279");  // Copa Mexico
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=59870");  // Mexican Clausura
@@ -101,22 +78,14 @@ competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=81
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=101");  // Russian Premier Division
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=2315454");  // Saudi Division 1
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=853446");  // Saudi Premier
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=107");  // Scottish Championship
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=409743");  // Scottish Cup
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=1038449");  // Scottish League Cup
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=109");  // Scottish League One
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=111");  // Scottish League Two 
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=105");  // Scottish Premiership
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=103");  // Serbian Super Liga
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=113");  // Slovakian Corgon Liga
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=115");  // Slovenian Prva Liga
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=867459");  // South Korean K League
-competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=117");  // Primera Division
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=121");  // Segunda B/1 
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=123");  // Segunda B/2 online betting
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=125");  // Segunda B/3
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=127");  // Segunda B/4
-//competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=119");  // Segunda Division
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=12801");  // Spanish Cup
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=129");  // Sweden Allsvenskan
 //competitionUrls.push("http://www.betfair.com/exchange/football/competition?id=135");  // Swiss Challenge League
@@ -150,10 +119,6 @@ module.exports = {
             + ':' + pad2(currentDateTime.getSeconds());
 
         return currentDateTimeString;
-    },
-
-    GetCompetitionUrls: function () {
-        return competitionUrls;
     }
 };
 

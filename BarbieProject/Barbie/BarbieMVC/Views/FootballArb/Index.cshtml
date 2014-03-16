@@ -1,7 +1,8 @@
-﻿@model IEnumerable<DAL.Arbs_Football_MatchWinner>
+﻿@model IEnumerable<BarbieMVC.Models.Arbs_Football_MatchWinner>
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -44,6 +45,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Updated)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FixtureMapID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Expired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
         <th></th>
     </tr>
 
@@ -83,9 +93,18 @@
             @Html.DisplayFor(modelItem => item.Updated)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.DisplayFor(modelItem => item.FixtureMapID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Expired)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
         </td>
     </tr>
 }

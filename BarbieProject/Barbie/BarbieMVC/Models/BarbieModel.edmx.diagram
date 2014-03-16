@@ -32,6 +32,7 @@
         <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballOdds_CompetitionID" ManuallyRouted="false" />
         <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID" ManuallyRouted="false" />
         <AssociationConnector Association="bARBieModel.FK_OddsCheckerFootballOdds_FixtureID" ManuallyRouted="false" />
+        <AssociationConnector Association="bARBieModel.FK_Arbs_Football_MatchWinner_FixtureMapID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

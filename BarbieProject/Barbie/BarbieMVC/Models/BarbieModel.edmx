@@ -4,12 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bARBieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bARBieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Arbs_Football_MatchWinner">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FixtureMapID" Type="int" Nullable="false" />
           <Property Name="MatchDateTime" Type="datetime" Nullable="false" />
           <Property Name="HomeTeam" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="AwayTeam" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -20,7 +21,9 @@
           <Property Name="Predication" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BetFairUpdated" Type="datetime" Nullable="false" />
           <Property Name="OddsCheckerUpdated" Type="datetime" Nullable="false" />
-          <Property Name="Updated" Type="datetime" Nullable="false" />
+          <Property Name="Expired" Type="bit" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
         </EntityType>
         <EntityType Name="BetFairCompetitionUrls">
           <Key>
@@ -150,6 +153,18 @@
           <Property Name="BetDaq" Type="decimal" Precision="8" Scale="2" />
           <Property Name="Updated" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Arbs_Football_MatchWinner_FixtureMapID">
+          <End Role="FootballFixturesMap" Type="Self.FootballFixturesMap" Multiplicity="1" />
+          <End Role="Arbs_Football_MatchWinner" Type="Self.Arbs_Football_MatchWinner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FootballFixturesMap">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Arbs_Football_MatchWinner">
+              <PropertyRef Name="FixtureMapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BetFairCompetitionUrls_CompetitionID">
           <End Role="FootballCompetitions" Type="Self.FootballCompetitions" Multiplicity="1" />
           <End Role="BetFairCompetitionUrls" Type="Self.BetFairCompetitionUrls" Multiplicity="*" />
@@ -354,6 +369,10 @@
           <EntitySet Name="OddsCheckerCompetitionUrls" EntityType="Self.OddsCheckerCompetitionUrls" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OddsCheckerFootballFixtures" EntityType="Self.OddsCheckerFootballFixtures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OddsCheckerFootballOdds" EntityType="Self.OddsCheckerFootballOdds" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Arbs_Football_MatchWinner_FixtureMapID" Association="Self.FK_Arbs_Football_MatchWinner_FixtureMapID">
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMap" />
+            <End Role="Arbs_Football_MatchWinner" EntitySet="Arbs_Football_MatchWinner" />
+          </AssociationSet>
           <AssociationSet Name="FK_BetFairCompetitionUrls_CompetitionID" Association="Self.FK_BetFairCompetitionUrls_CompetitionID">
             <End Role="FootballCompetitions" EntitySet="FootballCompetitions" />
             <End Role="BetFairCompetitionUrls" EntitySet="BetFairCompetitionUrls" />
@@ -419,8 +438,7 @@
             <End Role="OddsCheckerFootballOdds" EntitySet="OddsCheckerFootballOdds" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bARBieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -439,7 +457,11 @@
           <Property Name="Predication" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BetFairUpdated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="OddsCheckerUpdated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Updated" Type="DateTime" Precision="3" />
+          <Property Name="FixtureMapID" Type="Int32" Nullable="false" />
+          <Property Name="Expired" Type="Boolean" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="FootballFixturesMap" Relationship="bARBieModel.FK_Arbs_Football_MatchWinner_FixtureMapID" FromRole="Arbs_Football_MatchWinner" ToRole="FootballFixturesMap" />
         </EntityType>
         <EntityType Name="BetFairCompetitionUrl">
           <Key>
@@ -537,6 +559,7 @@
           <Property Name="OddsCheckerFixtureID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BetFairFootballFixture" Relationship="Self.FK_FootballFixturesMap_BetFairFixtureID" FromRole="FootballFixturesMap" ToRole="BetFairFootballFixtures" />
           <NavigationProperty Name="OddsCheckerFootballFixture" Relationship="Self.FK_FootballFixturesMap_OddsCheckerFixtureID" FromRole="FootballFixturesMap" ToRole="OddsCheckerFootballFixtures" />
+          <NavigationProperty Name="Arbs_Football_MatchWinner" Relationship="bARBieModel.FK_Arbs_Football_MatchWinner_FixtureMapID" FromRole="FootballFixturesMap" ToRole="Arbs_Football_MatchWinner" />
         </EntityType>
         <EntityType Name="OddsCheckerCompetitionUrl">
           <Key>
@@ -869,7 +892,23 @@
             <End Role="OddsCheckerFootballFixtures" EntitySet="OddsCheckerFootballFixtures" />
             <End Role="OddsCheckerFootballOdds" EntitySet="OddsCheckerFootballOdds" />
           </AssociationSet>
+          <AssociationSet Name="FK_Arbs_Football_MatchWinner_FixtureMapID" Association="bARBieModel.FK_Arbs_Football_MatchWinner_FixtureMapID">
+            <End Role="FootballFixturesMap" EntitySet="FootballFixturesMaps" />
+            <End Role="Arbs_Football_MatchWinner" EntitySet="Arbs_Football_MatchWinner" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Arbs_Football_MatchWinner_FixtureMapID">
+          <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="1" />
+          <End Type="bARBieModel.Arbs_Football_MatchWinner" Role="Arbs_Football_MatchWinner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FootballFixturesMap">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Arbs_Football_MatchWinner">
+              <PropertyRef Name="FixtureMapID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -879,6 +918,9 @@
           <EntitySetMapping Name="Arbs_Football_MatchWinner">
             <EntityTypeMapping TypeName="bARBieModel.Arbs_Football_MatchWinner">
               <MappingFragment StoreEntitySet="Arbs_Football_MatchWinner">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Expired" ColumnName="Expired" />
+                <ScalarProperty Name="FixtureMapID" ColumnName="FixtureMapID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MatchDateTime" ColumnName="MatchDateTime" />
                 <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />

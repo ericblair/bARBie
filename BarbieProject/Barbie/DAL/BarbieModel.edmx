@@ -21,8 +21,9 @@
           <Property Name="Predication" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BetFairUpdated" Type="datetime" Nullable="false" />
           <Property Name="OddsCheckerUpdated" Type="datetime" Nullable="false" />
-          <Property Name="Updated" Type="datetime" Nullable="false" />
           <Property Name="Expired" Type="bit" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Updated" Type="datetime" />
         </EntityType>
         <EntityType Name="BetFairCompetitionUrls">
           <Key>
@@ -924,10 +925,11 @@
           <Property Type="String" Name="Predication" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="BetFairUpdated" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="OddsCheckerUpdated" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="Updated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="Updated" Precision="3" />
           <Property Name="FixtureMapID" Type="Int32" Nullable="false" />
           <Property Name="Expired" Type="Boolean" />
           <NavigationProperty Name="FootballFixturesMap" Relationship="bARBieModel.FK_Arbs_Football_MatchWinner_FixtureMapID" FromRole="Arbs_Football_MatchWinner" ToRole="FootballFixturesMap" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_Arbs_Football_MatchWinner_FixtureMapID">
           <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="1" />
@@ -1088,6 +1090,7 @@
           <EntitySetMapping Name="Arbs_Football_MatchWinner">
             <EntityTypeMapping TypeName="bARBieModel.Arbs_Football_MatchWinner">
               <MappingFragment StoreEntitySet="Arbs_Football_MatchWinner">
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Expired" ColumnName="Expired" />
                 <ScalarProperty Name="FixtureMapID" ColumnName="FixtureMapID" />
                 <ScalarProperty Name="Updated" ColumnName="Updated" />

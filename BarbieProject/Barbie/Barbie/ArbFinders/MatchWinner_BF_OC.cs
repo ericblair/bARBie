@@ -15,14 +15,12 @@ namespace Barbie.ArbFinders
         // TODO: Load this variable from somewhere external
         private decimal? betFairCommision = new Decimal(0.05);
 
+        private int matchExpiryLimitMins;
+        private DateTime matchExpiryDateTime;
+
         public MatchWinner_BF_OC()
         {
             barbieEntity = new bARBieEntities();
-        }
-
-        public void CheckAllUnexpiredMappedFixtures()
-        {
-            int matchExpiryLimitMins;
 
             if (!Int32.TryParse(ConfigurationManager.AppSettings["MatchExpiryLimitMins"], out matchExpiryLimitMins))
             {
@@ -31,7 +29,10 @@ namespace Barbie.ArbFinders
             }
 
             var matchExpiryDateTime = DateTime.Now.AddMinutes(-matchExpiryLimitMins);
+        }
 
+        public void CheckAllUnexpiredMappedFixtures()
+        {
             var mappedFixtures = barbieEntity.FootballFixturesMap
                                     .Where(x => x.OddsCheckerFootballFixtures.MatchDateTime >= matchExpiryDateTime)
                                     .OrderBy(x => x.OddsCheckerFootballFixtures.MatchDateTime)
@@ -72,6 +73,49 @@ namespace Barbie.ArbFinders
                             bfOddsCollection.DrawOdds.LayHighCash, bfOddsCollection.DrawOdds.Updated, fixture.ID);
                 }
 
+            }
+        }
+
+
+        // TODO: think about the arbs expiry process
+        public void UpdateExpiredArbs()
+        {
+            // Get all arbs where matchdatetime has expired
+            var expiredFixtures = (from arb in barbieEntity.Arbs_Football_MatchWinner
+                                   join map in barbieEntity.FootballFixturesMap on arb.FixtureMapID equals map.ID
+                                   join oc in barbieEntity.OddsCheckerFootballFixtures on map.OddsCheckerFixtureID equals oc.ID
+                                   where oc.MatchDateTime >= matchExpiryDateTime
+                                   select arb).ToList();
+
+            if (expiredFixtures.Count > 0)
+            {
+                foreach (var arb in expiredFixtures)
+                {
+                    arb.Expired = true;
+                }
+
+                barbieEntity.SaveChanges();
+            }
+            
+            // Check to see if the arb reflects the latest odds
+            var arbs = barbieEntity.Arbs_Football_MatchWinner
+                        .Where(x => x.Expired == false)
+                        .OrderBy(x => x.MatchDateTime)
+                        .ToList();
+
+            foreach (var arb in arbs)
+            {
+                var bfFixtureId = barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.ID).Select(x => x.BetFairFixtureID).First();
+                var ocFixtureId = barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.ID).Select(x => x.OddsCheckerFixtureID).First();
+
+                var bfOddsUpdated = barbieEntity.BetFairFootballOdds.Where(x => x.FixtureID == bfFixtureId).OrderByDescending(x => x.ID).Select(x => x.Updated).First();
+                var ocOddsUpdated = barbieEntity.OddsCheckerFootballOdds.Where(x => x.FixtureID == ocFixtureId).OrderByDescending(x => x.ID).Select(x => x.Updated).First();
+
+                if (arb.BetFairUpdated < bfOddsUpdated && arb.OddsCheckerUpdated < ocOddsUpdated)
+                {
+                    arb.Expired = true;
+                    arb.Updated = DateTime.Now;
+                }
             }
         }
 
@@ -257,8 +301,14 @@ namespace Barbie.ArbFinders
                             .Where(x => x.Predication == prediction)
                             .FirstOrDefault();
 
+            // Update existing arb
             if (record != null)
+            {
+                record.Updated = DateTime.Now;
+                barbieEntity.SaveChanges();
                 return;
+            }
+                
 
             var arb = new Arbs_Football_MatchWinner();
             arb.MatchDateTime = matchDateTime;
@@ -272,7 +322,7 @@ namespace Barbie.ArbFinders
             arb.OddsCheckerUpdated = oddsCheckerUpdated;
             arb.Predication = prediction;
             arb.FixtureMapID = fixtureID;
-            arb.Updated = DateTime.Now;
+            arb.Created = DateTime.Now;
 
             barbieEntity.Arbs_Football_MatchWinner.Add(arb);
             barbieEntity.SaveChanges();

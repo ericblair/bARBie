@@ -20,11 +20,11 @@ namespace Barbie
 
             //runMapper();
 
-            //scrapeOCOdds();
+            scrapeOCOdds();
 
             //scrapeBFOdds();
 
-            runArbFinder();
+            //runArbFinder();
         }
 
         private static void scrapeOCFixtures()
@@ -42,7 +42,11 @@ namespace Barbie
         private static void scrapeOCOdds()
         {
             var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
-            ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
+            //ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
+
+            var startDate = DateTime.Now;
+            var endDate = new DateTime(2014, 3, 16, 23, 59, 59);
+            ocMatchWinnerOddsScraper.ScrapeOddsBetween(startDate, endDate);
         }
 
         private static void scrapeBFOdds()
@@ -60,6 +64,7 @@ namespace Barbie
         private static void runArbFinder()
         {
             var arbFinder = new ArbFinders.MatchWinner_BF_OC();
+            //arbFinder.UpdateExpiredArbs();
             arbFinder.CheckAllUnexpiredMappedFixtures();
         }
     }

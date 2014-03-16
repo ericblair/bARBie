@@ -25,9 +25,10 @@ namespace DAL
         public string Predication { get; set; }
         public System.DateTime BetFairUpdated { get; set; }
         public System.DateTime OddsCheckerUpdated { get; set; }
-        public System.DateTime Updated { get; set; }
+        public Nullable<System.DateTime> Updated { get; set; }
         public int FixtureMapID { get; set; }
         public Nullable<bool> Expired { get; set; }
+        public System.DateTime Created { get; set; }
     
         public virtual FootballFixturesMap FootballFixturesMap { get; set; }
     }

@@ -93,19 +93,19 @@
             @Html.DisplayFor(modelItem => item.Updated)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.FixtureMapID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Expired)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+        </td>*@
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
-        </td>
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>*@
     </tr>
 }
 

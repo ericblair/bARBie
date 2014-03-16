@@ -1,0 +1,93 @@
+﻿@model IEnumerable<DAL.Arbs_Football_MatchWinner>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MatchDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HomeTeam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AwayTeam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BetFairOdds)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookieOdds)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BetFairCash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Predication)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BetFairUpdated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OddsCheckerUpdated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Updated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MatchDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HomeTeam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AwayTeam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BetFairOdds)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookieOdds)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BetFairCash)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bookie)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Predication)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BetFairUpdated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OddsCheckerUpdated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Updated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

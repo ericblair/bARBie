@@ -1,0 +1,92 @@
+﻿@model DAL.Arbs_Football_MatchWinner
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Arbs_Football_MatchWinner</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MatchDateTime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MatchDateTime)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HomeTeam)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HomeTeam)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AwayTeam)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AwayTeam)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BetFairOdds)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BetFairOdds)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BookieOdds)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BookieOdds)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BetFairCash)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BetFairCash)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Bookie)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Bookie)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Predication)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Predication)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BetFairUpdated)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BetFairUpdated)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OddsCheckerUpdated)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OddsCheckerUpdated)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Updated)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Updated)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

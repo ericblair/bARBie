@@ -28,7 +28,7 @@ namespace BarbieMVC.Controllers
             var activeArbs =
                 db.Arbs_Football_MatchWinner
                 .Where(arb => arb.Expired == false || arb.Expired == null)
-                .Where(arb => arb.MatchDateTime > arbCutOffDateTime)
+                //.Where(arb => arb.MatchDateTime > arbCutOffDateTime)
                 .GroupBy(arb => new { arb.HomeTeam, arb.AwayTeam, arb.MatchDateTime, arb.Bookie, arb.Predication })
                 .Select(arb => arb.FirstOrDefault())
                 .OrderByDescending(arb => arb.Updated)

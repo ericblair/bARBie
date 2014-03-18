@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BarbieMVC.Models;
+using BarbieMVC.ViewModels;
 
 namespace BarbieMVC.Controllers
 {
@@ -18,17 +19,13 @@ namespace BarbieMVC.Controllers
 
         public ActionResult Index()
         {
-            //return View(db.FootballArbs.ToList());
-
             var arbCutOffDateTime = DateTime.Now.AddHours(-3);
-
-            //var activeArbs = db.FootballArbs.Where(arb => arb.MatchDateTime > arbCutOffDateTime).ToList();
 
             // group results by bookie and then display only the most recent arb
             var activeArbs =
                 db.Arbs_Football_MatchWinner
                 .Where(arb => arb.Expired == false || arb.Expired == null)
-                //.Where(arb => arb.MatchDateTime > arbCutOffDateTime)
+                .Where(arb => arb.MatchDateTime > arbCutOffDateTime)
                 .GroupBy(arb => new { arb.HomeTeam, arb.AwayTeam, arb.MatchDateTime, arb.Bookie, arb.Predication })
                 .Select(arb => arb.FirstOrDefault())
                 .OrderByDescending(arb => arb.Updated)
@@ -39,7 +36,29 @@ namespace BarbieMVC.Controllers
                 .ThenBy(arb => arb.Bookie)
                 .ThenBy(arb => arb.Predication);
 
-            return View(activeArbs);
+            var activeArbsResult = new List<DisplayFootballArbViewModel>();
+            foreach (var activeArb in activeArbs)
+            {
+                var arb = new DisplayFootballArbViewModel
+                {
+                    MatchDateTime = activeArb.MatchDateTime,
+                    HomeTeam = activeArb.HomeTeam,
+                    AwayTeam = activeArb.AwayTeam,
+                    Predication = activeArb.Predication,
+                    Bookie = activeArb.Bookie,
+                    BookieOdds = activeArb.BookieOdds,
+                    BetFairOdds = activeArb.BetFairOdds,
+                    BetFairCash = activeArb.BetFairCash,
+                    BetFairUpdated = activeArb.BetFairUpdated,
+                    OddsCheckerUpdated = activeArb.OddsCheckerUpdated,
+                    Updated = activeArb.Updated,
+                    Created = activeArb.Created
+                };
+
+                activeArbsResult.Add(arb);
+            }
+
+            return View(activeArbsResult);
         }
 
         //

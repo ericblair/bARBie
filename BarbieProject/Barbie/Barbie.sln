@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barbie", "Barbie\Barbie.csproj", "{C8DA5350-62E3-4355-81A5-535870B45E0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrapers", "Scrapers\Scrapers.csproj", "{F44A77C8-5018-4A42-ACEC-F868AE091728}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{E379F885-9963-435D-9C28-A4F6EDD2FFB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarbieMVC", "BarbieMVC\BarbieMVC.csproj", "{BD939508-52D5-424C-9709-F0B73B7C6418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,10 @@ Global
 		{E379F885-9963-435D-9C28-A4F6EDD2FFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E379F885-9963-435D-9C28-A4F6EDD2FFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E379F885-9963-435D-9C28-A4F6EDD2FFB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD939508-52D5-424C-9709-F0B73B7C6418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD939508-52D5-424C-9709-F0B73B7C6418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD939508-52D5-424C-9709-F0B73B7C6418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD939508-52D5-424C-9709-F0B73B7C6418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

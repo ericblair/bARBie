@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BarbieMVC.ViewModels.DisplayFootballArbViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Live Arbs</h2>
+
+@foreach (var fixtures in Model.GroupBy(x => new { x.MatchDateTime, x.HomeTeam, x.AwayTeam }))
+{
+    <h3>Home Team: @Html.Encode(fixtures.Select(x => x.HomeTeam).First())</h3>
+    <h3>Away Team: @Html.Encode(fixtures.Select(x => x.AwayTeam).First())</h3>
+    <h3>MatchDateTime: @Html.Encode(fixtures.Select(x => x.MatchDateTime).First())</h3>
+    <br/>
+    
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Predication)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bookie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookieOdds)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BetFairOdds)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BetFairCash)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BetFairUpdated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OddsCheckerUpdated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+        </tr>
+
+        @foreach (var fixture in fixtures)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.Predication)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.Bookie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.BookieOdds)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.BetFairOdds)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.BetFairCash)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.BetFairUpdated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.OddsCheckerUpdated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.Updated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => fixture.Created)
+                </td>
+            </tr>
+        }
+    </table>
+}

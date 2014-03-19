@@ -42,13 +42,23 @@ namespace Barbie
         private static void scrapeOCOdds()
         {
             var ocMatchWinnerOddsScraper = new OCMatchWinnerOddsScraper();
-            ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
+            //ocMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
+
+            var startDate = DateTime.Now.AddHours(-3);
+            var endDate = DateTime.Now.AddDays(2);
+
+            ocMatchWinnerOddsScraper.ScrapeOddsBetween(startDate, endDate);
         }
 
         private static void scrapeBFOdds()
         {
             var bfMatchWinnerOddsScraper = new BFMatchWinnerOddsScraper();
-            bfMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
+            //bfMatchWinnerOddsScraper.ScrapeOddsForUnexpiredFixtures();
+
+            var startDate = DateTime.Now.AddHours(-3);
+            var endDate = DateTime.Now.AddDays(2);
+
+            bfMatchWinnerOddsScraper.ScrapeOddsBetween(startDate, endDate);
         }
 
         private static void runMapper()
@@ -61,6 +71,7 @@ namespace Barbie
         {
             var arbFinder = new ArbFinders.MatchWinner_BF_OC();
             arbFinder.CheckAllUnexpiredMappedFixtures();
+            arbFinder.UpdateExpiredArbs();
         }
     }
 }

@@ -35,6 +35,7 @@
         <AssociationConnector Association="bARBieModel.FK_FootballFixturesMap_OddsCheckerFixtureID1" />
         <EntityTypeShape EntityType="bARBieModel.Arbs_Football_MatchWinner" Width="1.5" PointX="1.375" PointY="12.875" />
         <AssociationConnector Association="bARBieModel.FK_Arbs_Football_MatchWinner_FixtureMapID" />
+        <EntityTypeShape EntityType="bARBieModel.Arbs_Football_MatchWinner_Expired" Width="1.5" PointX="8.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

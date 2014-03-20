@@ -49,6 +49,9 @@
     <Compile Include="Arbs_Football_MatchWinner.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Arbs_Football_MatchWinner_Expired.cs">
+      <DependentUpon>BarbieModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="BarbieModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -36,5 +36,6 @@ namespace DAL
         public DbSet<BetFairFootballFixtures> BetFairFootballFixtures { get; set; }
         public DbSet<FootballFixturesMap> FootballFixturesMap { get; set; }
         public DbSet<Arbs_Football_MatchWinner> Arbs_Football_MatchWinner { get; set; }
+        public DbSet<Arbs_Football_MatchWinner_Expired> Arbs_Football_MatchWinner_Expired { get; set; }
     }
 }

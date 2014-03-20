@@ -29,6 +29,9 @@ namespace Barbie
 
             //var archiver = new ArchiveOdds_MatchWinner_BF_OC();
             //archiver.ArchiveExpiredOdds();
+
+            //var deleteExpiredRecords = new DeleteExpiredData();
+            //deleteExpiredRecords.Run();
         }
 
         private static void scrapeOCFixtures()

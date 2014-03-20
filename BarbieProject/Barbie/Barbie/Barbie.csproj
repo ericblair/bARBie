@@ -54,6 +54,7 @@
     <Compile Include="ArbFinders\MatchWinner_BF_OC.cs" />
     <Compile Include="ArbFinders\OCMatchWinnerOddsCollection.cs" />
     <Compile Include="DbMaintenance\ArchiveOdds_MatchWinner_BF_OC.cs" />
+    <Compile Include="DbMaintenance\DeleteExpiredData.cs" />
     <Compile Include="FixtureMappers\MatchWinner_BF_OC.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

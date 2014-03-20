@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Scrapers.Football;
 using Barbie.FixtureMappers;
 using Barbie.ArbFinders;
+using Barbie.DbMaintenance;
 
 namespace Barbie
 {
@@ -25,6 +26,9 @@ namespace Barbie
             //scrapeBFOdds();
 
             runArbFinder();
+
+            //var archiver = new ArchiveOdds_MatchWinner_BF_OC();
+            //archiver.ArchiveExpiredOdds();
         }
 
         private static void scrapeOCFixtures()

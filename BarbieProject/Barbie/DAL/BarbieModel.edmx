@@ -14,16 +14,18 @@
           <Property Name="MatchDateTime" Type="datetime" Nullable="false" />
           <Property Name="HomeTeam" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="AwayTeam" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="BetFairOdds" Type="decimal" Precision="8" Scale="2" Nullable="false" />
-          <Property Name="BookieOdds" Type="decimal" Precision="8" Scale="2" Nullable="false" />
-          <Property Name="BetFairCash" Type="decimal" Precision="8" Scale="2" />
           <Property Name="Bookie" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BookieOdds" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="BetFairLayLevel" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="BetFairOdds" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="BetFairCash" Type="decimal" Precision="8" Scale="2" />
           <Property Name="Predication" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BetFairUpdated" Type="datetime" Nullable="false" />
           <Property Name="OddsCheckerUpdated" Type="datetime" Nullable="false" />
           <Property Name="Expired" Type="bit" />
           <Property Name="Created" Type="datetime" Nullable="false" />
           <Property Name="Updated" Type="datetime" />
+          <Property Name="ParentID" Type="int" />
         </EntityType>
         <EntityType Name="BetFairCompetitionUrls">
           <Key>
@@ -930,6 +932,8 @@
           <Property Name="Expired" Type="Boolean" />
           <NavigationProperty Name="FootballFixturesMap" Relationship="bARBieModel.FK_Arbs_Football_MatchWinner_FixtureMapID" FromRole="Arbs_Football_MatchWinner" ToRole="FootballFixturesMap" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="BetFairLayLevel" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Arbs_Football_MatchWinner_FixtureMapID">
           <End Type="bARBieModel.FootballFixturesMap" Role="FootballFixturesMap" Multiplicity="1" />
@@ -1090,6 +1094,8 @@
           <EntitySetMapping Name="Arbs_Football_MatchWinner">
             <EntityTypeMapping TypeName="bARBieModel.Arbs_Football_MatchWinner">
               <MappingFragment StoreEntitySet="Arbs_Football_MatchWinner">
+                <ScalarProperty Name="BetFairLayLevel" ColumnName="BetFairLayLevel" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Expired" ColumnName="Expired" />
                 <ScalarProperty Name="FixtureMapID" ColumnName="FixtureMapID" />

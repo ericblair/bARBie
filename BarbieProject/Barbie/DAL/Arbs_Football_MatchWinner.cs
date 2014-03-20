@@ -29,6 +29,8 @@ namespace DAL
         public int FixtureMapID { get; set; }
         public Nullable<bool> Expired { get; set; }
         public System.DateTime Created { get; set; }
+        public Nullable<int> ParentID { get; set; }
+        public string BetFairLayLevel { get; set; }
     
         public virtual FootballFixturesMap FootballFixturesMap { get; set; }
     }

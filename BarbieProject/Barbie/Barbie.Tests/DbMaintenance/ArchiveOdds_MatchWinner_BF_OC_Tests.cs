@@ -39,17 +39,18 @@ namespace Barbie.Tests.DbMaintenance
         }
 
         [TestMethod]
-        public void ArchiveExpiredOdds_ConfidenceTest()
+        public void ArchiveExpiredOdds_VerifyOnlyExpiredFixtureIsArchived()
         {
-            // Set up some expired and unexpired arbs
+            // Arrange
+
             var expiredArbRecord = ModelHelpers.Arbs_Football_MatchWinner_Helper.CreateRecord(id: 1, expired: true);
             var unexpiredArbRecord = ModelHelpers.Arbs_Football_MatchWinner_Helper.CreateRecord(id: 2, expired: false);
 
-            // Add records to Arbs_Football_MatchWinner table
             mockArbsFootballMatchWinnerTable.Add(expiredArbRecord);
             mockArbsFootballMatchWinnerTable.Add(unexpiredArbRecord);
 
             // Act
+
             var testContext = new ArchiveOdds_MatchWinner_BF_OC(mockContext.Object);
             testContext.ArchiveExpiredOdds();
 

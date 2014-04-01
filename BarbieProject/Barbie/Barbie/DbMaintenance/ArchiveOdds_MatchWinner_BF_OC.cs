@@ -9,16 +9,21 @@ namespace Barbie.DbMaintenance
 {
     public class ArchiveOdds_MatchWinner_BF_OC
     {
-        bARBieEntities barbieEntity;
+        bARBieEntities _barbieEntity;
 
         public ArchiveOdds_MatchWinner_BF_OC()
         {
-            barbieEntity = new bARBieEntities();
+            _barbieEntity = new bARBieEntities();
+        }
+
+        public ArchiveOdds_MatchWinner_BF_OC(bARBieEntities barbieEntity)
+        {
+            _barbieEntity = barbieEntity;
         }
         
         public void ArchiveExpiredOdds()
         {
-            var expiredOdds = barbieEntity.Arbs_Football_MatchWinner.Where(x => x.Expired == true);
+            var expiredOdds = _barbieEntity.Arbs_Football_MatchWinner.Where(x => x.Expired == true);
 
             var oddsToArchive = new List<Arbs_Football_MatchWinner_Expired>();
             var oddsToDelete = new List<Arbs_Football_MatchWinner>();
@@ -50,15 +55,15 @@ namespace Barbie.DbMaintenance
 
             foreach (var record in oddsToArchive)
             {
-                barbieEntity.Arbs_Football_MatchWinner_Expired.Add(record);
+                _barbieEntity.Arbs_Football_MatchWinner_Expired.Add(record);
             }
 
             foreach (var record in oddsToDelete)
             {
-                barbieEntity.Arbs_Football_MatchWinner.Remove(record);
+                _barbieEntity.Arbs_Football_MatchWinner.Remove(record);
             }
 
-            barbieEntity.SaveChanges();
+            _barbieEntity.SaveChanges();
         }
     }
 }

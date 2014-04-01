@@ -25,17 +25,17 @@ namespace DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Arbs_Football_MatchWinner> Arbs_Football_MatchWinner { get; set; }
-        public virtual DbSet<Arbs_Football_MatchWinner_Expired> Arbs_Football_MatchWinner_Expired { get; set; }
-        public virtual DbSet<BetFairCompetitionUrls> BetFairCompetitionUrls { get; set; }
-        public virtual DbSet<BetFairFootballFixtures> BetFairFootballFixtures { get; set; }
-        public virtual DbSet<BetFairFootballOdds> BetFairFootballOdds { get; set; }
-        public virtual DbSet<Bookie> Bookie { get; set; }
-        public virtual DbSet<Countries> Countries { get; set; }
-        public virtual DbSet<FootballCompetitions> FootballCompetitions { get; set; }
-        public virtual DbSet<FootballFixturesMap> FootballFixturesMap { get; set; }
-        public virtual DbSet<OddsCheckerCompetitionUrls> OddsCheckerCompetitionUrls { get; set; }
-        public virtual DbSet<OddsCheckerFootballFixtures> OddsCheckerFootballFixtures { get; set; }
-        public virtual DbSet<OddsCheckerFootballOdds> OddsCheckerFootballOdds { get; set; }
+        public IDbSet<Arbs_Football_MatchWinner> Arbs_Football_MatchWinner { get; set; }
+        public IDbSet<Arbs_Football_MatchWinner_Expired> Arbs_Football_MatchWinner_Expired { get; set; }
+        public IDbSet<BetFairCompetitionUrls> BetFairCompetitionUrls { get; set; }
+        public IDbSet<BetFairFootballFixtures> BetFairFootballFixtures { get; set; }
+        public IDbSet<BetFairFootballOdds> BetFairFootballOdds { get; set; }
+        public IDbSet<Bookie> Bookie { get; set; }
+        public IDbSet<Countries> Countries { get; set; }
+        public IDbSet<FootballCompetitions> FootballCompetitions { get; set; }
+        public IDbSet<FootballFixturesMap> FootballFixturesMap { get; set; }
+        public IDbSet<OddsCheckerCompetitionUrls> OddsCheckerCompetitionUrls { get; set; }
+        public IDbSet<OddsCheckerFootballFixtures> OddsCheckerFootballFixtures { get; set; }
+        public IDbSet<OddsCheckerFootballOdds> OddsCheckerFootballOdds { get; set; }
     }
 }

@@ -16,19 +16,33 @@ namespace Barbie.Tests.DbMaintenance
     [TestClass]
     public class ArchiveOdds_MatchWinner_BF_OC_Tests
     {
+        Mock<bARBieEntities> mockContext;
+
+        // Create mock objects for the tables used in test
+        FakeDbSet<Arbs_Football_MatchWinner> mockArbsFootballMatchWinnerTable;
+        FakeDbSet<Arbs_Football_MatchWinner_Expired> mockExpiredArbsFootballMatchWinnerTable;
+
         public ArchiveOdds_MatchWinner_BF_OC_Tests()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            mockContext = new Mock<bARBieEntities>();
+
+            mockArbsFootballMatchWinnerTable = new FakeDbSet<Arbs_Football_MatchWinner>();
+            mockExpiredArbsFootballMatchWinnerTable = new FakeDbSet<Arbs_Football_MatchWinner_Expired>();
+        }
+
+        [TestInitialize()]
+        public void Initialize()
+        {
+            // Set mockContext tables to FakeDbSet objects
+            mockContext.Object.Arbs_Football_MatchWinner = mockArbsFootballMatchWinnerTable;
+            mockContext.Object.Arbs_Football_MatchWinner_Expired = mockExpiredArbsFootballMatchWinnerTable;
         }
 
         [TestMethod]
         public void ArchiveExpiredOdds_ConfidenceTest()
         {
             // Set up some expired and unexpired arbs
-            var mockContext = new Mock<bARBieEntities>();
-
+            
             var expiredArbRecord = new Arbs_Football_MatchWinner
             {
                 ID = 1,
@@ -71,20 +85,18 @@ namespace Barbie.Tests.DbMaintenance
                 ParentID = null
             };
 
-            var mockArbsFootballMatchWinnerTable = new FakeDbSet<Arbs_Football_MatchWinner>();
-
+            // Add records to Arbs_Football_MatchWinner table
             mockArbsFootballMatchWinnerTable.Add(expiredArbRecord);
             mockArbsFootballMatchWinnerTable.Add(unexpiredArbRecord);
 
-            mockContext.Object.Arbs_Football_MatchWinner = mockArbsFootballMatchWinnerTable;
+            //mockContext.Object.Arbs_Football_MatchWinner = mockArbsFootballMatchWinnerTable;
+            //mockContext.Object.Arbs_Football_MatchWinner_Expired = mockExpiredArbsFootballMatchWinnerTable;
 
-            var mockExpiredArbsFootballMatchWinnerTable = new FakeDbSet<Arbs_Football_MatchWinner_Expired>();
-
-            mockContext.Object.Arbs_Football_MatchWinner_Expired = mockExpiredArbsFootballMatchWinnerTable;
-
-            // Call test method
+            // Act
             var testContext = new ArchiveOdds_MatchWinner_BF_OC(mockContext.Object);
             testContext.ArchiveExpiredOdds();
+
+            // Assert
 
             // Verify that expired arbs have been moved to expired table
             Assert.AreEqual(1, mockContext.Object.Arbs_Football_MatchWinner_Expired.Count());
@@ -92,6 +104,7 @@ namespace Barbie.Tests.DbMaintenance
             
             // Verify that unexpired arbs haven't been touched
             Assert.AreEqual(1, mockContext.Object.Arbs_Football_MatchWinner.Count());
+            Assert.AreEqual(2, mockContext.Object.Arbs_Football_MatchWinner.ElementAt(0).ID);
         }
     }
 }

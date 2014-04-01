@@ -14,38 +14,44 @@ namespace Barbie.DbMaintenance
     /// </summary>
     public class DeleteExpiredData
     {
-        bARBieEntities barbieEntity;
+        bARBieEntities _barbieEntity;
 
-        private int expiryLimitHours;
-        private DateTime expiryDate;
+        private int _expiryLimitHours;
+        private DateTime _expiryDate;
 
         public DeleteExpiredData()
         {
-            barbieEntity = new bARBieEntities();
+            _barbieEntity = new bARBieEntities();
 
-            if (Int32.TryParse(ConfigurationManager.AppSettings["DataExpirationLimitHours"], out expiryLimitHours))
+            if (Int32.TryParse(ConfigurationManager.AppSettings["DataExpirationLimitHours"], out _expiryLimitHours))
             {
                 // log error 
-                return;
+                throw new ConfigurationErrorsException();
             }
 
-            expiryDate = DateTime.Now.AddHours(-expiryLimitHours);
+            _expiryDate = DateTime.Now.AddHours(-_expiryLimitHours);
         }
 
-        public void CleanFixtureAndOddsFromBF_OC()
+        public DeleteExpiredData(bARBieEntities barbieEntity, int expiryLimitHours)
         {
-            var bfExpiredFixtures = barbieEntity.BetFairFootballFixtures.Where(x => x.MatchDateTime < expiryDate);
-            var ocExpiredFixtures = barbieEntity.OddsCheckerFootballFixtures.Where(x => x.MatchDateTime < expiryDate);
+            _barbieEntity = barbieEntity;
+            _expiryDate = DateTime.Now.AddHours(-expiryLimitHours);
+        }
+
+        public void CleanFixtureAndOddsFromBFAndOCTables()
+        {
+            var bfExpiredFixtures = _barbieEntity.BetFairFootballFixtures.Where(x => x.MatchDateTime < _expiryDate);
+            var ocExpiredFixtures = _barbieEntity.OddsCheckerFootballFixtures.Where(x => x.MatchDateTime < _expiryDate);
 
             var bfExpiredFixtureIDs = bfExpiredFixtures.Select(x => x.ID).ToList();
             var ocExpiredFixtureIDs = ocExpiredFixtures.Select(x => x.ID).ToList();
 
-            var expiredFixtureMaps = barbieEntity.FootballFixturesMap
+            var expiredFixtureMaps = _barbieEntity.FootballFixturesMap
                                         .Where(x => bfExpiredFixtureIDs.Contains(x.BetFairFixtureID) || ocExpiredFixtureIDs.Contains(x.OddsCheckerFixtureID));
             var expiredFixtureMapIDs = expiredFixtureMaps.Select(x => x.ID).ToList();
 
-            var bfExpiredOdds = barbieEntity.BetFairFootballOdds.Where(x => expiredFixtureMapIDs.Contains(x.ID));
-            var ocExpiredOdds = barbieEntity.OddsCheckerFootballOdds.Where(x => expiredFixtureMapIDs.Contains(x.ID));
+            var bfExpiredOdds = _barbieEntity.BetFairFootballOdds.Where(x => expiredFixtureMapIDs.Contains(x.ID));
+            var ocExpiredOdds = _barbieEntity.OddsCheckerFootballOdds.Where(x => expiredFixtureMapIDs.Contains(x.ID));
 
             deleteBetFairFootballOddsRecords(bfExpiredOdds);
             deleteOddsCheckerFootballOddsRecords(ocExpiredOdds);
@@ -58,50 +64,50 @@ namespace Barbie.DbMaintenance
         {
             foreach (var record in recordsToDelete)
             {
-                barbieEntity.BetFairFootballOdds.Remove(record);
+                _barbieEntity.BetFairFootballOdds.Remove(record);
             }
 
-            barbieEntity.SaveChanges();
+            _barbieEntity.SaveChanges();
         }
 
         private void deleteOddsCheckerFootballOddsRecords(IQueryable<OddsCheckerFootballOdds> recordsToDelete)
         {
             foreach (var record in recordsToDelete)
             {
-                barbieEntity.OddsCheckerFootballOdds.Remove(record);
+                _barbieEntity.OddsCheckerFootballOdds.Remove(record);
             }
 
-            barbieEntity.SaveChanges();
+            _barbieEntity.SaveChanges();
         }
 
         private void deleteFixtureMapRecords(IQueryable<FootballFixturesMap> recordsToDelete)
         {
             foreach (var record in recordsToDelete)
             {
-                barbieEntity.FootballFixturesMap.Remove(record);
+                _barbieEntity.FootballFixturesMap.Remove(record);
             }
 
-            barbieEntity.SaveChanges();
+            _barbieEntity.SaveChanges();
         }
 
         private void deleteBetFairFootballFixtureRecords(IQueryable<BetFairFootballFixtures> recordsToDelete)
         {
             foreach (var record in recordsToDelete)
             {
-                barbieEntity.BetFairFootballFixtures.Remove(record);
+                _barbieEntity.BetFairFootballFixtures.Remove(record);
             }
 
-            barbieEntity.SaveChanges();
+            _barbieEntity.SaveChanges();
         }
 
         private void deleteOddsCheckerFootballFixtureRecords(IQueryable<OddsCheckerFootballFixtures> recordsToDelete)
         {
             foreach (var record in recordsToDelete)
             {
-                barbieEntity.OddsCheckerFootballFixtures.Remove(record);
+                _barbieEntity.OddsCheckerFootballFixtures.Remove(record);
             }
 
-            barbieEntity.SaveChanges();
+            _barbieEntity.SaveChanges();
         }
     }
 }

@@ -8,6 +8,9 @@ using DAL;
 
 namespace Barbie.DbMaintenance
 {
+    /// <summary>
+    /// Delete expired fixtures and odds from betfair and oddschecker tables
+    /// </summary>
     public class DeleteExpiredData
     {
         bARBieEntities barbieEntity;

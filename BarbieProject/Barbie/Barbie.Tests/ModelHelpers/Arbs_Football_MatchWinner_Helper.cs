@@ -36,5 +36,34 @@ namespace Barbie.Tests.ModelHelpers
 
             return record;
         }
+
+        public static Arbs_Football_MatchWinner CreateRecord(int id, bool expired, DateTime matchDateTime, string homeTeam, string awayTeam,
+                                                            string bookie, decimal bookieOdds, string betFairLevel, decimal betFairOdds,
+                                                            decimal betFairCash, string prediction, DateTime betFairUpdated, 
+                                                            DateTime oddsCheckerUpdated, DateTime created, DateTime updated, int parentID)
+        {
+            var record = new Arbs_Football_MatchWinner
+            {
+                ID = id,
+                FixtureMapID = 1,
+                MatchDateTime = matchDateTime,
+                HomeTeam = homeTeam,
+                AwayTeam = awayTeam,
+                Bookie = bookie,
+                BookieOdds = bookieOdds,
+                BetFairLayLevel = betFairLevel,
+                BetFairOdds = betFairOdds,
+                BetFairCash = betFairCash,
+                Predication = prediction,
+                BetFairUpdated = betFairUpdated,
+                OddsCheckerUpdated = oddsCheckerUpdated,
+                Expired = expired,
+                Created = created,
+                Updated = updated,
+                ParentID = parentID
+            };
+
+            return record;
+        }
     }
 }

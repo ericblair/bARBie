@@ -42,55 +42,12 @@ namespace Barbie.Tests.DbMaintenance
         public void ArchiveExpiredOdds_ConfidenceTest()
         {
             // Set up some expired and unexpired arbs
-            
-            var expiredArbRecord = new Arbs_Football_MatchWinner
-            {
-                ID = 1,
-                FixtureMapID = 1,
-                MatchDateTime = DateTime.Now,
-                HomeTeam = "Arsenal",
-                AwayTeam = "Chelsea",
-                Bookie = "Bet365",
-                BookieOdds = 5,
-                BetFairLayLevel = "LOW",
-                BetFairOdds = 4,
-                BetFairCash = 1000,
-                Predication = "Arsenal",
-                BetFairUpdated = DateTime.Now,
-                OddsCheckerUpdated = DateTime.Now,
-                Expired = true,
-                Created = DateTime.Now,
-                Updated = null,
-                ParentID = null
-            };
-
-            var unexpiredArbRecord = new Arbs_Football_MatchWinner
-            {
-                ID = 2,
-                FixtureMapID = 1,
-                MatchDateTime = DateTime.Now,
-                HomeTeam = "Arsenal",
-                AwayTeam = "Chelsea",
-                Bookie = "Bet365",
-                BookieOdds = 5,
-                BetFairLayLevel = "LOW",
-                BetFairOdds = 4,
-                BetFairCash = 1000,
-                Predication = "Arsenal",
-                BetFairUpdated = DateTime.Now,
-                OddsCheckerUpdated = DateTime.Now,
-                Expired = false,
-                Created = DateTime.Now,
-                Updated = null,
-                ParentID = null
-            };
+            var expiredArbRecord = ModelHelpers.Arbs_Football_MatchWinner_Helper.CreateRecord(id: 1, expired: true);
+            var unexpiredArbRecord = ModelHelpers.Arbs_Football_MatchWinner_Helper.CreateRecord(id: 2, expired: false);
 
             // Add records to Arbs_Football_MatchWinner table
             mockArbsFootballMatchWinnerTable.Add(expiredArbRecord);
             mockArbsFootballMatchWinnerTable.Add(unexpiredArbRecord);
-
-            //mockContext.Object.Arbs_Football_MatchWinner = mockArbsFootballMatchWinnerTable;
-            //mockContext.Object.Arbs_Football_MatchWinner_Expired = mockExpiredArbsFootballMatchWinnerTable;
 
             // Act
             var testContext = new ArchiveOdds_MatchWinner_BF_OC(mockContext.Object);

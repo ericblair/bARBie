@@ -61,6 +61,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DbMaintenance\ArchiveOdds_MatchWinner_BF_OC_Tests.cs" />
+    <Compile Include="ModelHelpers\Arbs_Football_MatchWinner_Helper.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

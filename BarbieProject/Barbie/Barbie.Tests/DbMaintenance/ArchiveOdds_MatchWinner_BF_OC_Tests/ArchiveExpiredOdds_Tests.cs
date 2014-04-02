@@ -14,7 +14,7 @@ namespace Barbie.Tests.DbMaintenance
     /// Tests for Barbie.DbMaintenance.ArchiveOdds_MatchWinner_BF_OC class
     /// </summary>
     [TestClass]
-    public class ArchiveOdds_MatchWinner_BF_OC_Tests
+    public class ArchiveExpiredOdds_Tests
     {
         Mock<bARBieEntities> mockContext;
         ArchiveOdds_MatchWinner_BF_OC testClass;

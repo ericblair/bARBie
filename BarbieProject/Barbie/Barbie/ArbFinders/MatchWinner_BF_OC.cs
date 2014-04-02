@@ -34,7 +34,7 @@ namespace Barbie.ArbFinders
         private decimal? setBetFairCommision()
         {
             var commisionPercentage = _configHelper.BetFairCommisionPercentage();
-            var commision = Convert.ToDecimal(commisionPercentage / 100);
+            var commision = Convert.ToDecimal(commisionPercentage / 100.0);
 
             return commision;
         }

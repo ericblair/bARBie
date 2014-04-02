@@ -52,5 +52,11 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
             _mockContext.Object.BetFairFootballOdds = mockBetFairFootballOddsTable;
             _mockContext.Object.OddsCheckerFootballOdds = mockOddsCheckerFootballOddsTable;
         }
+
+        [TestMethod]
+        public void Test()
+        {
+            _testClass.CheckAllUnexpiredMappedFixtures();
+        }
     }
 }

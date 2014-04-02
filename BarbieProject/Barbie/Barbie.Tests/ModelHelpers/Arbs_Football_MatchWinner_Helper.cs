@@ -9,8 +9,6 @@ namespace Barbie.Tests.ModelHelpers
 {
     public static class Arbs_Football_MatchWinner_Helper
     {
-
-
         public static Arbs_Football_MatchWinner CreateRecord(int id, bool expired = false)
         {
             var record = new Arbs_Football_MatchWinner

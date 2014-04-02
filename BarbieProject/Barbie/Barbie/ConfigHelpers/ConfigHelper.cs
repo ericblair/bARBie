@@ -17,5 +17,18 @@ namespace Barbie
 
             return expiryLimitHours;
         }
+
+        public int StringMatchingMaxLevenshteinValue()
+        {
+            int maxValue;
+
+            if (Int32.TryParse(ConfigurationManager.AppSettings["StringMatchingMaxLevenshteinValue"], out maxValue))
+            {
+                // TODO: log error 
+                throw new ConfigurationErrorsException();
+            }
+
+            return maxValue;
+        }
     }
 }

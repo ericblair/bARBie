@@ -25,6 +25,11 @@ namespace Barbie.FixtureMappers
             _barbieEntity = new bARBieEntities();
         }
 
+        public MatchWinner_BF_OC(bARBieEntities barbieEntity)
+        {
+            _barbieEntity = barbieEntity;
+        }
+
         public void RunMapper()
         {
             // TODO: Externalise var to config file

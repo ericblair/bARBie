@@ -24,5 +24,20 @@ namespace Barbie.Tests.ModelHelpers
 
             return record;
         }
+
+        public static OddsCheckerFootballFixtures CreateRecord(int id, int competitionID, DateTime matchDateTime, string homeTeam, string awayTeam)
+        {
+            var record = new OddsCheckerFootballFixtures
+            {
+                ID = id,
+                CompetitionID = competitionID,
+                MatchDateTime = matchDateTime,
+                HomeTeam = homeTeam,
+                AwayTeam = awayTeam,
+                MatchWinnerOddsUrl = "http://test.com/test1"
+            };
+
+            return record;
+        }
     }
 }

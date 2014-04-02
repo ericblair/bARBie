@@ -27,10 +27,17 @@ namespace Barbie.FixtureMappers
             _configHelper = configHelper;
         }
 
+        /// <summary>
+        /// This method looks for fixtures in the same competition and being played at the same time.
+        /// It then uses a levenshtein matching algorithm to match the home and away teams.
+        /// </summary>
         public void MapFixtures()
         {
             var maxLevenshteinValue = _configHelper.StringMatchingMaxLevenshteinValue();
 
+            // Gradually increase the difference allowed between the strings, first matching the fixtures 
+            // that are most similar. The team names can vary quite significantly between the sites so
+            // by increasing the value it maps the fixtures..
             for (var i = 0; i <= maxLevenshteinValue; i++)
             {
                 _unmappedBetFairFixtures = GetAllUnmappedBetFairFixtures();

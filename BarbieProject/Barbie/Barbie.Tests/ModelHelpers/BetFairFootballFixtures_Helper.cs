@@ -14,11 +14,25 @@ namespace Barbie.Tests.ModelHelpers
             var record = new BetFairFootballFixtures
             {
                 ID = id,
-                CountryID = 1,
                 CompetitionID = 1,
                 MatchDateTime = matchDateTime,
                 HomeTeam = "Rangers",
                 AwayTeam = "Celtic",
+                MatchWinnerOddsUrl = "http://test.com/test1"
+            };
+
+            return record;
+        }
+
+        public static BetFairFootballFixtures CreateRecord(int id, int competitionID, DateTime matchDateTime, string homeTeam, string awayTeam)
+        {
+            var record = new BetFairFootballFixtures
+            {
+                ID = id,
+                CompetitionID = competitionID,
+                MatchDateTime = matchDateTime,
+                HomeTeam = homeTeam,
+                AwayTeam =awayTeam,
                 MatchWinnerOddsUrl = "http://test.com/test1"
             };
 

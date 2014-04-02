@@ -39,8 +39,8 @@ namespace Barbie.FixtureMappers
                               join oc in unmappedOddsCheckerFixtures
                               on bf.CompetitionID equals oc.CompetitionID
                               where bf.MatchDateTime == oc.MatchDateTime
-                              && levenshtein(bf.HomeTeam, oc.HomeTeam) <= i
-                              && levenshtein(bf.AwayTeam, oc.AwayTeam) <= i
+                              && GetLevenshteinValueOfStrings(bf.HomeTeam, oc.HomeTeam) <= i
+                              && GetLevenshteinValueOfStrings(bf.AwayTeam, oc.AwayTeam) <= i
                               select new FootballFixturesMap
                               {
                                   BetFairFixtureID = bf.ID,
@@ -82,7 +82,7 @@ namespace Barbie.FixtureMappers
             return unmappedFixtures;
         }
 
-        private Int32 levenshtein(String a, String b)
+        private Int32 GetLevenshteinValueOfStrings(String a, String b)
         {
             if (string.IsNullOrEmpty(a))
             {

@@ -9,9 +9,10 @@ using System.Data.Objects.SqlClient;
 
 namespace Barbie.FixtureMappers
 {
-    // The following articles have been invaluble with the design of this class:
-    // http://www.sportshacker.net/posts/fuzzy_string_matching.html
-    // http://www.tsjensen.com/blog/post/2011/05/27/Four+Functions+For+Finding+Fuzzy+String+Matches+In+C+Extensions.aspx
+    /// <summary>
+    /// This class provides methods to match fixtures between the betfair and oddschecker
+    /// match winner fixtures
+    /// </summary>
     public class MatchWinner_BF_OC
     {
         bARBieEntities barbieEntity;
@@ -82,6 +83,9 @@ namespace Barbie.FixtureMappers
             return unmappedFixtures;
         }
 
+        // The following articles have been invaluble with the design of this method:
+        // http://www.sportshacker.net/posts/fuzzy_string_matching.html
+        // http://www.tsjensen.com/blog/post/2011/05/27/Four+Functions+For+Finding+Fuzzy+String+Matches+In+C+Extensions.aspx
         private Int32 GetLevenshteinValueOfStrings(String a, String b)
         {
             if (string.IsNullOrEmpty(a))

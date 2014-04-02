@@ -65,16 +65,19 @@ namespace Barbie.Tests.DbMaintenance.DeleteExpiredDataTests
 
             var betFairFootballFixtureExpiredRecord = ModelHelpers.BetFairFootballFixtures_Helper.CreateRecord(id: 1, matchDateTime: expiredMatchDateTime);
             var betFairFootballFixtureUnexpiredRecord = ModelHelpers.BetFairFootballFixtures_Helper.CreateRecord(id: 2, matchDateTime: unexpiredMatchDateTime);
+
             mockBetFairFootballFixturesTable.Add(betFairFootballFixtureExpiredRecord);
             mockBetFairFootballFixturesTable.Add(betFairFootballFixtureUnexpiredRecord);
 
             var oddsCheckerFootballFixtureExpiredRecord = ModelHelpers.OddsCheckerFootballFixtures_Helper.CreateRecord(id: 1, matchDateTime: expiredMatchDateTime);
             var oddsCheckerFootballFixtureUnexpiredRecord = ModelHelpers.OddsCheckerFootballFixtures_Helper.CreateRecord(id: 2, matchDateTime: unexpiredMatchDateTime);
+
             mockOddsCheckerFootballFixturesTable.Add(oddsCheckerFootballFixtureExpiredRecord);
             mockOddsCheckerFootballFixturesTable.Add(oddsCheckerFootballFixtureUnexpiredRecord);
 
             var footballFixtureMapExpiredRecord = ModelHelpers.FootballFixturesMap_Helper.CreateRecord(id: 1, betFairFixtureID: 1, oddsCheckerFixtureID: 1);
             var footballFixtureMapUnexpiredRecord = ModelHelpers.FootballFixturesMap_Helper.CreateRecord(id: 2, betFairFixtureID: 2, oddsCheckerFixtureID: 2);
+
             mockFootballFixturesMapTable.Add(footballFixtureMapExpiredRecord);
             mockFootballFixturesMapTable.Add(footballFixtureMapUnexpiredRecord);
 

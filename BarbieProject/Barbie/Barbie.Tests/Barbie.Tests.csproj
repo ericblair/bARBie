@@ -60,7 +60,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ArbFinders\MatchWinner_BF_OC_Tests\CheckAllUnexpiredMappedFixturesTests.cs" />
     <Compile Include="DbMaintenance\ArchiveOdds_MatchWinner_BF_OC_Tests\ArchiveExpiredOdds_Tests.cs" />
     <Compile Include="DbMaintenance\DeleteExpiredDataTests\CleanFixtureAndOddsFromBFAndOCTablesTests.cs" />
     <Compile Include="FixtureMappers\MatchWinner_BF_OC_Tests\MapFixturesTests.cs" />
@@ -85,6 +84,9 @@
       <Project>{e379f885-9963-435d-9c28-a4f6edd2ffb5}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ArbFinders\MatchWinner_BF_OC_Tests\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

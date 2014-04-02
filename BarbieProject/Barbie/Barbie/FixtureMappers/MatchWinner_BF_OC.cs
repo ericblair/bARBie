@@ -27,7 +27,7 @@ namespace Barbie.FixtureMappers
             _configHelper = configHelper;
         }
 
-        public void RunMapper()
+        public void MapFixtures()
         {
             var maxLevenshteinValue = _configHelper.StringMatchingMaxLevenshteinValue();
 

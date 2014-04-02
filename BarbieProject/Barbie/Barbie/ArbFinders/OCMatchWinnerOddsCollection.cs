@@ -7,6 +7,9 @@ using DAL;
 
 namespace Barbie.ArbFinders
 {
+    /// <summary>
+    /// This class provides properties providing the latest oddschecker match winner odds for a fixture
+    /// </summary>
     public class OCMatchWinnerOddsCollection
     {
         bARBieEntities _barbieEntity;

@@ -15,14 +15,14 @@ namespace Barbie.FixtureMappers
     /// </summary>
     public class MatchWinner_BF_OC
     {
-        bARBieEntities barbieEntity;
+        bARBieEntities _barbieEntity;
 
-        List<BetFairFootballFixtures> unmappedBetFairFixtures;
-        List<OddsCheckerFootballFixtures> unmappedOddsCheckerFixtures;
+        List<BetFairFootballFixtures> _unmappedBetFairFixtures;
+        List<OddsCheckerFootballFixtures> _unmappedOddsCheckerFixtures;
 
         public MatchWinner_BF_OC()
         {
-            barbieEntity = new bARBieEntities();
+            _barbieEntity = new bARBieEntities();
         }
 
         public void RunMapper()
@@ -32,12 +32,12 @@ namespace Barbie.FixtureMappers
 
             for (var i = 0; i <= maxLevenshteinValue; i++)
             {
-                unmappedBetFairFixtures = GetAllUnmappedBetFairFixtures();
-                unmappedOddsCheckerFixtures = GetAllUnmappedOddsCheckerFixtures();
+                _unmappedBetFairFixtures = GetAllUnmappedBetFairFixtures();
+                _unmappedOddsCheckerFixtures = GetAllUnmappedOddsCheckerFixtures();
 
                 var mappedFixtures = 
-                              (from bf in unmappedBetFairFixtures
-                              join oc in unmappedOddsCheckerFixtures
+                              (from bf in _unmappedBetFairFixtures
+                              join oc in _unmappedOddsCheckerFixtures
                               on bf.CompetitionID equals oc.CompetitionID
                               where bf.MatchDateTime == oc.MatchDateTime
                               && GetLevenshteinValueOfStrings(bf.HomeTeam, oc.HomeTeam) <= i
@@ -50,10 +50,10 @@ namespace Barbie.FixtureMappers
 
                 foreach (var fixture in mappedFixtures)
                 {
-                    barbieEntity.FootballFixturesMap.Add(fixture);
+                    _barbieEntity.FootballFixturesMap.Add(fixture);
                 }
 
-                barbieEntity.SaveChanges();
+                _barbieEntity.SaveChanges();
             }
  
         }
@@ -62,8 +62,8 @@ namespace Barbie.FixtureMappers
         {
             using (var t = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
-                var unmappedFixtures = (from bf in barbieEntity.BetFairFootballFixtures
-                                        where !(from map in barbieEntity.FootballFixturesMap
+                var unmappedFixtures = (from bf in _barbieEntity.BetFairFootballFixtures
+                                        where !(from map in _barbieEntity.FootballFixturesMap
                                                 select map.BetFairFixtureID)
                                                 .Contains(bf.ID)
                                         select bf).ToList();
@@ -74,8 +74,8 @@ namespace Barbie.FixtureMappers
 
         private List<OddsCheckerFootballFixtures> GetAllUnmappedOddsCheckerFixtures()
         {
-            var unmappedFixtures = (from oc in barbieEntity.OddsCheckerFootballFixtures
-                                    where !(from map in barbieEntity.FootballFixturesMap
+            var unmappedFixtures = (from oc in _barbieEntity.OddsCheckerFootballFixtures
+                                    where !(from map in _barbieEntity.FootballFixturesMap
                                             select map.OddsCheckerFixtureID)
                                             .Contains(oc.ID)
                                     select oc).ToList();

@@ -43,5 +43,18 @@ namespace Barbie
 
             return commision;
         }
+
+        public int MaxTotalMatchTimeMins()
+        {
+            int maxMatchTime;
+
+            if (Int32.TryParse(ConfigurationManager.AppSettings["MaxTotalMatchTimeMins"], out maxMatchTime))
+            {
+                // TODO: log error 
+                throw new ConfigurationErrorsException();
+            }
+
+            return maxMatchTime;
+        }
     }
 }

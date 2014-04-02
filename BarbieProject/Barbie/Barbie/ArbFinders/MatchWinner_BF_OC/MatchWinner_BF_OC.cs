@@ -23,6 +23,7 @@ namespace Barbie.ArbFinders
             _configHelper = configHelper;
             _arbFinder = arbFinder;
 
+            _matchExpiryLimitMins = _configHelper.MaxTotalMatchTimeMins();
             _matchExpiryDateTime = DateTime.Now.AddMinutes(-_matchExpiryLimitMins);
         }
 

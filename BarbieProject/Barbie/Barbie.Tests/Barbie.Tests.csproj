@@ -63,6 +63,11 @@
     <Compile Include="DbMaintenance\ArchiveOdds_MatchWinner_BF_OC_Tests.cs" />
     <Compile Include="DbMaintenance\DeleteExpiredDataTests\CleanFixtureAndOddsFromBFAndOCTablesTests.cs" />
     <Compile Include="ModelHelpers\Arbs_Football_MatchWinner_Helper.cs" />
+    <Compile Include="ModelHelpers\BetFairFootballFixtures_Helper.cs" />
+    <Compile Include="ModelHelpers\BetFairFootballOdds_Helper.cs" />
+    <Compile Include="ModelHelpers\FootballFixturesMap_Helper.cs" />
+    <Compile Include="ModelHelpers\OddsCheckerFootballFixtures_Helper.cs" />
+    <Compile Include="ModelHelpers\OddsCheckerFootballOdds_Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

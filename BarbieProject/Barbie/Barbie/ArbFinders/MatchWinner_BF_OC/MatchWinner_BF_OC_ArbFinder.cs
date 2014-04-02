@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,27 +7,22 @@ using DAL;
 
 namespace Barbie.ArbFinders
 {
-    public class MatchWinner_BF_OC
+    public class MatchWinner_BF_OC_ArbFinder : IArbFinder
     {
         bARBieEntities _barbieEntity;
         IConfigHelper _configHelper;
 
         private decimal? _betFairCommision;
-
-        private int _matchExpiryLimitMins;
-        private DateTime _matchExpiryDateTime;
-
         private const string _betFairLevelLow = "LOW";
         private const string _betFairLevelMid = "MID";
         private const string _betFairLevelHigh = "HIGH";
 
-        public MatchWinner_BF_OC(bARBieEntities barbieEntity, IConfigHelper configHelper)
+        public MatchWinner_BF_OC_ArbFinder(bARBieEntities barbieEntity, IConfigHelper configHelper)
         {
             _barbieEntity = barbieEntity;
             _configHelper = configHelper;
 
             _betFairCommision = setBetFairCommision();
-            _matchExpiryDateTime = DateTime.Now.AddMinutes(-_matchExpiryLimitMins);
         }
 
         private decimal? setBetFairCommision()
@@ -39,13 +33,8 @@ namespace Barbie.ArbFinders
             return commision;
         }
 
-        public void CheckAllUnexpiredMappedFixtures()
+        public void FindArbs(List<FootballFixturesMap> mappedFixtures)
         {
-            var mappedFixtures = _barbieEntity.FootballFixturesMap
-                                    .Where(x => x.OddsCheckerFootballFixtures.MatchDateTime >= _matchExpiryDateTime)
-                                    .OrderBy(x => x.OddsCheckerFootballFixtures.MatchDateTime)
-                                    .ToList();
-
             foreach (var fixture in mappedFixtures)
             {
                 var ocOddsCollection = new OCMatchWinnerOddsCollection(fixture);
@@ -81,54 +70,6 @@ namespace Barbie.ArbFinders
                             bfOddsCollection.DrawOdds.LayHighCash, bfOddsCollection.DrawOdds.Updated, fixture.ID);
                 }
 
-            }
-        }
-
-
-        // TODO: think about the arbs expiry process
-        public void SetArbsExpiredForFinishedMatches()
-        {
-            // Get all arbs where matchdatetime has expired
-            var expiredFixtures = (from arb in _barbieEntity.Arbs_Football_MatchWinner
-                                   join map in _barbieEntity.FootballFixturesMap on arb.FixtureMapID equals map.ID
-                                   join oc in _barbieEntity.OddsCheckerFootballFixtures on map.OddsCheckerFixtureID equals oc.ID
-                                   where oc.MatchDateTime < _matchExpiryDateTime
-                                   select arb).ToList();
-
-            if (expiredFixtures.Count > 0)
-            {
-                foreach (var arb in expiredFixtures)
-                {
-                    arb.Expired = true;
-                    arb.Updated = DateTime.Now;
-                }
-
-                _barbieEntity.SaveChanges();
-            }
-        }
-
-        public void SetArbsExpiredForOutdatedOdds()
-        {
-            // Check to see if the arb reflects the latest odds
-            var arbs = _barbieEntity.Arbs_Football_MatchWinner
-                        .Where(x => x.Expired == false || x.Expired == null)
-                        .OrderBy(x => x.MatchDateTime)
-                        .ToList();
-
-            foreach (var arb in arbs)
-            {
-                var bfFixtureId = _barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.FixtureMapID).Select(x => x.BetFairFixtureID).First();
-                var ocFixtureId = _barbieEntity.FootballFixturesMap.Where(x => x.ID == arb.FixtureMapID).Select(x => x.OddsCheckerFixtureID).First();
-
-                var bfOddsUpdated = _barbieEntity.BetFairFootballOdds.Where(x => x.FixtureID == bfFixtureId).OrderByDescending(x => x.ID).Select(x => x.Updated).First();
-                var ocOddsUpdated = _barbieEntity.OddsCheckerFootballOdds.Where(x => x.FixtureID == ocFixtureId).OrderByDescending(x => x.ID).Select(x => x.Updated).First();
-
-                if (arb.BetFairUpdated < bfOddsUpdated && arb.OddsCheckerUpdated < ocOddsUpdated)
-                {
-                    arb.Expired = true;
-                    arb.Updated = DateTime.Now;
-                    _barbieEntity.SaveChanges();
-                }
             }
         }
 
@@ -297,7 +238,7 @@ namespace Barbie.ArbFinders
             }
         }
 
-        private void WriteArbToDatabase(DateTime matchDateTime, string homeTeam, string awayTeam, string betFairLevel,
+            private void WriteArbToDatabase(DateTime matchDateTime, string homeTeam, string awayTeam, string betFairLevel,
                                         decimal betFairLayOdds, decimal betFairCash,
                                         DateTime betFairUpdated, string bookie, decimal bookieOdds,
                                         DateTime oddsCheckerUpdated, string prediction, int fixtureID)

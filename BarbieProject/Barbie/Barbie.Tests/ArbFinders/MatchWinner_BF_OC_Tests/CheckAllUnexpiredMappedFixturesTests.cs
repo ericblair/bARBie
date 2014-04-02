@@ -19,6 +19,7 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
         Mock<bARBieEntities> _mockContext;
         MatchWinner_BF_OC _testClass;
         Mock<IConfigHelper> _mockConfigHelper;
+        Mock<IArbFinder> _mockArbFinder;
 
         int _betFairCommisionPercentage = 5;
 
@@ -34,10 +35,11 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
         {
             _mockContext = new Mock<bARBieEntities>();
             _mockConfigHelper = new Mock<IConfigHelper>();
+            _mockArbFinder = new Mock<IArbFinder>();
 
             _mockConfigHelper.Setup(m => m.BetFairCommisionPercentage()).Returns(_betFairCommisionPercentage);
 
-            _testClass = new MatchWinner_BF_OC(_mockContext.Object, _mockConfigHelper.Object);
+            _testClass = new MatchWinner_BF_OC(_mockContext.Object, _mockConfigHelper.Object, _mockArbFinder.Object);
 
             mockBetFairFootballFixturesTable = new FakeDbSet<BetFairFootballFixtures>();
             mockOddsCheckerFootballFixturesTable = new FakeDbSet<OddsCheckerFootballFixtures>();

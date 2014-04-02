@@ -70,8 +70,8 @@ namespace Barbie
 
         private static void runMapper()
         {
-            var mapper = new FixtureMappers.MatchWinner_BF_OC();
-            mapper.RunMapper();
+            //var mapper = new FixtureMappers.MatchWinner_BF_OC();
+            //mapper.RunMapper();
         }
 
         private static void runArbFinder()

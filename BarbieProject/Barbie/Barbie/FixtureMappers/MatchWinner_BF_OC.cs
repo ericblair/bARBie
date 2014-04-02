@@ -16,24 +16,20 @@ namespace Barbie.FixtureMappers
     public class MatchWinner_BF_OC
     {
         bARBieEntities _barbieEntity;
+        IConfigHelper _configHelper;
 
         List<BetFairFootballFixtures> _unmappedBetFairFixtures;
         List<OddsCheckerFootballFixtures> _unmappedOddsCheckerFixtures;
 
-        public MatchWinner_BF_OC()
-        {
-            _barbieEntity = new bARBieEntities();
-        }
-
-        public MatchWinner_BF_OC(bARBieEntities barbieEntity)
+        public MatchWinner_BF_OC(bARBieEntities barbieEntity, IConfigHelper configHelper)
         {
             _barbieEntity = barbieEntity;
+            _configHelper = configHelper;
         }
 
         public void RunMapper()
         {
-            // TODO: Externalise var to config file
-            var maxLevenshteinValue = 15;
+            var maxLevenshteinValue = _configHelper.StringMatchingMaxLevenshteinValue();
 
             for (var i = 0; i <= maxLevenshteinValue; i++)
             {

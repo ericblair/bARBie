@@ -76,11 +76,11 @@ namespace Barbie
 
         private static void runArbFinder()
         {
-            var arbFinder = new ArbFinders.MatchWinner_BF_OC();
+            //var arbFinder = new ArbFinders.MatchWinner_BF_OC();
             
-            arbFinder.SetArbsExpiredForFinishedMatches();
-            arbFinder.CheckAllUnexpiredMappedFixtures();
-            arbFinder.SetArbsExpiredForFinishedMatches();
+            //arbFinder.SetArbsExpiredForFinishedMatches();
+            //arbFinder.CheckAllUnexpiredMappedFixtures();
+            //arbFinder.SetArbsExpiredForFinishedMatches();
         }
     }
 }

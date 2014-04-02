@@ -6,5 +6,6 @@ namespace Barbie
     {
         int DataExpirationLimitHours();
         int StringMatchingMaxLevenshteinValue();
+        int BetFairCommisionPercentage();
     }
 }

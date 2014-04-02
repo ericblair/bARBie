@@ -30,5 +30,18 @@ namespace Barbie
 
             return maxValue;
         }
+
+        public int BetFairCommisionPercentage()
+        {
+            int commision;
+
+            if (Int32.TryParse(ConfigurationManager.AppSettings["BetFairCommisionPercentage"], out commision))
+            {
+                // TODO: log error 
+                throw new ConfigurationErrorsException();
+            }
+
+            return commision;
+        }
     }
 }

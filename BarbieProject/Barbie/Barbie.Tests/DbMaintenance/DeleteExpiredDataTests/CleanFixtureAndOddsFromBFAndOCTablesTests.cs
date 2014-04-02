@@ -18,6 +18,8 @@ namespace Barbie.Tests.DbMaintenance.DeleteExpiredDataTests
     {
         Mock<bARBieEntities> mockContext;
         DeleteExpiredData testClass;
+
+        Mock<IConfigHelper> mockConfigHelper;
         int expiryLimitHours;
 
         // Create mock objects for the tables used in test
@@ -31,8 +33,12 @@ namespace Barbie.Tests.DbMaintenance.DeleteExpiredDataTests
         public void Initialize()
         {
             mockContext = new Mock<bARBieEntities>();
+            mockConfigHelper = new Mock<IConfigHelper>();
+
             expiryLimitHours = 6;
-            testClass = new DeleteExpiredData(mockContext.Object, expiryLimitHours);
+            mockConfigHelper.Setup(m => m.DataExpirationLimitHours()).Returns(expiryLimitHours);
+
+            testClass = new DeleteExpiredData(mockContext.Object, mockConfigHelper.Object);
 
             mockBetFairFootballFixturesTable = new FakeDbSet<BetFairFootballFixtures>();
             mockOddsCheckerFootballFixturesTable = new FakeDbSet<OddsCheckerFootballFixtures>();

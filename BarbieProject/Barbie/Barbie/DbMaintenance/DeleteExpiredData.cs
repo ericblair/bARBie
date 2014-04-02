@@ -15,27 +15,23 @@ namespace Barbie.DbMaintenance
     public class DeleteExpiredData
     {
         bARBieEntities _barbieEntity;
+        IConfigHelper _configHelper;
 
         private int _expiryLimitHours;
         private DateTime _expiryDate;
 
-        public DeleteExpiredData()
-        {
-            _barbieEntity = new bARBieEntities();
-
-            if (Int32.TryParse(ConfigurationManager.AppSettings["DataExpirationLimitHours"], out _expiryLimitHours))
-            {
-                // log error 
-                throw new ConfigurationErrorsException();
-            }
-
-            _expiryDate = DateTime.Now.AddHours(-_expiryLimitHours);
-        }
-
-        public DeleteExpiredData(bARBieEntities barbieEntity, int expiryLimitHours)
+        public DeleteExpiredData(bARBieEntities barbieEntity, IConfigHelper configHelper)
         {
             _barbieEntity = barbieEntity;
-            _expiryDate = DateTime.Now.AddHours(-expiryLimitHours);
+            _configHelper = configHelper;
+
+            setDataExpiryDate();
+        }
+
+        private void setDataExpiryDate()
+        {
+            _expiryLimitHours = _configHelper.DataExpirationLimitHours();
+            _expiryDate = DateTime.Now.AddHours(-_expiryLimitHours);
         }
 
         public void CleanFixtureAndOddsFromBFAndOCTables()

@@ -43,7 +43,8 @@ namespace Barbie.DbMaintenance
             var ocExpiredFixtureIDs = ocExpiredFixtures.Select(x => x.ID).ToList();
 
             var expiredFixtureMaps = _barbieEntity.FootballFixturesMap
-                                        .Where(x => bfExpiredFixtureIDs.Contains(x.BetFairFixtureID) || ocExpiredFixtureIDs.Contains(x.OddsCheckerFixtureID))
+                                        .Where(x => bfExpiredFixtureIDs.Contains(x.BetFairFixtureID) 
+                                                || ocExpiredFixtureIDs.Contains(x.OddsCheckerFixtureID))
                                         .ToList();
             var expiredFixtureMapIDs = expiredFixtureMaps.Select(x => x.ID).ToList();
 

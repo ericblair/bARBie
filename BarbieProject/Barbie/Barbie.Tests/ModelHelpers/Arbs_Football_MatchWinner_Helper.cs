@@ -35,16 +35,26 @@ namespace Barbie.Tests.ModelHelpers
             return record;
         }
 
-        public static Arbs_Football_MatchWinner CreateRecord(int id, bool expired, DateTime matchDateTime, string homeTeam, string awayTeam,
-                                                            string bookie, decimal bookieOdds, string betFairLevel, decimal betFairOdds,
-                                                            decimal betFairCash, string prediction, DateTime betFairUpdated, 
-                                                            DateTime oddsCheckerUpdated, DateTime created, DateTime updated, int parentID)
+        public static Arbs_Football_MatchWinner CreateRecord(int id = 1, bool? expired = false, DateTime? matchDateTime = null, string homeTeam = "Man City", 
+                                                            string awayTeam = "Everton", string bookie = "Ladbrokes", decimal bookieOdds = 5, 
+                                                            string betFairLevel = "LOW", decimal betFairOdds = 4, decimal betFairCash = 1000, 
+                                                            string prediction = "Everton", DateTime? betFairUpdated = null, DateTime? oddsCheckerUpdated = null, 
+                                                            DateTime? created = null, DateTime? updated = null, int parentID = 1)
         {
+            if (matchDateTime == null)
+                matchDateTime = DateTime.Now;
+            if (betFairUpdated == null)
+                betFairUpdated = DateTime.Now;
+            if (oddsCheckerUpdated == null)
+                oddsCheckerUpdated = DateTime.Now;
+            if (created == null)
+                created = DateTime.Now;
+
             var record = new Arbs_Football_MatchWinner
             {
                 ID = id,
                 FixtureMapID = 1,
-                MatchDateTime = matchDateTime,
+                MatchDateTime = matchDateTime.Value,
                 HomeTeam = homeTeam,
                 AwayTeam = awayTeam,
                 Bookie = bookie,
@@ -53,10 +63,10 @@ namespace Barbie.Tests.ModelHelpers
                 BetFairOdds = betFairOdds,
                 BetFairCash = betFairCash,
                 Predication = prediction,
-                BetFairUpdated = betFairUpdated,
-                OddsCheckerUpdated = oddsCheckerUpdated,
+                BetFairUpdated = betFairUpdated.Value,
+                OddsCheckerUpdated = oddsCheckerUpdated.Value,
                 Expired = expired,
-                Created = created,
+                Created = created.Value,
                 Updated = updated,
                 ParentID = parentID
             };

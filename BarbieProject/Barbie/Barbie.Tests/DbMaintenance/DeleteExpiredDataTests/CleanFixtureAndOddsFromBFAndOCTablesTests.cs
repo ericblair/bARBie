@@ -11,15 +11,15 @@ using Barbie.DbMaintenance;
 namespace Barbie.Tests.DbMaintenance.DeleteExpiredDataTests
 {
     /// <summary>
-    /// Tests for Barbie.DbMaintenance.DeleteExpiredDataTests.CleanFixtureAndOddsFromBFAndOCTablesTests() method
+    /// Tests for Barbie.DbMaintenance.DeleteExpiredDataTests.CleanFixtureAndOddsFromBFAndOCTables() method
     /// </summary>
     [TestClass]
     public class CleanFixtureAndOddsFromBFAndOCTablesTests
     {
         Mock<bARBieEntities> _mockContext;
+        Mock<IConfigHelper> _mockConfigHelper;
         DeleteExpiredData _testClass;
 
-        Mock<IConfigHelper> _mockConfigHelper;
         int _expiryLimitHours;
 
         // Create mock objects for the tables used in test

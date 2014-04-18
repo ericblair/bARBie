@@ -37,26 +37,19 @@ namespace Barbie.ArbFinders
             _arbFinder.FindArbs(mappedFixtures);
         }
 
-        // TODO: think about the arbs expiry process
-        public void SetArbsExpiredForFinishedMatches()
+        public void ExpireArbsForFinishedMatches()
         {
-            // Get all arbs where matchdatetime has expired
-            var expiredFixtures = (from arb in _barbieEntity.Arbs_Football_MatchWinner
-                                   join map in _barbieEntity.FootballFixturesMap on arb.FixtureMapID equals map.ID
-                                   join oc in _barbieEntity.OddsCheckerFootballFixtures on map.OddsCheckerFixtureID equals oc.ID
-                                   where oc.MatchDateTime < _matchExpiryDateTime
-                                   select arb).ToList();
+            var expiredFixtures = _barbieEntity.Arbs_Football_MatchWinner
+                                        .Where(x => x.MatchDateTime < _matchExpiryDateTime && x.Expired != true)
+                                        .ToList();
 
-            if (expiredFixtures.Count > 0)
+            foreach (var arb in expiredFixtures)
             {
-                foreach (var arb in expiredFixtures)
-                {
-                    arb.Expired = true;
-                    arb.Updated = DateTime.Now;
-                }
-
-                _barbieEntity.SaveChanges();
+                arb.Expired = true;
+                arb.Updated = DateTime.Now;
             }
+
+            _barbieEntity.SaveChanges();
         }
 
         public void SetArbsExpiredForOutdatedOdds()

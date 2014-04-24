@@ -94,6 +94,11 @@
     <Compile Include="FootballFixturesMap.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\Arbs_Football_MatchWinner\IsArbMarkedAsExpired.cs" />
+    <Compile Include="Repository\BetFairFootballOdds\GetDateTimeBetfairFootballOddsLastUpdated.cs" />
+    <Compile Include="Repository\FootballFixturesMap\GetBetfairFixtureIdForArb.cs" />
+    <Compile Include="Repository\FootballFixturesMap\GetOddscheckerFixtureIdForArb.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="OddsCheckerCompetitionUrls.cs">
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
@@ -104,6 +109,8 @@
       <DependentUpon>BarbieModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\OddsCheckerFootballOdds\GetDateTimeOddscheckerFootballOddsLastUpdated.cs" />
+    <Compile Include="Repository\Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

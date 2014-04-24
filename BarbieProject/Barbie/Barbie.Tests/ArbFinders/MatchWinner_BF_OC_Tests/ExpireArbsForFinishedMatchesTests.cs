@@ -17,6 +17,7 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
     public class ExpireArbsForFinishedMatchesTests
     {
         Mock<bARBieEntities> _mockContext;
+        Mock<IRepository> _mockRepository;
         Mock<IConfigHelper> _mockConfigHelper;
         Mock<IArbFinder> _mockArbFinder;
         MatchWinner_BF_OC _testClass;
@@ -30,12 +31,13 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
         public void Initialize()
         {
             _mockContext = new Mock<bARBieEntities>();
+            _mockRepository = new Mock<IRepository>();
             _mockConfigHelper = new Mock<IConfigHelper>();
             _mockArbFinder = new Mock<IArbFinder>();
 
             _mockConfigHelper.Setup(m => m.MaxTotalMatchTimeMins()).Returns(_maxMatchTimeMins);
 
-            _testClass = new MatchWinner_BF_OC(_mockContext.Object, _mockConfigHelper.Object, _mockArbFinder.Object);
+            _testClass = new MatchWinner_BF_OC(_mockContext.Object, _mockRepository.Object, _mockConfigHelper.Object, _mockArbFinder.Object);
 
             _mockArbsFootballMatchWinnerTable = new FakeDbSet<Arbs_Football_MatchWinner>();
 
@@ -96,7 +98,6 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
             Assert.IsNotNull(_mockContext.Object.Arbs_Football_MatchWinner.ElementAt(0).Updated);
         }
 
-        // Updates only expired records
         [TestMethod]
         public void ExpiredArbsForFinishedMatches_UpdatesOnlyExpiredArbs()
         {

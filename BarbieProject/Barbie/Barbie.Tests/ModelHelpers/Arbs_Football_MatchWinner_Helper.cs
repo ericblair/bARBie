@@ -35,8 +35,8 @@ namespace Barbie.Tests.ModelHelpers
             return record;
         }
 
-        public static Arbs_Football_MatchWinner CreateRecord(int id = 1, bool? expired = false, DateTime? matchDateTime = null, string homeTeam = "Man City", 
-                                                            string awayTeam = "Everton", string bookie = "Ladbrokes", decimal bookieOdds = 5, 
+        public static Arbs_Football_MatchWinner CreateRecord(int id = 1, bool? expired = false, DateTime? matchDateTime = null, int fixtureMapID = 1,
+                                                            string homeTeam = "Man City", string awayTeam = "Everton", string bookie = "Ladbrokes", decimal bookieOdds = 5, 
                                                             string betFairLevel = "LOW", decimal betFairOdds = 4, decimal betFairCash = 1000, 
                                                             string prediction = "Everton", DateTime? betFairUpdated = null, DateTime? oddsCheckerUpdated = null, 
                                                             DateTime? created = null, DateTime? updated = null, int parentID = 1)
@@ -53,7 +53,7 @@ namespace Barbie.Tests.ModelHelpers
             var record = new Arbs_Football_MatchWinner
             {
                 ID = id,
-                FixtureMapID = 1,
+                FixtureMapID = fixtureMapID,
                 MatchDateTime = matchDateTime.Value,
                 HomeTeam = homeTeam,
                 AwayTeam = awayTeam,

@@ -69,6 +69,7 @@ namespace Barbie.Tests.DbMaintenance
             // Arrange
 
             int id = 2;
+            int fixtureMapID = 1;
             bool expired = true;
             DateTime matchDateTime = DateTime.Now;
             string homeTeam = "Everton";
@@ -86,7 +87,7 @@ namespace Barbie.Tests.DbMaintenance
             int parentID = 1;
 
             var arbRecord = 
-                ModelHelpers.Arbs_Football_MatchWinner_Helper.CreateRecord(id, expired, matchDateTime, homeTeam, awayTeam, bookie, bookieOdds,
+                ModelHelpers.Arbs_Football_MatchWinner_Helper.CreateRecord(id, expired, matchDateTime, fixtureMapID, homeTeam, awayTeam, bookie, bookieOdds,
                                                                         betFairLevel, betFairOdds, betFairCash, prediction, betFairUpdated,
                                                                         oddsCheckerUpdated, created, updated, parentID);
 

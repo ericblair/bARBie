@@ -9,6 +9,7 @@ namespace Barbie.ArbFinders
 {
     public interface IArbFinder
     {
+        void CheckLatestOddsForArbs(int fixtureMapID);
         void FindArbs(List<FootballFixturesMap> mappedFixtures);
     }
 }

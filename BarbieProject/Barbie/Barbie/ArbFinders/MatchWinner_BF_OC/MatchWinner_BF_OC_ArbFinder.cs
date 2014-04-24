@@ -33,6 +33,14 @@ namespace Barbie.ArbFinders
             return commision;
         }
 
+        public void CheckLatestOddsForArbs(int fixtureMapID)
+        {
+            var fixture = _barbieEntity.FootballFixturesMap.FirstOrDefault(x => x.ID == fixtureMapID);
+
+            List<FootballFixturesMap> fixtures = new List<FootballFixturesMap>() { fixture };
+            FindArbs(fixtures);
+        }
+
         public void FindArbs(List<FootballFixturesMap> mappedFixtures)
         {
             foreach (var fixture in mappedFixtures)
@@ -258,6 +266,7 @@ namespace Barbie.ArbFinders
             // Update existing arb
             if (record != null)
             {
+                // NOTE: bf / oc updated values should be taken from the tables so that the time the odds were originally recorded is persisted rather than the time of the update
                 record.BetFairUpdated = DateTime.Now;
                 record.OddsCheckerUpdated = DateTime.Now;
                 record.Updated = DateTime.Now;

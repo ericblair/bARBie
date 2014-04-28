@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Scrapers.Football;
 using Barbie.FixtureMappers;
-using Barbie.ArbFinders;
+using Barbie.Arbs;
 using Barbie.DbMaintenance;
 
 namespace Barbie

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 
-namespace Barbie.ArbFinders
+namespace Barbie.Arbs
 {
     /// <summary>
     /// This class provides properties providing the latest betfair match winner odds for a fixture

@@ -53,11 +53,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArbFinders\IArbFinder.cs" />
-    <Compile Include="ArbFinders\MatchWinner_BF_OC\BFMatchWinnerOddsCollection.cs" />
-    <Compile Include="ArbFinders\MatchWinner_BF_OC\MatchWinner_BF_OC.cs" />
-    <Compile Include="ArbFinders\MatchWinner_BF_OC\MatchWinner_BF_OC_ArbFinder.cs" />
-    <Compile Include="ArbFinders\MatchWinner_BF_OC\OCMatchWinnerOddsCollection.cs" />
+    <Compile Include="Arbs\IArbFinder.cs" />
+    <Compile Include="Arbs\MatchWinner_BF_OC\BFMatchWinnerOddsCollection.cs" />
+    <Compile Include="Arbs\MatchWinner_BF_OC\MatchWinner_BF_OC_Controller.cs" />
+    <Compile Include="Arbs\MatchWinner_BF_OC\MatchWinner_BF_OC_ArbFinder.cs" />
+    <Compile Include="Arbs\MatchWinner_BF_OC\OCMatchWinnerOddsCollection.cs" />
     <Compile Include="ConfigHelpers\ConfigHelper.cs" />
     <Compile Include="ConfigHelpers\IConfigHelper.cs" />
     <Compile Include="DbMaintenance\ArchiveOdds_MatchWinner_BF_OC.cs" />

@@ -60,8 +60,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ArbFinders\MatchWinner_BF_OC_Tests\ExpireArbsForFinishedMatchesTests.cs" />
-    <Compile Include="ArbFinders\MatchWinner_BF_OC_Tests\UpdateArbTests.cs" />
+    <Compile Include="Arbs\MatchWinner_BF_OC_Tests\ExpireArbsForFinishedMatchesTests.cs" />
+    <Compile Include="Arbs\MatchWinner_BF_OC_Tests\UpdateArbTests.cs" />
     <Compile Include="DbMaintenance\ArchiveOdds_MatchWinner_BF_OC_Tests\ArchiveExpiredOdds_Tests.cs" />
     <Compile Include="DbMaintenance\DeleteExpiredDataTests\CleanFixtureAndOddsFromBFAndOCTablesTests.cs" />
     <Compile Include="FixtureMappers\MatchWinner_BF_OC_Tests\MapFixturesTests.cs" />

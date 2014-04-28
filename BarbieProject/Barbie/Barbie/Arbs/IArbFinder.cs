@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 
-namespace Barbie.ArbFinders
+namespace Barbie.Arbs
 {
     public interface IArbFinder
     {

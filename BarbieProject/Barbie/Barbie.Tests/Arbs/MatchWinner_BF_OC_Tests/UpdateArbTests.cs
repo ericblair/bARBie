@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using DAL;
-using Barbie.ArbFinders;
+using Barbie.Arbs;
 
 namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
 {
@@ -20,7 +20,7 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
         Mock<IRepository> _mockRepository;
         Mock<IConfigHelper> _mockConfigHelper;
         Mock<IArbFinder> _mockArbFinder;
-        MatchWinner_BF_OC _testClass;
+        MatchWinner_BF_OC_Controller _testClass;
 
         // Create mock objects for the tables used in test
         FakeDbSet<Arbs_Football_MatchWinner> _mockArbsFootballMatchWinnerTable;
@@ -35,7 +35,7 @@ namespace Barbie.Tests.ArbFinders.MatchWinner_BF_OC_Tests
 
             //_mockConfigHelper.Setup(m => m.MaxTotalMatchTimeMins()).Returns(_maxMatchTimeMins);
 
-            _testClass = new MatchWinner_BF_OC(_mockContext.Object, _mockRepository.Object, _mockConfigHelper.Object, _mockArbFinder.Object);
+            _testClass = new MatchWinner_BF_OC_Controller(_mockContext.Object, _mockRepository.Object, _mockConfigHelper.Object, _mockArbFinder.Object);
 
             _mockArbsFootballMatchWinnerTable = new FakeDbSet<Arbs_Football_MatchWinner>();
 

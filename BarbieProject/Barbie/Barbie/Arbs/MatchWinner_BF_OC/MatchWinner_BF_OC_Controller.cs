@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 
-namespace Barbie.ArbFinders
+namespace Barbie.Arbs
 {
-    public class MatchWinner_BF_OC
+    public class MatchWinner_BF_OC_Controller
     {
         bARBieEntities _barbieEntity;
         IConfigHelper _configHelper;
@@ -18,7 +18,7 @@ namespace Barbie.ArbFinders
         private int _matchExpiryLimitMins;
         private DateTime _matchExpiryDateTime;
 
-        public MatchWinner_BF_OC(bARBieEntities barbieEntity, IRepository repository, IConfigHelper configHelper, IArbFinder arbFinder)
+        public MatchWinner_BF_OC_Controller(bARBieEntities barbieEntity, IRepository repository, IConfigHelper configHelper, IArbFinder arbFinder)
         {
             _repository = repository;
             _barbieEntity = barbieEntity;
